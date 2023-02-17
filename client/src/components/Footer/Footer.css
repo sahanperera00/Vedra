@@ -1,9 +1,10 @@
 .footer {
     width: 100%;
     height: 300px;
-    background: #101010;
+    /* background: #101010; */
+    background: linear-gradient(0deg, #278a9e 10%, #00fcac7b 100%);
     text-align: center;
-    color: rgba(255, 255, 255, 0.614);
+    color: rgba(255, 255, 255, 0.837);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -30,7 +31,7 @@
 }
 
 .footerBottomCont>ul>li {
-    padding: 15px 30px;
+    padding: 15px 25px;
     letter-spacing: 2px;
     /* font-weight: bold; */
 }

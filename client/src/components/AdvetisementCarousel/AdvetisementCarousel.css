@@ -1,9 +1,19 @@
 .advetisementCarousel {
     width: 100vw;
-    height: 400px;
+    /* height: 400px; */
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #757575;
     color: white;
+    /* background-color: #757575; */
+    /* padding: 0 3rem; */
 }
+
+/* .advetisementCarousel__image {
+    width: 100%;
+    object-fit: cover;
+}
+
+.advetisementCarousel__image>img {
+    width: 100%;
+} */
