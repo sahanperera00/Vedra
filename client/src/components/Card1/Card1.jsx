@@ -1,5 +1,6 @@
 import "./Card1.css";
 import TextTruncate from "react-text-truncate";
+import { Rating } from "react-simple-star-rating";
 
 export default function Card1({ item }) {
   return (
@@ -15,7 +16,11 @@ export default function Card1({ item }) {
           text={item.name}
           // textTruncateChild={<a href="#">Read on</a>}
         />
-        <p>{item.price}</p>
+        <div>
+          <p>{item.price}</p>
+          <Rating size={20} initialValue={item.star} />
+          {/* <p>{item.star}</p> */}
+        </div>
       </div>
     </div>
   );
