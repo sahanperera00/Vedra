@@ -11,14 +11,14 @@ body {
 
 .button {
   background: transparent;
-  padding: 1rem 1rem;
+  padding: 13px;
   border: 0.7px solid rgba(0, 0, 0, 0.423);
   border-radius: 25px;
 }
 
 .button:hover {
   cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0.8);
+  /* border: 1px solid rgba(0, 0, 0, 0.8); */
 }
 
 ::-webkit-scrollbar {
