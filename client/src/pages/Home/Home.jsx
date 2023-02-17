@@ -5,6 +5,7 @@ import AdvetisementCarousel from "../../components/AdvetisementCarousel/Advetise
 import TrendingNow from "../../components/TrendingNow/TrendingNow";
 import NewArrivals from "../../components/NewArrivals/NewArrivals";
 import Specials from "../../components/Specials/Specials";
+import BestSellers from "../../components/BestSellers/BestSellers";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <TrendingNow />
       <NewArrivals />
       <Specials />
+      <BestSellers />
       <Footer />
     </div>
   );
