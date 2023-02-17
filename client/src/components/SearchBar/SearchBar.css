@@ -1,0 +1,29 @@
+.searchBar {
+    width: 280px;
+    display: flex;
+    border-radius: 30px;
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.34);
+    /* background-color: aliceblue; */
+}
+
+.searchBar>input {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding-left: 20px;
+}
+
+.s-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    padding: 4px;
+    color: rgba(0, 0, 0, 0.582);
+}
+
+.s-icon:hover {
+    cursor: pointer;
+}
