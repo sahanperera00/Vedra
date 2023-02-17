@@ -4,6 +4,7 @@ import Footer from "../../components/Footer/Footer";
 import AdvetisementCarousel from "../../components/AdvetisementCarousel/AdvetisementCarousel";
 import TrendingNow from "../../components/TrendingNow/TrendingNow";
 import NewArrivals from "../../components/NewArrivals/NewArrivals";
+import Specials from "../../components/Specials/Specials";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <AdvetisementCarousel />
       <TrendingNow />
       <NewArrivals />
+      <Specials />
       <Footer />
     </div>
   );
