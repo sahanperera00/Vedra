@@ -1,32 +1,46 @@
 import "./Footer.css";
+import {
+  UilFacebookF,
+  UilInstagram,
+  UilLinkedin,
+  UilTwitter,
+  UilWhatsapp,
+} from "@iconscout/react-unicons";
 
 export default function Footer() {
   return (
     <div className="footer">
       <img
-        src="https://firebasestorage.googleapis.com/v0/b/ayurvita-b6e56.appspot.com/o/ayurvitalogoW.png?alt=media&token=5cd51f59-8e78-4646-a16a-7a54c84939dd"
+        src="https://firebasestorage.googleapis.com/v0/b/vedra-8d493.appspot.com/o/W.png?alt=media&token=87a8af90-8889-4e84-9553-bc22b39b1d62"
         alt=""
       />
       <div className="footerBottomCont">
         <ul>
-          <li>TRENDING NOW</li>
-          <li>NEW ARRIVALS</li>
-          <li>SPECIALS</li>
-          <li>BEST SELLERS</li>
+          <li>
+            <UilFacebookF />
+          </li>
+          <li>
+            <UilInstagram />
+          </li>
+          <li>
+            <UilLinkedin />
+          </li>
+          <li>
+            <UilTwitter />
+          </li>
+          <li>
+            <UilWhatsapp />
+          </li>
         </ul>
       </div>
-      {/* <span>
-        Copyright ©2023 All rights reserved | This template is made with by
-        Colorlib.com
-      </span> */}
       <span>
-        ayurvita.com © Copyright 1997-2023 ayurvita, LLC. All rights reserved.
-        ayurvita® is a registered trademark of ayurvita, LLC. Trusted Brands.
-        Healthy Rewards. and the ayurvita.com Trusted Brands. Healthy Rewards.
-        Logo are trademarks of ayurvita, LLC. *Disclaimer: Statements made, or
-        products sold through this website, have not been evaluated by the
-        United States Food and Drug Administration. They are not intended to
-        diagnose, treat, cure or prevent any disease
+        Vedra.com © Copyright 1997-2023 Vedra, LLC. All rights reserved. Vedra®
+        is a registered trademark of Vedra, LLC. Trusted Brands. Healthy
+        Rewards. and the Vedra.com Trusted Brands. Healthy Rewards. Logo are
+        trademarks of Vedra, LLC. *Disclaimer: Statements made, or products sold
+        through this website, have not been evaluated by the United States Food
+        and Drug Administration. They are not intended to diagnose, treat, cure
+        or prevent any disease
       </span>
     </div>
   );
