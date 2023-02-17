@@ -8,7 +8,7 @@ export default function Navbar() {
         <div></div>
         <div>
           <img
-            src="https://firebasestorage.googleapis.com/v0/b/ayurvita-b6e56.appspot.com/o/ayurvitalogoB%26W.png?alt=media&token=92fc7480-6b1a-4a03-9be3-9ca5d3cfe542"
+            src="https://firebasestorage.googleapis.com/v0/b/vedra-8d493.appspot.com/o/C.png?alt=media&token=e4428da2-88c5-4e72-92b9-589c18f95334"
             alt=""
           />
         </div>

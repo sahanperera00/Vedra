@@ -10,13 +10,15 @@ body {
 }
 
 .button {
-  padding: 0.5rem 1rem;
-  border: 1px solid rgba(0, 0, 0, 0.423);
-  border-radius: 8px;
+  background: transparent;
+  padding: 1rem 1rem;
+  border: 0.7px solid rgba(0, 0, 0, 0.423);
+  border-radius: 25px;
 }
 
 .button:hover {
   cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.8);
 }
 
 ::-webkit-scrollbar {
