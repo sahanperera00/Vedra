@@ -1,5 +1,6 @@
 import "./Navbar.css";
 import SearchBar from "../SearchBar/SearchBar";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
@@ -7,10 +8,13 @@ export default function Navbar() {
       <div className="navTopCont">
         <div></div>
         <div>
-          <img
-            src="https://firebasestorage.googleapis.com/v0/b/vedra-8d493.appspot.com/o/C.png?alt=media&token=e4428da2-88c5-4e72-92b9-589c18f95334"
-            alt=""
-          />
+          <Link to={"/"}>
+            <img
+              className="logo"
+              src="https://firebasestorage.googleapis.com/v0/b/vedra-8d493.appspot.com/o/C.png?alt=media&token=e4428da2-88c5-4e72-92b9-589c18f95334"
+              alt=""
+            />
+          </Link>
         </div>
         <div>
           <SearchBar />
