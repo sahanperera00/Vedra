@@ -1,13 +1,20 @@
 import "./App.css";
-import Home from "./pages/Home/Home";
 import { Routes, Route } from "react-router-dom";
+
+import Home from "./pages/Home/Home";
+import Product from "./pages/Product/Product";
+import ClientDash from "./pages/ClientDashboard/ClientDash";
+
+
 
 function App() {
   return (
-    <div className="app">
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
+    <div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/pr/:id" element={<Product />} />
+          <Route path="/user" element ={<ClientDash/> } />
+        </Routes>
     </div>
   );
 }

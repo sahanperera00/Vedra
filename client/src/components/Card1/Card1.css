@@ -31,8 +31,8 @@
     padding: 0.5rem 1rem;
 }
 
-.textcont>span {
-    height: 60%;
+.prname {
+    height: 80px;
     overflow: hidden;
     text-overflow: clip;
     font-size: 13px;
