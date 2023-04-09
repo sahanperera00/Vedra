@@ -1,6 +1,7 @@
 import "./Card1.css";
 import TextTruncate from "react-text-truncate";
-import { Rating } from "react-simple-star-rating";
+// import { Rating } from "react-simple-star-rating";
+import StarRatings from "react-star-ratings";
 import { Link } from "react-router-dom";
 
 export default function Card1({ item }) {
@@ -22,7 +23,18 @@ export default function Card1({ item }) {
         </Link>
         <div>
           <p>{item.price}</p>
-          <Rating size={20} initialValue={item.star} />
+          <div>
+            {/* <Rating size={20} initialValue={item.star} /> */}
+            <StarRatings
+              starDimension="20px"
+              starSpacing="0px"
+              rating={item.star}
+              starRatedColor="#feb400"
+              changeRating={() => {}}
+              numberOfStars={5}
+              name="rating"
+            />
+          </div>
           {/* <p>{item.star}</p> */}
         </div>
       </div>
