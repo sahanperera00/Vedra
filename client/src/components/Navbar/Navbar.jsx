@@ -18,6 +18,12 @@ export default function Navbar() {
         </div>
         <div>
           <SearchBar />
+          <Link to={"/signin"}>
+            <button>Sign in</button>
+          </Link>
+          <Link to={"/cart"}>
+            <button>Shopping Cart</button>
+          </Link>
         </div>
       </div>
       <hr />
