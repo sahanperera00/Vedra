@@ -7,7 +7,7 @@ import { MdKeyboardArrowDown } from 'react-icons/md';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import KG from '../../../../src/data/KG.png';
-import { Cart, Chat, Notification, UserProfile, FilterPopup } from '.';
+import { Cart, Chat, Notification, UserProfile } from '.';
 import { useStateContext } from '../../../../src/contexts/ContextProvider';
 
 const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
@@ -37,7 +37,7 @@ const Navbar = () => {
     setScreenSize,
     screenSize,
   } = useStateContext();
-  const user = JSON.parse(localStorage.getItem('userInfo'));
+  //const user = JSON.parse(localStorage.getItem('userInfo'));
 
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
@@ -81,7 +81,7 @@ const Navbar = () => {
             <p>
               <span className="text-gray-400 text-14">Hi,</span>{' '}
               <span className="text-gray-400 font-bold ml-1 text-14">
-                {user.userName}
+                Michael
                 {/* Michael */}
               </span>
             </p>
