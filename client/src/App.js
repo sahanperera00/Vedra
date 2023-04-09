@@ -17,8 +17,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/pr/:id" element={<Product />} />
-        <Route path="/client" element ={<ClientDash/> } />
-        <Route path="/template" element ={<PageTemplate/>}/>
+        <Route path="/client" element={<ClientDash />} />
+        <Route path="/template" element={<PageTemplate />} />
 
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
@@ -26,6 +26,104 @@ function App() {
         <Route path="/item/:id" element={<ItemView />} />
         <Route path="/cart" element={<ShoppingCart />} />
         <Route path="/checkout" element={<Checkout />} />
+
+        {/* Devs: Add your routes here
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         */}
+
+        {/* Poopy: Add your routes here
+         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         */}
+
+        {/* Nashie Pooh: Add your routes here
+         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         */}
+
+        {/* You bullshit Shaggy: Add your routes here
+         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         
+         */}
       </Routes>
     </div>
   );
