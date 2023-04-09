@@ -10,6 +10,7 @@ import ItemView from "./pages/ShoppingCart/ShoppingCart";
 import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
 import Checkout from "./pages/Checkout/Checkout";
 import PageTemplate from "./pages/PageTemplate";
+import AdminDash from './pages/AdminDashboard/AdminDash';
 
 function App() {
   return (
@@ -51,8 +52,8 @@ function App() {
 
          */}
 
-        {/* Poopy: Add your routes here
-         
+        {/* Poopy: Add your routes here*/
+         <Route path="/admin" element={<AdminDash />} />
 
 
 
@@ -74,7 +75,7 @@ function App() {
 
 
 
-         */}
+         /******************* */}
 
         {/* Nashie Pooh: Add your routes here
          
