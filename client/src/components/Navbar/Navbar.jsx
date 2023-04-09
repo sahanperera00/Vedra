@@ -18,6 +18,9 @@ export default function Navbar() {
         </div>
         <div>
           <SearchBar />
+          <Link to={"/signin"}>
+            <button>Sign in</button>
+          </Link>
         </div>
       </div>
       <hr />
