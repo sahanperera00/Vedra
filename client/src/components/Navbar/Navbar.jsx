@@ -21,6 +21,9 @@ export default function Navbar() {
           <Link to={"/signin"}>
             <button>Sign in</button>
           </Link>
+          <Link to={"/cart"}>
+            <button>Shopping Cart</button>
+          </Link>
         </div>
       </div>
       <hr />
