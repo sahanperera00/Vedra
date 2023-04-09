@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Product from "./pages/Product/Product";
 import ClientDash from "./pages/ClientDashboard/ClientDash";
+import PageTemplate from "./pages/PageTemplate";
 
 
 
@@ -13,7 +14,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/pr/:id" element={<Product />} />
-          <Route path="/user" element ={<ClientDash/> } />
+          <Route path="/client" element ={<ClientDash/> } />
+          <Route path="/template" element ={<PageTemplate/>}/>
         </Routes>
     </div>
   );
