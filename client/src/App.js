@@ -9,6 +9,7 @@ import Signin from "./pages/Signin/Signin";
 import ItemView from "./pages/ShoppingCart/ShoppingCart";
 import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
 import Checkout from "./pages/Checkout/Checkout";
+import PageTemplate from "./pages/PageTemplate";
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/pr/:id" element={<Product />} />
-        <Route path="/user" element={<ClientDash />} />
+        <Route path="/client" element ={<ClientDash/> } />
+        <Route path="/template" element ={<PageTemplate/>}/>
 
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
