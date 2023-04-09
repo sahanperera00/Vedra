@@ -6,6 +6,9 @@ import Product from "./pages/Product/Product";
 import ClientDash from "./pages/ClientDashboard/ClientDash";
 import Signup from "./pages/Signup/Signup";
 import Signin from "./pages/Signin/Signin";
+import ItemView from "./pages/ShoppingCart/ShoppingCart";
+import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
+import Checkout from "./pages/Checkout/Checkout";
 
 function App() {
   return (
@@ -17,6 +20,10 @@ function App() {
 
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
+
+        <Route path="/item/:id" element={<ItemView />} />
+        <Route path="/cart" element={<ShoppingCart />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </div>
   );
