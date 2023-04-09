@@ -2,6 +2,8 @@ import "./TrendingNow.css";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Card1 from "../Card1/Card1";
+import ItemView from "../../pages/ShoppingCart/ShoppingCart";
+import { Link } from "react-router-dom";
 
 export default function TrendingNow() {
   const data = [
@@ -90,7 +92,9 @@ export default function TrendingNow() {
       <div>
         <Carousel responsive={responsive}>
           {data.map((item) => (
+            // <Link to={`/item/${item.id}`}>
             <Card1 key={item.id} item={item} />
+            // </Link>
           ))}
         </Carousel>
       </div>
