@@ -80,7 +80,7 @@ export default function ShoppingCart() {
                 <div class="w-20">
                   <img
                     class="h-24"
-                    src="https://drive.google.com/uc?id=10ht6a9IR3K2i1j0rHofp9-Oubl1Chraw"
+                    src="https://drive.google.com/uc?id=18KkAVkGFvaGNqPy2DIvTqmUH_nk39o3z"
                     alt=""
                   />
                 </div>
@@ -129,7 +129,7 @@ export default function ShoppingCart() {
                 <div class="w-20">
                   <img
                     class="h-24"
-                    src="https://drive.google.com/uc?id=1vXhvO9HoljNolvAXLwtw_qX3WNZ0m75v"
+                    src="https://drive.google.com/uc?id=18KkAVkGFvaGNqPy2DIvTqmUH_nk39o3z"
                     alt=""
                   />
                 </div>
