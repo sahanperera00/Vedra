@@ -42,16 +42,25 @@ export default function Product() {
   return (
     <>
       <Navbar />
-      <div className="product">
-        <div className="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4 ">
-          <div className="flex justify-center items-center lg:flex-row flex-col gap-8">
-            {/* <!-- Description Div --> */}
-
-            <div className="  w-full sm:w-96 md:w-8/12 lg:w-6/12 items-center">
+      <div
+        className="product"
+        style={{
+          paddingBottom: "80px",
+        }}
+      >
+        <div className="2xl:container 2xl:mx-auto lg:py-auto lg:px-20 md:py-12 md:px-6 px-4">
+          <div className="flex justify-center items-center lg:flex-row flex-col gap-9">
+            <div className="  w-full sm:w-96 md:w-8/12 lg:w-7/12 items-center">
               <p className=" focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 font-normal text-base leading-4 text-gray-600">
-                Home / Furniture / Wooden Stool
+                Home / {"<<Category>>"}
               </p>
-              <h2 className="font-semibold lg:text-4xl text-3xl lg:leading-9 leading-7 text-gray-800 mt-4">
+              <h2
+                className="font-semibold lg:text-4xl text-3xl mt-4"
+                style={{
+                  lineHeight: "3.5rem",
+                  color: "#1a202c",
+                }}
+              >
                 {item.name}
               </h2>
 
@@ -62,12 +71,11 @@ export default function Product() {
                     starSpacing="0px"
                     rating={avgStar}
                     starRatedColor="#feb400"
-                    // changeRating={() => {}}
                     numberOfStars={5}
                     name="rating"
                   />
                 </div>
-                <p className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 font-normal text-base leading-4 text-gray-700  duration-100 ">
+                <p className="focus:outline-none font-normal text-base leading-4 text-gray-700  duration-100 mr-5">
                   {item.star &&
                   item.star.reviewers &&
                   item.star.reviewers.length > 0
@@ -80,52 +88,70 @@ export default function Product() {
               <p className=" font-normal text-base leading-6 text-gray-600 mt-7">
                 {item.description}
               </p>
-              <p className=" font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 mt-6 ">
-                $ {item.price}
+              <p className=" font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 mt-6">
+                ${item.price}
               </p>
 
               <div className="lg:mt-11 mt-10">
-                <div className="flex flex-row justify-between">
-                  <p className=" font-medium text-base leading-4 text-gray-600">
+                <div
+                  className="flex flex-row"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <p
+                    className=" font-medium text-base leading-4 text-gray-600"
+                    style={{
+                      marginRight: "50px",
+                    }}
+                  >
                     Select quantity
                   </p>
-                  <div className="flex">
+                  <div
+                    className="flex"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
                     <button
                       onClick={minusCount}
-                      className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 cursor-pointer border border-gray-300 border-r-0 w-7 h-7 flex items-center justify-center pb-1"
+                      className="focus:outline-none cursor-pointer w-7 h-7 flex items-center justify-center bg-[#3ea7ac] text-white hover:bg-[#278a9e] rounded-l-lg"
                     >
                       -
                     </button>
                     <input
                       id="counter"
                       aria-label="input"
-                      className="border border-gray-300 h-full text-center w-14 pb-1"
+                      className="border border-gray-300 h-full text-center w-14 mx-2"
                       type="text"
                       value={count}
-                      // onChange={(e) => e.target.value}
                       disabled
                     />
                     <button
                       onClick={addCount}
-                      className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 cursor-pointer border border-gray-300 border-l-0 w-7 h-7 flex items-center justify-center pb-1 "
+                      className="focus:outline-none cursor-pointer w-7 h-7 flex items-center justify-center bg-[#3ea7ac] text-white hover:bg-[#278a9e] rounded-r-lg"
                     >
                       +
                     </button>
                   </div>
                 </div>
-                <hr className=" bg-gray-200 w-full my-2" />
               </div>
 
               <Link to="/">
-                <button className="focus:outline-none focus:ring-2 hover:bg-black focus:ring-offset-2 focus:ring-gray-800 font-medium text-base leading-4 text-white bg-gray-800 w-full py-5 lg:mt-12 mt-6">
-                  Add to shopping cart
+                <button className="bg-[#3ea7ac] hover:bg-[#278a9e] focus:outline-none font-medium text-base rounded-lg leading-4 text-white w-full py-5 lg:mt-12 mt-6">
+                  Add to Shopping Cart
                 </button>
               </Link>
             </div>
 
-            {/* <!-- Preview Images Div For larger Screen--> */}
-
-            <div className=" w-full sm:w-96 md:w-8/12  lg:w-6/12 flex lg:flex-row flex-col lg:gap-8 sm:gap-6 gap-4">
+            <div
+              className=" w-full sm:w-96 md:w-8/12  lg:w-6/12 flex lg:flex-row flex-col lg:gap-8 sm:gap-6 gap-8"
+              style={{
+                marginLeft: "50px",
+              }}
+            >
               <div className=" w-full lg:w-8/12 bg-white flex justify-center items-center">
                 <img
                   src={
@@ -134,7 +160,6 @@ export default function Product() {
                       : item.image && item.image.length > 0 && item.image[0]
                   }
                   alt="Wooden Chair Previw"
-                  // style={{ height: "100%" }}
                 />
               </div>
               <div className=" w-full lg:w-4/12 grid lg:grid-cols-1 sm:grid-cols-4 grid-cols-2 gap-6">
@@ -161,7 +186,7 @@ export default function Product() {
           </div>
         </div>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }
