@@ -1,16 +1,9 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { MdOutlineCancel,MdPendingActions } from 'react-icons/md';
-import {TbTruckDelivery} from 'react-icons/tb';
+import {TbTruckDelivery,TbBrandGoogleAnalytics} from 'react-icons/tb';
 import { GiConfirmed } from 'react-icons/gi';
-import { HiUserGroup } from 'react-icons/hi';
-import { IoBagHandleOutline } from 'react-icons/io5';
-import {
-
-  TbReportMoney,
- 
-} from 'react-icons/tb';
-import { FaHouseDamage, FaRegMoneyBillAlt, FaChartLine } from 'react-icons/fa';
+import { AiOutlineHome } from 'react-icons/ai';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { useStateContext } from '../../../../src/contexts/ContextProvider';
@@ -63,9 +56,32 @@ const AdminSidebar = () => {
             {/*  menu ---------------------------------------------------------------------------------- menu  */}
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
+            <NavLink
+              to="/admin"
+              onClick={handleCloseSideBar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : '',
+              })}
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            >
+              <AiOutlineHome /> {/*  icon  */}
+              <span className="capitalize ">Dashboard</span> {/*  link name  */}
+            </NavLink>
 
             <NavLink
-              to="/EmployeeDashboard"
+              to="/"
+              onClick={handleCloseSideBar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : '',
+              })}
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            >
+              <TbBrandGoogleAnalytics /> {/*  icon  */}
+              <span className="capitalize ">Analytics</span> {/*  link name  */}
+            </NavLink>
+
+            <NavLink
+              to="/"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
@@ -79,7 +95,7 @@ const AdminSidebar = () => {
             {/*  links ---------------------------------------------------------------------------------- links  */}
 
             <NavLink
-              to="/AttendanceAndLeaveDashboard"
+              to="/"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
@@ -111,7 +127,7 @@ const AdminSidebar = () => {
             {/*  links ---------------------------------------------------------------------------------- links  */}
 
             <NavLink
-              to="/FinanceDashboard"
+              to="/"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
