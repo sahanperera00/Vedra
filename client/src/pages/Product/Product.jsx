@@ -140,7 +140,7 @@ export default function Product() {
               </div>
 
               <Link to="/">
-                <button className="bg-[#3ea7ac] hover:bg-[#278a9e] focus:outline-none font-medium text-base rounded-lg leading-4 text-white w-full py-5 lg:mt-12 mt-6">
+                <button className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-9">
                   Add to Shopping Cart
                 </button>
               </Link>
@@ -163,7 +163,7 @@ export default function Product() {
                 />
               </div>
               <div className=" w-full lg:w-4/12 grid lg:grid-cols-1 sm:grid-cols-4 grid-cols-2 gap-6">
-                <div className="bg-white flex justify-center items-center py-4">
+                <div className="bg-white flex justify-center items-center py-4 cursor-pointer">
                   <img
                     src={item.image && item.image.length > 0 && item.image[0]}
                     alt="Wooden chair - preview 1"
@@ -172,7 +172,7 @@ export default function Product() {
                     }}
                   />
                 </div>
-                <div className="bg-white flex justify-center items-center py-4">
+                <div className="bg-white flex justify-center items-center py-4 cursor-pointer">
                   <img
                     src={item.image && item.image.length > 0 && item.image[1]}
                     alt="Wooden chair - preview 2"
