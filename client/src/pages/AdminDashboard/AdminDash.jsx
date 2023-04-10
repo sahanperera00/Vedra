@@ -9,7 +9,7 @@ import { MdPendingActions } from 'react-icons/md';
 import { useStateContext } from '../../contexts/ContextProvider.js';
 import { DashTopBox, DashTopButton,  } from '../../components/Tailwind/components';
 import { FiSettings } from 'react-icons/fi';
-import { Navbar, Footer, AdminSidebar, ThemeSettings } from '../../components/Tailwind/components';
+import { Navbar, Footer, AdminSidebar, ThemeSettings,AdminPieChart } from '../../components/Tailwind/components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 
@@ -128,7 +128,9 @@ const AdminDash = () => { // <== THIS IS THE COMPONENT NAME, CHANGE IT TO YOUR C
 
 
 
-
+                            <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+          <AdminPieChart />
+      </div>
                             
 
 
