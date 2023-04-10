@@ -1,11 +1,25 @@
 import "./TrendingNow.css";
 import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
 import Card1 from "../Card1/Card1";
-import ItemView from "../../pages/ShoppingCart/ShoppingCart";
-import { Link } from "react-router-dom";
+import "pure-react-carousel/dist/react-carousel.es.css";
+import { useEffect, useState } from "react";
 
 export default function TrendingNow() {
+  const [items, setItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(
+        "http://localhost:8081/items/category/TrendingNow"
+      );
+      const data = await response.json();
+      setItems(data);
+      setIsLoading(false);
+    }
+    fetchData();
+  }, []);
+
   const data = [
     {
       id: 1,
@@ -90,13 +104,15 @@ export default function TrendingNow() {
         <button className="button">View more</button>
       </div>
       <div>
-        <Carousel responsive={responsive}>
-          {data.map((item) => (
-            // <Link to={`/item/${item.id}`}>
-            <Card1 key={item.id} item={item} />
-            // </Link>
-          ))}
-        </Carousel>
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <Carousel responsive={responsive}>
+            {items.map((item) => (
+              <Card1 key={item.id} item={item} />
+            ))}
+          </Carousel>
+        )}
       </div>
     </div>
   );

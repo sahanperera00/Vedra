@@ -3,15 +3,12 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv/config";
-import itemRoutes from "./routes/item.js";
 
 const app = express();
-const PORT = process.env.PORT || 8081;
+const PORT = process.env.PORT || 8084;
 
 app.use(bodyParser.json());
 app.use(cors());
-
-app.use("/items", itemRoutes);
 
 const URL = process.env.MONGODB_URL;
 mongoose.connect(URL);
