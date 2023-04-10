@@ -1,17 +1,23 @@
 import "./Card1.css";
 import TextTruncate from "react-text-truncate";
-// import { Rating } from "react-simple-star-rating";
 import StarRatings from "react-star-ratings";
 import { Link } from "react-router-dom";
 
 export default function Card1({ item }) {
+  const avgStar =
+    item.star && item.star.reviewers && item.star.reviewers.length > 0
+      ? item.star.total / item.star.reviewers.length
+      : 0;
   return (
     <div className="card1">
       <div>
-        <img src={item.img} alt="" />
+        <img
+          src={item.image && item.image.length > 0 && item.image[0]}
+          alt=""
+        />
       </div>
       <div className="textcont">
-        <Link to={"/pr/:id"}>
+        <Link to={`/pr/${item._id}`}>
           <div className="prname">
             <TextTruncate
               line={3}
@@ -22,20 +28,18 @@ export default function Card1({ item }) {
           </div>
         </Link>
         <div>
-          <p>{item.price}</p>
+          <p>${item.price}.00</p>
           <div>
-            {/* <Rating size={20} initialValue={item.star} /> */}
             <StarRatings
               starDimension="20px"
               starSpacing="0px"
-              rating={item.star}
+              rating={avgStar}
               starRatedColor="#feb400"
               changeRating={() => {}}
               numberOfStars={5}
               name="rating"
             />
           </div>
-          {/* <p>{item.star}</p> */}
         </div>
       </div>
     </div>
