@@ -81,7 +81,7 @@ const AdminSidebar = () => {
             </NavLink>
 
             <NavLink
-              to="/"
+              to="/pending"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
@@ -95,7 +95,7 @@ const AdminSidebar = () => {
             {/*  links ---------------------------------------------------------------------------------- links  */}
 
             <NavLink
-              to="/"
+              to="/confirmed"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
@@ -127,7 +127,7 @@ const AdminSidebar = () => {
             {/*  links ---------------------------------------------------------------------------------- links  */}
 
             <NavLink
-              to="/"
+              to="/dispatched"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
