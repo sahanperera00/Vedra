@@ -116,7 +116,7 @@ const DispatchedOrders = () => {
                 <TableHeader value="Price" />
                 <TableHeader value="Quantity" />
                 <TableHeader value="Total" />
-                <TableHeader value="Manage" />
+                <TableHeader value="Status" />
               </tr>
             </thead>
             <tbody>
@@ -143,13 +143,7 @@ const DispatchedOrders = () => {
                         <i className="fas fa-edit" />
                       </button>
                     </Link>
-                    <button
-                      type="button"
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 ml-2 rounded-full"
-                      
-                    >
-                      <i className="fas fa-trash" />
-                    </button>
+                    
                   </td>
                 </tr>
                 
