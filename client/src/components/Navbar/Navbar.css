@@ -1,67 +1,78 @@
 .navbar {
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .navTopCont {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 25% 50% 25%;
-    height: 70px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 25% 50% 25%;
+  height: 90px;
 }
 
-.navTopCont>:nth-of-type(1) {
-    width: 100%;
-    height: 100%;
+.navTopCont > :nth-of-type(1) {
+  width: 100%;
+  height: 100%;
+  /* background: #7d3131; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.navTopCont>:nth-of-type(2) {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.navTopCont > :nth-of-type(2) {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background: #322221; */
 }
 
 .logo {
-    width: 150px;
+  width: 125px;
 }
 
-.navTopCont>:nth-of-type(3) {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    /* background: #7d3131; */
+.navTopCont > :nth-of-type(3) {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  /* background: #7d3131; */
 }
 
-.navbar>hr {
-    width: 85%;
-    border: 1px solid #cfcdcd53;
+.navbar > hr {
+  width: 85%;
+  border: 1px solid #cfcdcd53;
 }
 
 .navBottomCont {
-    width: 100%;
-    /* background-color: aquamarine; */
-    display: flex;
+  width: 100%;
+  /* background-color: aquamarine; */
+  display: flex;
 }
 
-.navBottomCont>ul {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    list-style: none;
+.navBottomCont > ul {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
 }
 
-.navBottomCont>ul>li {
-    padding: 15px 30px;
-    letter-spacing: 1px;
+.navBottomCont > ul > li {
+  padding: 20px 30px;
+  letter-spacing: 1px;
 }
 
-.navBottomCont>ul>li:hover {
-    cursor: pointer;
-    font-weight: bold;
+.navBottomCont > ul > li:hover {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.cartIcon {
+  width: 30px;
+  height: 30px;
+  color: #4e4e4e;
 }
