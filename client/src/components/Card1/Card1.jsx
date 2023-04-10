@@ -28,14 +28,14 @@ export default function Card1({ item }) {
           </div>
         </Link>
         <div>
-          <p>${item.price}.00</p>
+          <p>${item.price}</p>
           <div>
             <StarRatings
               starDimension="20px"
               starSpacing="0px"
               rating={avgStar}
               starRatedColor="#feb400"
-              changeRating={() => {}}
+              // changeRating={() => {}}
               numberOfStars={5}
               name="rating"
             />
