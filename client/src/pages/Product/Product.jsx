@@ -62,13 +62,18 @@ export default function Product() {
                     starSpacing="0px"
                     rating={avgStar}
                     starRatedColor="#feb400"
-                    changeRating={() => {}}
+                    // changeRating={() => {}}
                     numberOfStars={5}
                     name="rating"
                   />
                 </div>
-                <p className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 font-normal text-base leading-4 text-gray-700 hover:underline hover:text-gray-800 duration-100 cursor-pointer">
-                  22 reviews
+                <p className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 font-normal text-base leading-4 text-gray-700  duration-100 ">
+                  {item.star &&
+                  item.star.reviewers &&
+                  item.star.reviewers.length > 0
+                    ? item.star.reviewers.length
+                    : 0}{" "}
+                  reviews
                 </p>
               </div>
 
@@ -76,7 +81,7 @@ export default function Product() {
                 {item.description}
               </p>
               <p className=" font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 mt-6 ">
-                $ {item.price}.00
+                $ {item.price}
               </p>
 
               <div className="lg:mt-11 mt-10">
@@ -113,7 +118,7 @@ export default function Product() {
 
               <Link to="/">
                 <button className="focus:outline-none focus:ring-2 hover:bg-black focus:ring-offset-2 focus:ring-gray-800 font-medium text-base leading-4 text-white bg-gray-800 w-full py-5 lg:mt-12 mt-6">
-                  Add to shopping bag
+                  Add to shopping cart
                 </button>
               </Link>
             </div>
@@ -121,7 +126,7 @@ export default function Product() {
             {/* <!-- Preview Images Div For larger Screen--> */}
 
             <div className=" w-full sm:w-96 md:w-8/12  lg:w-6/12 flex lg:flex-row flex-col lg:gap-8 sm:gap-6 gap-4">
-              <div className=" w-full lg:w-8/12 bg-gray-100 flex justify-center items-center">
+              <div className=" w-full lg:w-8/12 bg-white flex justify-center items-center">
                 <img
                   src={
                     imagePreview
@@ -129,11 +134,11 @@ export default function Product() {
                       : item.image && item.image.length > 0 && item.image[0]
                   }
                   alt="Wooden Chair Previw"
-                  style={{ height: "100%" }}
+                  // style={{ height: "100%" }}
                 />
               </div>
               <div className=" w-full lg:w-4/12 grid lg:grid-cols-1 sm:grid-cols-4 grid-cols-2 gap-6">
-                <div className="bg-gray-100 flex justify-center items-center py-4">
+                <div className="bg-white flex justify-center items-center py-4">
                   <img
                     src={item.image && item.image.length > 0 && item.image[0]}
                     alt="Wooden chair - preview 1"
@@ -142,7 +147,7 @@ export default function Product() {
                     }}
                   />
                 </div>
-                <div className="bg-gray-100 flex justify-center items-center py-4">
+                <div className="bg-white flex justify-center items-center py-4">
                   <img
                     src={item.image && item.image.length > 0 && item.image[1]}
                     alt="Wooden chair - preview 2"
