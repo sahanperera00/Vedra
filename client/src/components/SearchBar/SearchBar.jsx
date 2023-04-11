@@ -6,6 +6,7 @@ export default function SearchBar() {
     <div className="searchBar">
       <input
         type="text"
+        className="focus:outline-none focus:ring-0"
         placeholder="I'm looking for..."
         style={{
           outline: "none",
