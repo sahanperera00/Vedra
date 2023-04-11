@@ -4,6 +4,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import "./Product.css";
 import { useEffect, useState } from "react";
 import StarRatings from "react-star-ratings";
+import Reviews from "../../components/Reviews/Reviews";
 
 export default function Product() {
   const { id } = useParams();
@@ -46,11 +47,12 @@ export default function Product() {
         className="product"
         style={{
           paddingBottom: "80px",
+          // backgroundColor: "#34fafc",
         }}
       >
-        <div className="2xl:container 2xl:mx-auto lg:py-auto lg:px-20 md:py-12 md:px-6 px-4">
+        <div className="container">
           <div className="flex justify-center items-center lg:flex-row flex-col gap-9">
-            <div className="  w-full sm:w-96 md:w-8/12 lg:w-7/12 items-center">
+            <div className="w-full sm:w-96 md:w-8/12 lg:w-7/12 items-center">
               <p className=" focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 font-normal text-base leading-4 text-gray-600">
                 Home / {"<<Category>>"}
               </p>
@@ -186,6 +188,13 @@ export default function Product() {
           </div>
         </div>
       </div>
+      <Reviews
+        reviews={
+          item.star && item.star.reviewers && item.star.reviewers.length > 0
+            ? item.star
+            : 0
+        }
+      />
       <Footer />
     </>
   );
