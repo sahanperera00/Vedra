@@ -11,7 +11,9 @@ import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
 import Checkout from "./pages/Checkout/Checkout";
 import PageTemplate from "./pages/PageTemplate";
 import AdminDash from './pages/AdminDashboard/AdminDash';
-
+import PendingOrders from "./pages/AdminDashboard/PendingOrders";
+import ConfirmedOrders from "./pages/AdminDashboard/ConfirmedOrders";
+import DispatchedOrders from "./pages/AdminDashboard/DispatchedOrders";
 function App() {
   return (
     <div>
@@ -52,8 +54,11 @@ function App() {
 
          
 
-        {/* Poopy: Add your routes here*/
+        
          <Route path="/admin" element={<AdminDash />} />
+          <Route path="/pending" element={<PendingOrders />} />
+          <Route path="/confirmed" element={<ConfirmedOrders />} />
+          <Route path="/dispatched" element={<DispatchedOrders />} />
 
 
 
@@ -75,7 +80,7 @@ function App() {
 
 
 
-         /******************* */}
+         /******************* */
 
         {/* Nashie Pooh: Add your routes here
          

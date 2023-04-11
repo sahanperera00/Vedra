@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import { Link } from "react-router-dom";
+import Footer from "../../components/Footer/Footer";
 
 export default function Checkout() {
   return (
@@ -8,32 +9,19 @@ export default function Checkout() {
       <Navbar />
       <div class="flex flex-col items-center border-b bg-white py-4 sm:flex-row sm:px-10 lg:px-20 xl:px-32">
         <a href="#" class="text-2xl font-bold text-gray-800">
-          sneekpeeks
+          Checkout
         </a>
-        <div class="mt-4 py-2 text-xs sm:mt-0 sm:ml-auto sm:text-base">
+        <div class="mt-4 py-2 text-xs sm:mt-0 sm:ml-auto sm:text-base px-[100px]">
           <div class="relative">
             <ul class="relative flex w-full items-center justify-between space-x-2 sm:space-x-4">
               <li class="flex items-center space-x-3 text-left sm:space-x-4">
-                <a
-                  class="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-200 text-xs font-semibold text-emerald-700"
-                  href="#"
+                <Link
+                  to="/cart"
+                  class="flex h-6 w-6 items-center justify-center rounded-full bg-gray-400 text-xs font-semibold text-white"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                </a>
-                <span class="font-semibold text-gray-900">Shop</span>
+                  1
+                </Link>
+                <span class="font-semibold text-gray-900">Cart</span>
               </li>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -50,47 +38,21 @@ export default function Checkout() {
                 />
               </svg>
               <li class="flex items-center space-x-3 text-left sm:space-x-4">
-                <a
-                  class="flex h-6 w-6 items-center justify-center rounded-full bg-gray-600 text-xs font-semibold text-white ring ring-gray-600 ring-offset-2"
-                  href="#"
+                <Link
+                  to="/checkout"
+                  class="flex h-6 w-6 items-center justify-center rounded-full bg-[#278a9e] text-xs font-semibold text-white ring ring-[#278a9e] ring-offset-2"
                 >
                   2
-                </a>
-                <span class="font-semibold text-gray-900">Shipping</span>
-              </li>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4 text-gray-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-              <li class="flex items-center space-x-3 text-left sm:space-x-4">
-                <a
-                  class="flex h-6 w-6 items-center justify-center rounded-full bg-gray-400 text-xs font-semibold text-white"
-                  href="#"
-                >
-                  3
-                </a>
-                <span class="font-semibold text-gray-500">Payment</span>
+                </Link>
+                <span class="font-semibold text-gray-900">Checkout</span>
               </li>
             </ul>
           </div>
         </div>
       </div>
-      <div class="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32">
+      <div class="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32 mb-[100px]">
         <div class="px-4 pt-8">
-          <p class="text-xl font-medium">Order Summary</p>
-          <p class="text-gray-400">
-            Check your items. And select a suitable shipping method.
-          </p>
+          <p class="text-2xl font-bold">Order Summary</p>
           <div class="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
             <div class="flex flex-col rounded-lg bg-white sm:flex-row">
               <img
@@ -122,7 +84,7 @@ export default function Checkout() {
             </div>
           </div>
 
-          <p class="mt-8 text-lg font-medium">Shipping Methods</p>
+          <p class="mt-8 text-2xl font-bold">Shipping Methods</p>
           <form class="mt-5 grid gap-6">
             <div class="relative">
               <input
@@ -132,9 +94,9 @@ export default function Checkout() {
                 name="radio"
                 checked
               />
-              <span class="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
+              <span class="peer-checked:border-[#278a9e] absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
               <label
-                class="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
+                class="peer-checked:border-2 peer-checked:border-[#278a9e] peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
                 for="radio_1"
               >
                 <img
@@ -158,9 +120,9 @@ export default function Checkout() {
                 name="radio"
                 checked
               />
-              <span class="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
+              <span class="peer-checked:border-[#278a9e] absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
               <label
-                class="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
+                class="peer-checked:border-2 peer-checked:border-[#278a9e] peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
                 for="radio_2"
               >
                 <img
@@ -179,10 +141,7 @@ export default function Checkout() {
           </form>
         </div>
         <div class="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0">
-          <p class="text-xl font-medium">Payment Details</p>
-          <p class="text-gray-400">
-            Complete your order by providing your payment details.
-          </p>
+          <p class="text-2xl font-bold">Payment Details</p>
           <div class="">
             <label for="email" class="mt-4 mb-2 block text-sm font-medium">
               Email
@@ -192,7 +151,7 @@ export default function Checkout() {
                 type="text"
                 id="email"
                 name="email"
-                class="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                class="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:border-none focus:outline-0 focus:ring-0"
                 placeholder="your.email@gmail.com"
               />
               <div class="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
@@ -223,7 +182,7 @@ export default function Checkout() {
                 type="text"
                 id="card-holder"
                 name="card-holder"
-                class="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm uppercase shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                class="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm uppercase shadow-sm outline-none focus:border-none focus:outline-0 focus:ring-0"
                 placeholder="Your full name here"
               />
               <div class="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
@@ -252,7 +211,7 @@ export default function Checkout() {
                   type="text"
                   id="card-no"
                   name="card-no"
-                  class="w-full rounded-md border border-gray-200 px-2 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                  class="w-full rounded-md border border-gray-200 px-2 py-3 pl-11 text-sm shadow-sm outline-none focus:border-none focus:outline-0 focus:ring-0"
                   placeholder="xxxx-xxxx-xxxx-xxxx"
                 />
                 <div class="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
@@ -272,13 +231,13 @@ export default function Checkout() {
               <input
                 type="text"
                 name="credit-expiry"
-                class="w-full rounded-md border border-gray-200 px-2 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                class="w-full rounded-md border border-gray-200 px-2 py-3 text-sm shadow-sm outline-none focus:border-none focus:outline-0 focus:ring-0"
                 placeholder="MM/YY"
               />
               <input
                 type="text"
                 name="credit-cvc"
-                class="w-1/6 flex-shrink-0 rounded-md border border-gray-200 px-2 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                class="w-1/6 flex-shrink-0 rounded-md border border-gray-200 px-2 py-3 text-sm shadow-sm outline-none focus:border-none focus:outline-0 focus:ring-0"
                 placeholder="CVC"
               />
             </div>
@@ -294,7 +253,7 @@ export default function Checkout() {
                   type="text"
                   id="billing-address"
                   name="billing-address"
-                  class="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                  class="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:border-none focus:outline-0 focus:ring-0"
                   placeholder="Street Address"
                 />
                 <div class="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
@@ -308,14 +267,14 @@ export default function Checkout() {
               <select
                 type="text"
                 name="billing-state"
-                class="w-full rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                class="w-full rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:border-none focus:outline-0 focus:ring-0"
               >
                 <option value="State">State</option>
               </select>
               <input
                 type="text"
                 name="billing-zip"
-                class="flex-shrink-0 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none sm:w-1/6 focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                class="flex-shrink-0 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:border-none focus:outline-0 focus:ring-0"
                 placeholder="ZIP"
               />
             </div>
@@ -336,12 +295,13 @@ export default function Checkout() {
             </div>
           </div>
           <Link to="/">
-            <button class="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">
+            <button class="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-7">
               Place Order
             </button>
           </Link>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
