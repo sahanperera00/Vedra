@@ -1,28 +1,9 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { MdOutlineCancel } from 'react-icons/md';
-import {
-  FiUser,
-  FiCalendar,
-  FiBarChart,
-  FiUsers,
-  FiFileText,
-  FiTool,
-  FiPackage,
-  FiTrendingUp,
-  FiShoppingBag,
-  FiGift,
-} from 'react-icons/fi';
-import { GiSewingMachine, GiSteeringWheel } from 'react-icons/gi';
-import { HiUserGroup } from 'react-icons/hi';
-import { IoBagHandleOutline } from 'react-icons/io5';
-import {
-  TbBuildingWarehouse,
-  TbTruckDelivery,
-  TbReportMoney,
-  TbBuildingFactory2,
-} from 'react-icons/tb';
-import { FaHouseDamage, FaRegMoneyBillAlt, FaChartLine } from 'react-icons/fa';
+import { MdOutlineCancel,MdPendingActions } from 'react-icons/md';
+import {TbTruckDelivery,TbBrandGoogleAnalytics} from 'react-icons/tb';
+import { GiConfirmed } from 'react-icons/gi';
+import { AiOutlineHome } from 'react-icons/ai';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { useStateContext } from '../../../../src/contexts/ContextProvider';
@@ -47,12 +28,16 @@ const AdminSidebar = () => {
       {activeMenu && (
         <>
           <div className="flex justify-between items-center">
-            <Link
+          <Link
               to="/"
               onClick={handleCloseSideBar}
               className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900"
             >
-              Vedra
+              <img
+                className="logo" style={{marginLeft: "40px"}}
+                src="https://firebasestorage.googleapis.com/v0/b/vedra-8d493.appspot.com/o/C.png?alt=media&token=e4428da2-88c5-4e72-92b9-589c18f95334"
+                alt=""
+            />
             </Link>
 
             <TooltipComponent content="Menu" position="BottomCenter">
@@ -71,31 +56,54 @@ const AdminSidebar = () => {
             {/*  menu ---------------------------------------------------------------------------------- menu  */}
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
-
             <NavLink
-              to="/EmployeeDashboard"
+              to="/admin"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <FiUser /> {/*  icon  */}
-              <span className="capitalize ">Employees</span> {/*  link name  */}
+              <AiOutlineHome /> {/*  icon  */}
+              <span className="capitalize ">Dashboard</span> {/*  link name  */}
+            </NavLink>
+
+            <NavLink
+              to="/"
+              onClick={handleCloseSideBar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : '',
+              })}
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            >
+              <TbBrandGoogleAnalytics /> {/*  icon  */}
+              <span className="capitalize ">Analytics</span> {/*  link name  */}
+            </NavLink>
+
+            <NavLink
+              to="/pending"
+              onClick={handleCloseSideBar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : '',
+              })}
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            >
+              <MdPendingActions /> {/*  icon  */}
+              <span className="capitalize ">Pending orders</span> {/*  link name  */}
             </NavLink>
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
 
             <NavLink
-              to="/AttendanceAndLeaveDashboard"
+              to="/confirmed"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <FiCalendar /> {/*  icon  */}
-              <span className="capitalize ">Attendace and leaves</span>{' '}
+              <GiConfirmed /> {/*  icon  */}
+              <span className="capitalize ">Confirmed orders</span>{' '}
               {/*  link name  */}
             </NavLink>
 
@@ -119,70 +127,20 @@ const AdminSidebar = () => {
             {/*  links ---------------------------------------------------------------------------------- links  */}
 
             <NavLink
-              to="/FinanceDashboard"
+              to="/dispatched"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <TbReportMoney /> {/*  icon  */}
-              <span className="capitalize ">Finance Center</span>{' '}
+              <TbTruckDelivery /> {/*  icon  */}
+              <span className="capitalize ">Orders dispatched</span>{' '}
               {/*  link name  */}
             </NavLink>
 
-            {/*  links ---------------------------------------------------------------------------------- links  */}
+          
 
-            <NavLink
-              to="/SalaryDashboard"
-              onClick={handleCloseSideBar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <FaRegMoneyBillAlt /> {/*  icon  */}
-              <span className="capitalize ">Salary</span> {/*  link name  */}
-            </NavLink>
-            {/*  done ---------------------------------------------------------------------------------- done  */}
-
-            {/*  menu ---------------------------------------------------------------------------------- menu  */}
-
-
-            {/*  links ---------------------------------------------------------------------------------- links  */}
-
-            <NavLink
-              to="/SalesDashboard"
-              onClick={handleCloseSideBar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <FiShoppingBag /> {/*  icon  */}
-              <span className="capitalize ">Order Handling</span>{' '}
-              {/*  link name  */}
-            </NavLink>
-
-            {/*  links ---------------------------------------------------------------------------------- links  */}
-
-            <NavLink
-              to="/CustomerDashboard"
-              onClick={handleCloseSideBar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <HiUserGroup />
-              {/*  icon  */}
-              <span className="capitalize ">Customer Management</span>{' '}
-              {/*  link name  */}
-            </NavLink>
-
-            {/*  done ---------------------------------------------------------------------------------- done  */}
-
-            {/*  menu ---------------------------------------------------------------------------------- menu  */}
 
           </div>
         </>
