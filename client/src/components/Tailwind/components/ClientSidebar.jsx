@@ -1,28 +1,16 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { MdOutlineCancel } from 'react-icons/md';
-import {
-  FiUser,
-  FiCalendar,
-  FiBarChart,
-  FiUsers,
-  FiFileText,
-  FiTool,
-  FiPackage,
-  FiTrendingUp,
-  FiShoppingBag,
-  FiGift,
+import {AiOutlineShoppingCart} from 'react-icons/ai';
+import {FiUser,FiShoppingBag,
 } from 'react-icons/fi';
-import { GiSewingMachine, GiSteeringWheel } from 'react-icons/gi';
+
+import {SiMarketo} from "react-icons/si";
 import { HiUserGroup } from 'react-icons/hi';
-import { IoBagHandleOutline } from 'react-icons/io5';
-import {
-  TbBuildingWarehouse,
-  TbTruckDelivery,
-  TbReportMoney,
-  TbBuildingFactory2,
-} from 'react-icons/tb';
-import { FaHouseDamage, FaRegMoneyBillAlt, FaChartLine } from 'react-icons/fa';
+import {TbReportMoney,TbBuildingFactory2, TbFileInvoice} from 'react-icons/tb';
+import {BiDiamond} from 'react-icons/bi';
+import { FaRegMoneyBillAlt } from 'react-icons/fa';
+
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { useStateContext } from '../../../../src/contexts/ContextProvider';
@@ -71,13 +59,10 @@ const Sidebar = () => {
             </TooltipComponent>
           </div>
 
-          <div className="mt-10 ">
-            {/*  menu ---------------------------------------------------------------------------------- menu  */}
-
-            {/*  links ---------------------------------------------------------------------------------- links  */}
+          <div className="mt-10">
 
             <NavLink
-              to="/EmployeeDashboard"
+              to="/client"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
@@ -85,45 +70,25 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <FiUser /> {/*  icon  */}
-              <span className="capitalize ">Employees</span> {/*  link name  */}
+              <span className="capitalize">My Dashboard</span> {/*  link name  */}
             </NavLink>
 
-            {/*  links ---------------------------------------------------------------------------------- links  */}
 
             <NavLink
-              to="/AttendanceAndLeaveDashboard"
+              to="/"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <FiCalendar /> {/*  icon  */}
-              <span className="capitalize ">Attendace and leaves</span>{' '}
+              <SiMarketo/> {/*  icon  */}
+              <span className="capitalize ">Marketplace</span>{' '}
               {/*  link name  */}
             </NavLink>
 
-            {/*  links ---------------------------------------------------------------------------------- links  */}
-            {/*<NavLink
-              to="/WelfareDashboard"
-              onClick={handleCloseSideBar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <FiGift /> {/*  icon  */}
-            {/*} <span className="capitalize ">Welfare</span>{' '}
-              {/*  link name  */}
-            {/*</NavLink>*/}
-
-            {/*  menu ---------------------------------------------------------------------------------- menu  */}
-
-
-            {/*  links ---------------------------------------------------------------------------------- links  */}
-
             <NavLink
-              to="/FinanceDashboard"
+              to="/wishlist"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
@@ -131,32 +96,13 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <TbReportMoney /> {/*  icon  */}
-              <span className="capitalize ">Finance Center</span>{' '}
+              <span className="capitalize ">My Wishlist</span>{' '}
               {/*  link name  */}
             </NavLink>
 
-            {/*  links ---------------------------------------------------------------------------------- links  */}
 
             <NavLink
-              to="/SalaryDashboard"
-              onClick={handleCloseSideBar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <FaRegMoneyBillAlt /> {/*  icon  */}
-              <span className="capitalize ">Salary</span> {/*  link name  */}
-            </NavLink>
-            {/*  done ---------------------------------------------------------------------------------- done  */}
-
-            {/*  menu ---------------------------------------------------------------------------------- menu  */}
-
-
-            {/*  links ---------------------------------------------------------------------------------- links  */}
-
-            <NavLink
-              to="/SalesDashboard"
+              to="/orders"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
@@ -164,11 +110,21 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <FiShoppingBag /> {/*  icon  */}
-              <span className="capitalize ">Order Handling</span>{' '}
-              {/*  link name  */}
+              <span className="capitalize ">My Orders</span> {/*  link name  */}
             </NavLink>
 
-            {/*  links ---------------------------------------------------------------------------------- links  */}
+            <NavLink
+              to="/cart"
+              onClick={handleCloseSideBar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : '',
+              })}
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            >
+              < AiOutlineShoppingCart/> {/*  icon  */}
+              <span className="capitalize ">My Cart</span>{' '}
+              {/*  link name  */}
+            </NavLink>
 
             <NavLink
               to="/CustomerDashboard"
@@ -178,15 +134,12 @@ const Sidebar = () => {
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <HiUserGroup />
+              <TbReportMoney />
               {/*  icon  */}
-              <span className="capitalize ">Customer Management</span>{' '}
+              <span className="capitalize ">My Payments</span>{' '}
               {/*  link name  */}
             </NavLink>
 
-            {/*  done ---------------------------------------------------------------------------------- done  */}
-
-            {/*  menu ---------------------------------------------------------------------------------- menu  */}
 
           </div>
         </>
