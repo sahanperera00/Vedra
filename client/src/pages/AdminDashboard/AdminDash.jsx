@@ -3,12 +3,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import { TbTruckDelivery } from 'react-icons/tb';
+import { GiMoneyStack, GiConfirmed } from 'react-icons/gi';
+import { MdPendingActions } from 'react-icons/md';
 import { useStateContext } from '../../contexts/ContextProvider.js';
-import { FiUser } from 'react-icons/fi';
 import { DashTopBox, DashTopButton,  } from '../../components/Tailwind/components';
 import { FiSettings } from 'react-icons/fi';
-import { Navbar, Footer, Sidebar, ThemeSettings } from '../../components/Tailwind/components';
+import { Navbar, Footer, AdminSidebar, ThemeSettings,AdminPieChart } from '../../components/Tailwind/components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 
@@ -53,11 +54,11 @@ const AdminDash = () => { // <== THIS IS THE COMPONENT NAME, CHANGE IT TO YOUR C
 
                 {activeMenu ? ( // SIDEBAR IMPLEMENTATION
                     <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
-                    <Sidebar />
+                    <AdminSidebar />
                     </div>
                 ) : (
                     <div className="w-0 dark:bg-secondary-dark-bg">
-                    <Sidebar />
+                    <AdminSidebar />
                     </div>
                 )}
 
@@ -77,9 +78,64 @@ const AdminDash = () => { // <== THIS IS THE COMPONENT NAME, CHANGE IT TO YOUR C
                     <div>
                         {themeSettings && <ThemeSettings />}
                         <div>
-                           {/* Paste your content Here */}
+                        <div className="mt-5">
 
-                           <h1 className='ml-5'>This is admin bro</h1>
+                            <div className="flex flex-wrap lg:flex-nowrap justify-left ml-5 mt-5">
+                            <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
+                                {/* top buttons in the dashboard */} {/* use for navigation buttons*/}
+
+
+                                {/* <Link to="/MaintenanceViewAll">
+                                <DashTopButton value="Property Maintenance" icon={<BiBuildingHouse />} />
+                                </Link>
+                                
+                                <Link to="/MachMaintenanceViewAll">
+                                <DashTopButton value="Machinery Maintenance" icon={<GiSewingMachine />} />
+                                </Link>
+                               
+                                <Link to="/VehiMaintenanceViewAll">
+                                <DashTopButton value="Vehicles Maintenance" icon={<MdOutlineDirectionsBusFilled />} />
+                                </Link> */}
+                              
+                            </div>
+                            </div>
+
+
+                            <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                            <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
+                                {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
+                                <DashTopBox icon={<GiMoneyStack />} label="Average Sales Amount" data={200000+ "LKR"} />
+                                <DashTopBox icon={<GiMoneyStack />} label="Total Revenue Amount" data={2000000+ "LKR"} />
+
+                            </div>
+                            </div>
+
+                            <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                            <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
+                                {/* small top boxes in the dashboard */} {/* use minimum 3, maximum 5 */}
+
+                                <Link to="/MaintenanceViewAll">
+                                <DashTopBox icon={<MdPendingActions />} label="Orders pending" data={23} />
+                                </Link>
+                                <Link to="/MachMaintenanceViewAll">
+                                <DashTopBox icon={<GiConfirmed />} label="Orders confirmed" data={40} />
+                                </Link>
+                                <Link to="/VehiMaintenanceViewAll">
+                                <DashTopBox icon={<TbTruckDelivery />} label="Orders dispatched" data={85} />
+                                </Link>
+                            </div>
+                            </div>
+
+
+
+                            <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+          <AdminPieChart />
+      </div>
+                            
+
+
+
+                            </div>
                         </div>
                         <Footer />
                     </div>  

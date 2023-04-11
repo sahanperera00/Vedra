@@ -1,140 +1,183 @@
 import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
+import { useEffect, useState } from "react";
+import Footer from "../../components/Footer/Footer";
 
 export default function ShoppingCart() {
+  const [count, setCount] = useState(1);
+  const [item, setItem] = useState({});
+
+  const minusCount = () => {
+    if (count > 1) {
+      setCount(count - 1);
+    }
+  };
+
+  const addCount = () => {
+    setCount(count + 1);
+  };
+
+  useEffect(() => {
+    async function fetchDummyData() {
+      const response = await fetch(
+        "http://localhost:8081/items/64342201149c58b63a847a2f"
+      );
+      const data = await response.json();
+      setItem(data);
+    }
+    fetchDummyData();
+  }, []);
+
   return (
     <div className="Shoppingcart">
       <Navbar />
-      <div class="h-screen bg-gray-100 pt-20">
-        <h1 class="mb-10 text-center text-2xl font-bold">Cart Items</h1>
-        <div class="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
-          <div class="rounded-lg md:w-2/3">
-            <div class="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
-              <img
-                src="https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                alt="product-image"
-                class="w-full rounded-lg sm:w-40"
-              />
-              <div class="sm:ml-4 sm:flex sm:w-full sm:justify-between">
-                <div class="mt-5 sm:mt-0">
-                  <h2 class="text-lg font-bold text-gray-900">
-                    Nike Air Max 2019
-                  </h2>
-                  <p class="mt-1 text-xs text-gray-700">36EU - 4US</p>
-                </div>
-                <div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
-                  <div class="flex items-center border-gray-100">
-                    <span class="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50">
-                      {" "}
-                      -{" "}
-                    </span>
-                    <input
-                      class="h-8 w-8 border bg-white text-center text-xs outline-none"
-                      type="number"
-                      value="2"
-                      min="1"
-                    />
-                    <span class="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50">
-                      {" "}
-                      +{" "}
-                    </span>
-                  </div>
-                  <div class="flex items-center space-x-4">
-                    <p class="text-sm">259.000 ₭</p>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="h-5 w-5 cursor-pointer duration-150 hover:text-red-500"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
-              <img
-                src="https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1131&q=80"
-                alt="product-image"
-                class="w-full rounded-lg sm:w-40"
-              />
-              <div class="sm:ml-4 sm:flex sm:w-full sm:justify-between">
-                <div class="mt-5 sm:mt-0">
-                  <h2 class="text-lg font-bold text-gray-900">
-                    Nike Air Max 2019
-                  </h2>
-                  <p class="mt-1 text-xs text-gray-700">36EU - 4US</p>
-                </div>
-                <div class="mt-4 flex justify-between im sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
-                  <div class="flex items-center border-gray-100">
-                    <span class="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50">
-                      {" "}
-                      -{" "}
-                    </span>
-                    <input
-                      class="h-8 w-8 border bg-white text-center text-xs outline-none"
-                      type="number"
-                      value="2"
-                      min="1"
-                    />
-                    <span class="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50">
-                      {" "}
-                      +{" "}
-                    </span>
-                  </div>
-                  <div class="flex items-center space-x-4">
-                    <p class="text-sm">259.000 ₭</p>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="h-5 w-5 cursor-pointer duration-150 hover:text-red-500"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
-            <div class="mb-2 flex justify-between">
-              <p class="text-gray-700">Subtotal</p>
-              <p class="text-gray-700">$129.99</p>
-            </div>
-            <div class="flex justify-between">
-              <p class="text-gray-700">Shipping</p>
-              <p class="text-gray-700">$4.99</p>
-            </div>
-            <hr class="my-4" />
-            <div class="flex justify-between">
-              <p class="text-lg font-bold">Total</p>
-              <div class="">
-                <p class="mb-1 text-lg font-bold">$134.98 USD</p>
-                <p class="text-sm text-gray-700">including VAT</p>
-              </div>
-            </div>
-            <Link to="/checkout">
-              <button class="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
-                Check out
-              </button>
-            </Link>
+      <div class="flex flex-col items-center border-b bg-white py-4 sm:flex-row sm:px-10 lg:px-20 xl:px-32">
+        <div class="flex flex-row">
+          <h1 class="text-2xl font-bold text-gray-800">Shopping Cart</h1>
+        </div>
+        <div class="mt-4 py-2 text-xs sm:mt-0 sm:ml-auto sm:text-base px-[100px]">
+          <div class="relative">
+            <ul class="relative flex w-full items-center justify-between space-x-2 sm:space-x-4">
+              <li class="flex items-center space-x-3 text-left sm:space-x-4">
+                <a
+                  class="flex h-6 w-6 items-center justify-center rounded-full bg-[#278a9e] text-xs font-semibold text-white ring ring-[#278a9e] ring-offset-2"
+                  href="#"
+                >
+                  1
+                </a>
+                <span class="font-semibold text-gray-900">Cart</span>
+              </li>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+              <li class="flex items-center space-x-3 text-left sm:space-x-4">
+                <Link
+                  to="/checkout"
+                  class="flex h-6 w-6 items-center justify-center rounded-full bg-gray-400 text-xs font-semibold text-white"
+                >
+                  2
+                </Link>
+                <span class="font-semibold text-gray-900">Checkout</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
+      <div class="mb-[200px] w-[100vw] flex justify-center">
+        <div class="flex my-7 flex justify-between w-[85%]">
+          <div class="w-[63%] h-max px-10 py-3 rounded-[20px] shadow-md bg-white">
+            <table>
+              <thead>
+                <tr className="w-full h-[70px] pb-9">
+                  <th className="font-semibold text-gray-600 text-m w-[30%]">
+                    Product Details
+                  </th>
+                  <th className="font-semibold text-gray-600 text-m w-[30%]">
+                    Quantity
+                  </th>
+                  <th className="font-semibold text-gray-600 text-m w-[20%]">
+                    Price
+                  </th>
+                  <th className="font-semibold text-gray-600 text-m w-[20%]">
+                    Total
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="hover:bg-gray-100 border-t h-[150px] h-[70px]">
+                  <td className="h-full">
+                    <div class="flex w-full">
+                      <div class="w-[280px]">
+                        <img
+                          className="pl-[12px]"
+                          src={
+                            item.image && item.image.length > 0 && item.image[0]
+                          }
+                          alt=""
+                        />
+                      </div>
+                      <div class="flex flex-col justify-evenly ml-4 flex-grow">
+                        <span class="text-sm">{item.name}</span>
+                        <a
+                          href="#"
+                          class="font-semibold hover:text-red-500 text-gray-500 text-xs"
+                        >
+                          Remove
+                        </a>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="h-full">
+                    <div className="flex items-center justify-center items-center">
+                      <button
+                        onClick={minusCount}
+                        className="focus:outline-none cursor-pointer w-7 h-7 flex items-center justify-center bg-[#3ea7ac] text-white hover:bg-[#278a9e] rounded-l-lg"
+                      >
+                        -
+                      </button>
+                      <input
+                        id="counter"
+                        aria-label="input"
+                        className="border border-gray-300 h-full text-center w-14 mx-2"
+                        type="text"
+                        value={count}
+                        disabled
+                      />
+                      <button
+                        onClick={addCount}
+                        className="focus:outline-none cursor-pointer w-7 h-7 flex items-center justify-center bg-[#3ea7ac] text-white hover:bg-[#278a9e] rounded-r-lg"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </td>
+                  <td className="h-full ">
+                    <span class="text-center flex items-center justify-center text-m">
+                      ${item.price}
+                    </span>
+                  </td>
+                  <td className="h-full">
+                    <span class="text-center flex items-center justify-center text-m">
+                      ${item.price * count}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div id="summary" class="w-[35%] h-max px-8 py-3 rounded-[20px]">
+            <h1 class="font-semibold text-2xl border-b pb-8">Order Summary</h1>
+            <div class="flex justify-between mt-10 mb-5">
+              <span class=" text-m w-[350px]">{item.name}</span>
+              <span class=" text-m">${item.price * count}</span>
+            </div>
+            <div class="border-t mt-8">
+              <div class="flex font-semibold justify-between py-6 text-m ">
+                <span>Total Cost</span>
+                <span className="text-xl">${item.price * count}</span>
+              </div>
+              <Link to="/checkout">
+                <button class="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-2">
+                  Checkout
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Footer />
     </div>
   );
 }
