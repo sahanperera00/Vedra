@@ -21,8 +21,19 @@ const itemSchema = new Schema({
     },
     reviewers: [
       {
-        type: String,
-        required: true,
+        type: new Schema(
+          {
+            comment: {
+              type: String,
+              required: true,
+            },
+            rate: {
+              type: Number,
+              required: true,
+            },
+          },
+          { timestamps: true }
+        ),
       },
     ],
   },
