@@ -1,4 +1,5 @@
 import User from "../model/user.js";
+import bcrypt from "bcryptjs";
 
 export const getAllUsers = async (req, res) => {
     try {
@@ -19,12 +20,29 @@ export const getUser = async (req, res) => {
     }
 };
 
-export const createUser = async (req, res) => {
-    const user = req.body;
-    const newUser = new User(user);
+export const createUser = (req, res) => {
+    const { firstName,
+            lastName,
+            email,password} = req.body;
+    
     try {
-        await newUser.save();
-        res.status(201).json(newUser);
+        bcrypt.genSalt(10, (err, salt) =>{
+        bcrypt.hash(password, salt, async(err, hash)=> {
+
+        const hashedPassword  = hash;
+        const newUser = new User({
+            firstName,
+            lastName,
+            email,
+            password:hashedPassword,
+            });
+           
+            await newUser.save();
+             res.status(201).json(newUser);    
+        });
+         
+});
+        
     } catch (error) {
         res.status(404).json({ message: error });
     }
