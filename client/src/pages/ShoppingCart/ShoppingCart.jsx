@@ -20,7 +20,7 @@ export default function ShoppingCart() {
   useEffect(() => {
     async function fetchDummyData() {
       const response = await fetch(
-        "http://localhost:8081/items/64342201149c58b63a847a2f"
+        "http://localhost:8081/items/6435302e36b699dcbe0c3fa2"
       );
       const data = await response.json();
       setItem(data);
