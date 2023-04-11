@@ -20,8 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/pr/:id" element={<Product />} />
-        <Route path="/client" element={<ClientDash />} />
-        <Route path="/template" element={<PageTemplate />} />
+
 
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
@@ -30,7 +29,10 @@ function App() {
         <Route path="/cart" element={<ShoppingCart />} />
         <Route path="/checkout" element={<Checkout />} />
 
-        {/* Devs: Add your routes here
+        {/* Devs: Add your routes here*/}
+        <Route path="/client" element={<ClientDash />} />
+        <Route path="/template" element={<PageTemplate />} />
+        
 
 
 
@@ -50,9 +52,7 @@ function App() {
 
 
 
-
-
-         */}
+         
 
         
          <Route path="/admin" element={<AdminDash />} />
