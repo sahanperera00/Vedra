@@ -14,6 +14,10 @@ import AdminDash from './pages/AdminDashboard/AdminDash';
 import PendingOrders from "./pages/AdminDashboard/PendingOrders";
 import ConfirmedOrders from "./pages/AdminDashboard/ConfirmedOrders";
 import DispatchedOrders from "./pages/AdminDashboard/DispatchedOrders";
+import SellerDash from "./pages/SellerDashboard/SellerDash";
+import ItemManagement from "./pages/SellerDashboard/ItemManagement";
+import AddItem from "./pages/SellerDashboard/AddItem";
+
 function App() {
   return (
     <div>
@@ -80,11 +84,13 @@ function App() {
 
 
 
-         /******************* */
-
-        {/* Nashie Pooh: Add your routes here
          
 
+        {/* Nashie Pooh: Add your routes here*/}
+         
+          <Route path="/seller" element={<SellerDash/>} />
+          <Route path="/itemmanagement" element={<ItemManagement/>} />
+          <Route path="/additem" element={<AddItem/>} />  
 
 
 
@@ -102,9 +108,7 @@ function App() {
 
 
 
-
-
-         */}
+         
 
         {/* You bullshit Shaggy: Add your routes here
          
