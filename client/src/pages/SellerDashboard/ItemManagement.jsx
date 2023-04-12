@@ -80,18 +80,18 @@ const ItemManagement = () => { // <== THIS IS THE COMPONENT NAME, CHANGE IT TO Y
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     
        {/* Item management heading */}
-        <h1 class="float-left mb-3 text-3xl font-medium leading-tight text-primary">
+        <h1 class="float-left mb-6 text-3xl font-medium leading-tight text-primary">
         Item Management
         </h1>
        
-        {/* Add item button for modal form */}
+        {/* Add item button form */}
         <Link to="/additem">
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded float-right mr-20 mb-3" type="button">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded float-right mr-20 mb-6" type="button">
             Add new Item
         </button>
         </Link>
  
-        
+        {/* table to store item data */}
    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
        
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -108,7 +108,7 @@ const ItemManagement = () => { // <== THIS IS THE COMPONENT NAME, CHANGE IT TO Y
                 <th scope="col" class="px-6 py-3">
                     Price
                 </th>
-                <th scope="col" class="px-7 py-4">
+                <th scope="col" class="px-16 py-4">
                     Action
                 </th>
             </tr>
@@ -135,103 +135,10 @@ const ItemManagement = () => { // <== THIS IS THE COMPONENT NAME, CHANGE IT TO Y
                         Delete
                     </button>
                  </td>
-            </tr>
-            <tr class="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Cell Forté
-                </th>
-                <td class="px-6 py-4">
-                    White
-                </td>
-                <td class="px-6 py-4">
-                    Vitamins
-                </td>
-                <td class="px-6 py-4">
-                    $6.99
-                </td>
-                <td class="px-3 py-4">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
-                        Update
-                    </button>
-                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                        Delete
-                    </button>
-                 </td>
-            </tr>
-            <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    mega 800 Pharmaceutical Grade Fish Oil
-                </th>
-                <td class="px-6 py-4">
-                    Black
-                </td>
-                <td class="px-6 py-4">
-                    Vitamins
-                </td>
-                <td class="px-6 py-4">
-                    $99
-                </td>
-                <td class="px-3 py-4">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
-                        Update
-                    </button>
-                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                        Delete
-                    </button>
-                 </td>
-            </tr>
-            <tr class="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                   BioActive Complete B-Complex
-                </th>
-                <td class="px-6 py-4">
-                    Gray
-                </td>
-                <td class="px-6 py-4">
-                    Vitamins
-                </td>
-                <td class="px-6 py-4">
-                    $6.99
-                </td>
-                 <td class="px-3 py-4">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
-                        Update
-                    </button>
-                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                        Delete
-                    </button>
-                 </td>
-            </tr>
-            <tr>
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                   Q10 Anti-Wrinkle Face Cream
-                </th>
-                <td class="px-6 py-4">
-                    Red
-                </td>
-                <td class="px-6 py-4">
-                    Vitamins
-                </td>
-                <td class="px-6 py-4">
-                    $999
-                </td>
-               <td class="px-3 py-4">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
-                        Update
-                    </button>
-                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                        Delete
-                    </button>
-                 </td>
-            </tr>
-            
+            </tr>           
         </tbody>
     </table>
-
-    
-
    </div>
-
                          </div>
                         </div>
                         </div>
