@@ -84,14 +84,14 @@ const ItemManagement = () => { // <== THIS IS THE COMPONENT NAME, CHANGE IT TO Y
         Item Management
         </h1>
        
-        {/* Add item button for modal form */}
+        {/* Add item button form */}
         <Link to="/additem">
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded float-right mr-20 mb-3" type="button">
             Add new Item
         </button>
         </Link>
  
-        
+        {/* table to store item data */}
    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
        
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -201,37 +201,10 @@ const ItemManagement = () => { // <== THIS IS THE COMPONENT NAME, CHANGE IT TO Y
                         Delete
                     </button>
                  </td>
-            </tr>
-            <tr>
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                   Q10 Anti-Wrinkle Face Cream
-                </th>
-                <td class="px-6 py-4">
-                    Red
-                </td>
-                <td class="px-6 py-4">
-                    Vitamins
-                </td>
-                <td class="px-6 py-4">
-                    $999
-                </td>
-               <td class="px-3 py-4">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
-                        Update
-                    </button>
-                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                        Delete
-                    </button>
-                 </td>
-            </tr>
-            
+            </tr>   
         </tbody>
     </table>
-
-    
-
    </div>
-
                          </div>
                         </div>
                         </div>
