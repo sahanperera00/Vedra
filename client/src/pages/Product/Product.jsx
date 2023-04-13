@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
+import axios from "axios";
 import "./Product.css";
 import { useEffect, useState } from "react";
 import StarRatings from "react-star-ratings";
@@ -14,6 +15,9 @@ export default function Product() {
   const [imagePreview, setImagePreview] = useState(
     item.image && item.image.length > 0 && item.image[0]
   );
+
+  const [disableCart, setDisableCart] = useState(false);
+  const [response, setResponse] = useState({});
 
   const avgStar =
     item.star && item.star.reviewers && item.star.reviewers.length > 0
@@ -30,15 +34,90 @@ export default function Product() {
     setCount(count + 1);
   };
 
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const isSuccess = await fetch(`http://localhost:8081/items/${id}`);
+
+  //     const data = await response.json();
+  //     setResponse(data.order);
+      
+  //   }
+  //   fetchData();
+  // },[]);
+
   useEffect(() => {
+
     async function fetchData() {
-      const response = await fetch(`http://localhost:8081/items/${id}`);
-      const data = await response.json();
-      setItem(data);
-      setIsLoading(false);
+    const response = await fetch(`http://localhost:8081/items/${id}`);
+    const data = await response.json();
+    setItem(data);
+    const isSuccess = await fetch(`http://localhost:8081/items/${id}`);
+    const data2 = await response.json();
+    setResponse(data2.order);
+    setIsLoading(false);
+    
     }
+    
     fetchData();
-  }, [id]);
+     }, [id]);
+
+ async function AddtoCart() {
+  const email = "abc@gmail.com";
+  const status = "cart";
+  const itemID = item._id;
+
+ 
+  // console.log(data);
+  if (disableCart) {
+    //update cart 
+  }
+  else {
+    const Neworder = {
+      email: email,
+      items: [
+        {
+          itemID: item._id,
+          name:item.name,
+          quantity: count,
+          price: item.price,
+          image: item.image[0],
+
+        },
+      ],
+
+      total : item.price * count,
+      status: status,
+      address: "kandy",
+      shippingMethod: "PayPal",
+    };
+
+    await axios.patch(`http://localhost:8083/orders/${response._id}`, response).then (res => {
+      console.log(res);
+      console.log(res.data);
+    })
+    .catch (err => {
+      console.log(err);
+    });
+    setDisableCart(true);
+  }
+}
+
+useEffect(() => {
+  async function fetchData() {
+    const email = "abc@gmail.com";	
+    const status = "cart";
+    const itemID = item._id;
+
+    const response = await fetch(`http://localhost:8083/orders/${email}/${status}/${itemID}`);
+    const data = await response.json();
+    console.log(data);
+    if (data.isSuccess) {
+      //update cart
+      setDisableCart(true);
+    }
+   
+  }
+}, [id]);
 
   return (
     <>
@@ -141,11 +220,21 @@ export default function Product() {
                 </div>
               </div>
 
-              <Link to="/">
-                <button className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-9">
+              {disableCart ? (
+                <button
+                  className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-9"
+                  onClick={AddtoCart}
+                  disabled
+                >
+                  Added
+                </button>
+              ) : (
+
+                <button className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-9" onClick={AddtoCart}>
                   Add to Shopping Cart
                 </button>
-              </Link>
+              )}
+              
             </div>
 
             <div
