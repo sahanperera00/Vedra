@@ -27,7 +27,7 @@ mongoose.set('strictQuery',false); // To hide the deprecated warnings
 mongoose.connect(URL);
 const connection = mongoose.connection;
 connection.once('open',()=>{
-    console.log("MongoDb connection is successful");
+    console.log("MongoDB payment database connection successful!");
 
 });
 
