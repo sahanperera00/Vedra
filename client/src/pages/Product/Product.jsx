@@ -34,90 +34,185 @@ export default function Product() {
     setCount(count + 1);
   };
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const isSuccess = await fetch(`http://localhost:8081/items/${id}`);
-
-  //     const data = await response.json();
-  //     setResponse(data.order);
-      
-  //   }
-  //   fetchData();
-  // },[]);
-
-  useEffect(() => {
-
-    async function fetchData() {
-    const response = await fetch(`http://localhost:8081/items/${id}`);
-    const data = await response.json();
-    setItem(data);
-    const isSuccess = await fetch(`http://localhost:8081/items/${id}`);
-    const data2 = await response.json();
-    setResponse(data2.order);
-    setIsLoading(false);
-    
-    }
-    
-    fetchData();
-     }, [id]);
-
- async function AddtoCart() {
-  const email = "abc@gmail.com";
-  const status = "cart";
-  const itemID = item._id;
-
- 
-  // console.log(data);
-  if (disableCart) {
-    //update cart 
-  }
-  else {
-    const Neworder = {
-      email: email,
-      items: [
-        {
-          itemID: item._id,
-          name:item.name,
-          quantity: count,
-          price: item.price,
-          image: item.image[0],
-
-        },
-      ],
-
-      total : item.price * count,
-      status: status,
-      address: "kandy",
-      shippingMethod: "PayPal",
-    };
-
-    await axios.patch(`http://localhost:8083/orders/${response._id}`, response).then (res => {
-      console.log(res);
-      console.log(res.data);
-    })
-    .catch (err => {
-      console.log(err);
-    });
-    setDisableCart(true);
-  }
-}
-
-useEffect(() => {
-  async function fetchData() {
-    const email = "abc@gmail.com";	
+  async function AddtoCart() {
+    const email = "abc@gmail.com";
     const status = "cart";
     const itemID = item._id;
 
-    const response = await fetch(`http://localhost:8083/orders/${email}/${status}/${itemID}`);
-    const data = await response.json();
-    console.log(data);
-    if (data.isSuccess) {
-      //update cart
+    if (disableCart) {
+      return;
+    } else {
+      console.log(response);
+
+      const Neworder = {
+        email: email,
+        items: [
+          {
+            itemID: item._id,
+            name: item.name,
+            quantity: count,
+            price: item.price,
+            image: item.image[0],
+          },
+        ],
+        total: item.price * count,
+        status: status,
+        address: "kandy",
+        shippingMethod: "PayPal",
+      };
+
+      if (response.length > 0) {
+        await axios
+          .patch(`http://localhost:8083/orders/${response._id}`, response)
+          .then((res) => {
+            console.log(res);
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        await axios
+          .post(`http://localhost:8083/orders`, Neworder)
+          .then((res) => {
+            console.log(res);
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+
       setDisableCart(true);
     }
-   
   }
-}, [id]);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const response1 = await fetch(`http://localhost:8081/items/${id}`);
+  //     const data1 = await response1.json().then((res) => {
+  //       console.log(res);
+  //       setItem(res);
+
+  //       if (item != null) {
+  //         console.log(item._id);
+  //       }
+  //     });
+  // setItem(data1);
+
+  // await axios
+  //   .get(`http://localhost:8081/items/${id}`)
+  //   .then((res) => {
+  //     setItem(res.data);
+
+  //     if (item != null) {
+  //       const email = "abc@gmail.com";
+  //       const status = "cart";
+  //       const itemID = item._id;
+  //       console.log(item._id);
+
+  //       axios
+  //         .get(
+  //           `http://localhost:8083/orders/${email}/${status}/${item._id}`
+  //         )
+  //         .then((res) => {
+  //           // console.log(res);
+  //         })
+  //         .catch((err) => {
+  //           console.log(err);
+  //         });
+  //     } else {
+  //       console.log("item is null");
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
+
+  // const email = "abc@gmail.com";
+  // const status = "cart";
+
+  // console.log(email, status, item._id);
+  // const response3 = await axios
+  //   .get(`http://localhost:8083/orders/${email}/${status}/${item._id}`)
+  //   .then((res) => {
+  //     console.log(res);
+  //     if (res.data.isSuccess) {
+  //       setDisableCart(true);
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
+
+  // const response2 = await fetch(
+  //   `http://localhost:8083/orders/${email}/${status}`
+  // );
+  // const data2 = await response2.json();
+  // // console.log(data2);
+  // setResponse(data2.order);
+
+  //     setIsLoading(false);
+  //   }
+  //   fetchData();
+  // }, [id]);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     if (item !== null) {
+  //       const email = "";
+  //       const status = "cart";
+  //       const itemID = item._id;
+
+  //       const response = await fetch(
+  //         `http://localhost:8083/orders/${email}/${status}/${item._id}`
+  //       );
+  //       const data = await response.json();
+  //       console.log(data);
+  //     } else {
+  //       console.log("item is null");
+  //     }
+  //   }
+  // }, [item]);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const response = await fetch(`http://localhost:8081/items/${id}`);
+  //     const data = await response.json();
+  //     setItem(data);
+  //     setIsLoading(false);
+  //   }
+  //   fetchData();
+  // }, [id]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(`http://localhost:8081/items/${id}`);
+      const data = await response.json();
+      setItem(data);
+      setIsLoading(false);
+      return data; // Return the item data from the function
+    }
+
+    // Call the fetchData function and wait for the item data to be returned
+    fetchData().then((item) => {
+      async function checkCart() {
+        if (item !== null) {
+          const email = "abc@gmail.com"; // Replace with current user's email
+          const status = "cart";
+          const itemID = item._id;
+          const response = await fetch(
+            `http://localhost:8083/orders/${email}/${status}/${itemID}`
+          );
+          const data = await response.json();
+          setDisableCart(data.isSuccess);
+        } else {
+          console.log("item is null");
+        }
+      }
+      checkCart();
+    });
+  }, [id]);
 
   return (
     <>
@@ -229,12 +324,13 @@ useEffect(() => {
                   Added
                 </button>
               ) : (
-
-                <button className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-9" onClick={AddtoCart}>
+                <button
+                  className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-9"
+                  onClick={AddtoCart}
+                >
                   Add to Shopping Cart
                 </button>
               )}
-              
             </div>
 
             <div
