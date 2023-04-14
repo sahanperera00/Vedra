@@ -32,11 +32,15 @@ function App() {
 
         <Route path="/item/:id" element={<ItemView />} />
         <Route path="/cart" element={<ShoppingCart />} />
-        <Route path="/checkout" element={<Checkout />} />
+        
 
         {/* Devs: Add your routes here*/}
         <Route path="/client" element={<ClientDash />} />
         <Route path="/template" element={<PageTemplate />} />
+        <Route path="/checkout/:id" element={<Checkout />} />
+        {/* Test method to fetch item information */}
+        <Route path="/checkout/:6438fa2c518a57cbd5bdc8f4" element={<Checkout />} /> 
+        
         
 
 

@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import { Link } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
+import axios from "axios";
+
+//importing stripe checkout
+import StripeCheckout from "react-stripe-checkout";
 
 export default function Checkout() {
+
+  const pmtKey = "pk_test_51MwfKHDtOg3Q5sN3OTX8k5fywchFMqv9sy758Q8M8hXDpucAadXrkdN33IluVD0eeaf8bNEt0jzxXH0OVRBbqYo400lE3qUaIP";
+
+
+  const handlePmtToken = async (token, address) => {
+    const response = await axios.post("http://localhost:8082/pay", { token, product1 });
+
+    console.log(response.status);
+  }
 
   const product1 = {
     name: "Nike Air Max Pro - Super Light",
@@ -15,7 +28,10 @@ export default function Checkout() {
     size: "42EU - 8.5US",
     price: 130.99
   }
-  
+
+
+  const total = product1.price + product2.price;
+
   return (
     <div>
       <Navbar />
@@ -104,7 +120,7 @@ export default function Checkout() {
                 id="radio_1"
                 type="radio"
                 name="radio"
-                checked
+
               />
 
               <span class="peer-checked:border-[#278a9e] absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
@@ -122,6 +138,9 @@ export default function Checkout() {
                   <p class="text-slate-500 text-sm leading-6">
                     Delivery: 2-4 Days
                   </p>
+                  <p>
+                    {`$ ${(total * .07).toFixed(2)}`}
+                  </p>
                 </div>
               </label>
             </div>
@@ -131,7 +150,6 @@ export default function Checkout() {
                 id="radio_2"
                 type="radio"
                 name="radio"
-                checked
               />
               <span class="peer-checked:border-[#278a9e] absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
               <label
@@ -144,9 +162,12 @@ export default function Checkout() {
                   alt=""
                 />
                 <div class="ml-5">
-                  <span class="mt-2 font-semibold">Fedex Delivery</span>
+                  <span class="mt-2 font-semibold">Standard Delivery</span>
                   <p class="text-slate-500 text-sm leading-6">
-                    Delivery: 2-4 Days
+                    Delivery: 7 - 15 Days
+                  </p>
+                  <p>
+                    {`$ ${(total * .02).toFixed(2)}`}
                   </p>
                 </div>
               </label>
@@ -159,7 +180,7 @@ export default function Checkout() {
             <div class="mt-6 border-t border-b py-2">
               <div class="flex items-center justify-between">
                 <p class="text-sm font-medium text-gray-900">Subtotal</p>
-                <p class="font-semibold text-gray-900">$399.00</p>
+                <p class="font-semibold text-gray-900">{`$ ${total} `}</p>
               </div>
               <div class="flex items-center justify-between">
                 <p class="text-sm font-medium text-gray-900">Shipping</p>
@@ -172,11 +193,23 @@ export default function Checkout() {
             </div>
           </div>
           <div className="justify-center text-right">
-            <Link to="/">
-              <button className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center mt-7">
+            
+              <button className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center mt-7"
+              onClick={()=>{
+                
+              }}>
                 Place Order
-              </button>
-            </Link>
+             </button>
+
+             <StripeCheckout
+                className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center mt-7"
+                stripeKey={pmtKey}
+                token={handlePmtToken}
+                amount={total}
+                name={product1.name}
+                billingAddress
+                shippingAddress
+              ></StripeCheckout>
           </div>
         </div>
       </div>
