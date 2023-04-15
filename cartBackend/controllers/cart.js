@@ -63,7 +63,39 @@ export const updateOrder = async (req, res) => {
   }
 };
 
-//search order by email,itemID,status
+export const addItemToCart = async (req, res) => {
+  const item = req.body;
+  try {
+    const order = await Order.findById(req.params.id);
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+    order.items.push(item);
+    order.total += item.price * item.quantity;
+    await order.save();
+    res.json(order);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+export const removeItemFromCart = async (req, res) => {
+  const item = req.body;
+  try {
+    const order = await Order.findById(req.params.id);
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+    await order.items.pull(item);
+    order.total -= item.price * item.quantity;
+    await order.save();
+    res.json(order);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+};
 
 export const searchOrder = async (req, res) => {
   const { email, status, itemID } = req.params;
