@@ -10,19 +10,12 @@ import Reviews from "../../components/Reviews/Reviews";
 export default function Product() {
   const { id } = useParams();
   const [item, setItem] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
   const [count, setCount] = useState(1);
   const [imagePreview, setImagePreview] = useState(
     item.image && item.image.length > 0 && item.image[0]
   );
-
-  const [disableCart, setDisableCart] = useState(false);
-  const [response, setResponse] = useState({});
-
-  const avgStar =
-    item.star && item.star.reviewers && item.star.reviewers.length > 0
-      ? item.star.total / item.star.reviewers.length
-      : 0;
+  const [disableCart, setDisableCart] = useState();
+  const [res, setRes] = useState({});
 
   const minusCount = () => {
     if (count > 1) {
@@ -34,6 +27,11 @@ export default function Product() {
     setCount(count + 1);
   };
 
+  const avgStar =
+    item.star && item.star.reviewers && item.star.reviewers.length > 0
+      ? item.star.total / item.star.reviewers.length
+      : 0;
+
   async function AddtoCart() {
     const email = "abc@gmail.com";
     const status = "cart";
@@ -42,8 +40,6 @@ export default function Product() {
     if (disableCart) {
       return;
     } else {
-      console.log(response);
-
       const Neworder = {
         email: email,
         items: [
@@ -61,21 +57,28 @@ export default function Product() {
         shippingMethod: "PayPal",
       };
 
-      if (response.length > 0) {
-        await axios
-          .patch(`http://localhost:8083/orders/${response._id}`, response)
-          .then((res) => {
-            console.log(res);
-            console.log(res.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+      const newItem = {
+        itemID: item._id,
+        name: item.name,
+        quantity: count,
+        price: item.price,
+        image: item.image[0],
+      };
+
+      if (res.isSuccess) {
+        try {
+          const res2 = await axios.post(
+            `http://localhost:8083/orders/${res.order[0]._id}/addItem`,
+            newItem
+          );
+          console.log(res2.data);
+        } catch (err) {
+          console.error(err);
+        }
       } else {
         await axios
           .post(`http://localhost:8083/orders`, Neworder)
           .then((res) => {
-            console.log(res);
             console.log(res.data);
           })
           .catch((err) => {
@@ -87,132 +90,38 @@ export default function Product() {
     }
   }
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const response1 = await fetch(`http://localhost:8081/items/${id}`);
-  //     const data1 = await response1.json().then((res) => {
-  //       console.log(res);
-  //       setItem(res);
+  async function fetchItem() {
+    try {
+      const response1 = await fetch(`http://localhost:8081/items/${id}`);
+      setItem(await response1.json());
 
-  //       if (item != null) {
-  //         console.log(item._id);
-  //       }
-  //     });
-  // setItem(data1);
+      const response2 = await fetch(
+        `http://localhost:8083/orders/abc@gmail.com/cart/${id}`
+      );
+      const data = await response2.json();
+      setDisableCart(data.isSuccess);
 
-  // await axios
-  //   .get(`http://localhost:8081/items/${id}`)
-  //   .then((res) => {
-  //     setItem(res.data);
+      const response3 = await fetch(
+        `http://localhost:8083/orders/abc@gmail.com/cart`
+      );
+      setRes(await response3.json());
 
-  //     if (item != null) {
-  //       const email = "abc@gmail.com";
-  //       const status = "cart";
-  //       const itemID = item._id;
-  //       console.log(item._id);
-
-  //       axios
-  //         .get(
-  //           `http://localhost:8083/orders/${email}/${status}/${item._id}`
-  //         )
-  //         .then((res) => {
-  //           // console.log(res);
-  //         })
-  //         .catch((err) => {
-  //           console.log(err);
-  //         });
-  //     } else {
-  //       console.log("item is null");
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
-
-  // const email = "abc@gmail.com";
-  // const status = "cart";
-
-  // console.log(email, status, item._id);
-  // const response3 = await axios
-  //   .get(`http://localhost:8083/orders/${email}/${status}/${item._id}`)
-  //   .then((res) => {
-  //     console.log(res);
-  //     if (res.data.isSuccess) {
-  //       setDisableCart(true);
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
-
-  // const response2 = await fetch(
-  //   `http://localhost:8083/orders/${email}/${status}`
-  // );
-  // const data2 = await response2.json();
-  // // console.log(data2);
-  // setResponse(data2.order);
-
-  //     setIsLoading(false);
-  //   }
-  //   fetchData();
-  // }, [id]);
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     if (item !== null) {
-  //       const email = "";
-  //       const status = "cart";
-  //       const itemID = item._id;
-
-  //       const response = await fetch(
-  //         `http://localhost:8083/orders/${email}/${status}/${item._id}`
-  //       );
-  //       const data = await response.json();
-  //       console.log(data);
-  //     } else {
-  //       console.log("item is null");
-  //     }
-  //   }
-  // }, [item]);
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const response = await fetch(`http://localhost:8081/items/${id}`);
-  //     const data = await response.json();
-  //     setItem(data);
-  //     setIsLoading(false);
-  //   }
-  //   fetchData();
-  // }, [id]);
+      return { item, disableCart, res };
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      const response = await fetch(`http://localhost:8081/items/${id}`);
-      const data = await response.json();
-      setItem(data);
-      setIsLoading(false);
-      return data; // Return the item data from the function
-    }
-
-    // Call the fetchData function and wait for the item data to be returned
-    fetchData().then((item) => {
-      async function checkCart() {
-        if (item !== null) {
-          const email = "abc@gmail.com"; // Replace with current user's email
-          const status = "cart";
-          const itemID = item._id;
-          const response = await fetch(
-            `http://localhost:8083/orders/${email}/${status}/${itemID}`
-          );
-          const data = await response.json();
-          setDisableCart(data.isSuccess);
-        } else {
-          console.log("item is null");
-        }
-      }
-      checkCart();
-    });
-  }, [id]);
+    fetchItem()
+      .then((data) => {
+        // console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <>
