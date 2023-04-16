@@ -2,10 +2,11 @@ import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import { useEffect, useState } from "react";
 import Footer from "../../components/Footer/Footer";
+import axios from "axios";
 
 export default function ShoppingCart() {
   const [count, setCount] = useState(1);
-  const [item, setItem] = useState({});
+  const [cart, setCart] = useState({});
 
   const minusCount = () => {
     if (count > 1) {
@@ -18,15 +19,17 @@ export default function ShoppingCart() {
   };
 
   useEffect(() => {
-    async function fetchDummyData() {
+    async function fetchCart() {
+      const email = "abc@gmail.com";
+      const status = "cart";
       const response = await fetch(
-        "http://localhost:8081/items/6435302e36b699dcbe0c3fa2"
+        `http://localhost:8083/orders/${email}/${status}`
       );
       const data = await response.json();
-      setItem(data);
+      setCart(data.order[0]);
     }
-    fetchDummyData();
-  }, []);
+    fetchCart();
+  }, [cart]);
 
   return (
     <div className="Shoppingcart">
@@ -95,64 +98,86 @@ export default function ShoppingCart() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="hover:bg-gray-100 border-t h-[150px] h-[70px]">
-                  <td className="h-full">
-                    <div class="flex w-full">
-                      <div class="w-[280px]">
-                        <img
-                          className="pl-[12px]"
-                          src={
-                            item.image && item.image.length > 0 && item.image[0]
-                          }
-                          alt=""
-                        />
-                      </div>
-                      <div class="flex flex-col justify-evenly ml-4 flex-grow">
-                        <span class="text-sm">{item.name}</span>
-                        <a
-                          href="#"
-                          class="font-semibold hover:text-red-500 text-gray-500 text-xs"
-                        >
-                          Remove
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="h-full">
-                    <div className="flex items-center justify-center items-center">
-                      <button
-                        onClick={minusCount}
-                        className="focus:outline-none cursor-pointer w-7 h-7 flex items-center justify-center bg-[#3ea7ac] text-white hover:bg-[#278a9e] rounded-l-lg"
-                      >
-                        -
-                      </button>
-                      <input
-                        id="counter"
-                        aria-label="input"
-                        className="border border-gray-300 h-full text-center w-14 mx-2"
-                        type="text"
-                        value={count}
-                        disabled
-                      />
-                      <button
-                        onClick={addCount}
-                        className="focus:outline-none cursor-pointer w-7 h-7 flex items-center justify-center bg-[#3ea7ac] text-white hover:bg-[#278a9e] rounded-r-lg"
-                      >
-                        +
-                      </button>
-                    </div>
-                  </td>
-                  <td className="h-full ">
-                    <span class="text-center flex items-center justify-center text-m">
-                      ${item.price}
-                    </span>
-                  </td>
-                  <td className="h-full">
-                    <span class="text-center flex items-center justify-center text-m">
-                      ${item.price * count}
-                    </span>
-                  </td>
-                </tr>
+                {cart &&
+                  cart.items &&
+                  cart.items.map((item) => (
+                    <tr className="hover:bg-gray-100 border-t h-[160px]">
+                      {/* {item && item.quantity && setCount(item.quantity)} */}
+                      <>
+                        <td className="h-full">
+                          <div class="flex w-full">
+                            <div class="w-[280px]">
+                              <img
+                                className="pl-[12px]"
+                                src={
+                                  item.image &&
+                                  item.image.length > 0 &&
+                                  item.image
+                                }
+                                alt=""
+                              />
+                            </div>
+                            <div class="flex flex-col justify-evenly ml-4 flex-grow">
+                              <span class="text-sm">{item.name}</span>
+                              <p
+                                class="font-semibold hover:text-red-500 text-gray-500 text-xs cursor-pointer"
+                                onClick={async (e) => {
+                                  await axios
+                                    .post(
+                                      `http://localhost:8083/orders/${cart._id}/removeItem`,
+                                      item
+                                    )
+                                    .then((res) => {
+                                      console.log(res);
+                                    });
+                                }}
+                              >
+                                Remove
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="h-full">
+                          <div className="flex items-center justify-center items-center">
+                            <button
+                              onClick={(e) => {
+                                setCount(minusCount);
+                              }}
+                              className="focus:outline-none cursor-pointer w-7 h-7 flex items-center justify-center bg-[#3ea7ac] text-white hover:bg-[#278a9e] rounded-l-lg"
+                            >
+                              -
+                            </button>
+                            <input
+                              id="counter"
+                              aria-label="input"
+                              className="border border-gray-300 h-full text-center w-14 mx-2"
+                              type="text"
+                              value={item.quantity}
+                              disabled
+                            />
+                            <button
+                              onClick={(e) => {
+                                setCount(addCount);
+                              }}
+                              className="focus:outline-none cursor-pointer w-7 h-7 flex items-center justify-center bg-[#3ea7ac] text-white hover:bg-[#278a9e] rounded-r-lg"
+                            >
+                              +
+                            </button>
+                          </div>
+                        </td>
+                        <td className="h-full ">
+                          <span class="text-center flex items-center justify-center text-m">
+                            ${item.price}
+                          </span>
+                        </td>
+                        <td className="h-full">
+                          <span class="text-center flex items-center justify-center text-m">
+                            ${item.price * count}
+                          </span>
+                        </td>
+                      </>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
@@ -160,13 +185,13 @@ export default function ShoppingCart() {
           <div id="summary" class="w-[35%] h-max px-8 py-3 rounded-[20px]">
             <h1 class="font-semibold text-2xl border-b pb-8">Order Summary</h1>
             <div class="flex justify-between mt-10 mb-5">
-              <span class=" text-m w-[350px]">{item.name}</span>
-              <span class=" text-m">${item.price * count}</span>
+              {/* <span class=" text-m w-[350px]">{item.name}</span> */}
+              {/* <span class=" text-m">${item.price * count}</span> */}
             </div>
             <div class="border-t mt-8">
               <div class="flex font-semibold justify-between py-6 text-m ">
                 <span>Total Cost</span>
-                <span className="text-xl">${item.price * count}</span>
+                {/* <span className="text-xl">${item.price * count}</span> */}
               </div>
               <Link to="/checkout">
                 <button class="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-2">
