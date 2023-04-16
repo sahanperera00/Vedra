@@ -11,10 +11,6 @@ const pmtSchema = new Schema({
         type:String,
 
     },
-    pmtMethod:{
-        type:String,
-        required:true
-    },
     pmtDate:{
         type:Date,
         required:true
