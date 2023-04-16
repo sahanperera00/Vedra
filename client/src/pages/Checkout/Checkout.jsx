@@ -4,10 +4,6 @@ import { Link } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import axios from "axios";
 
-
-//importing stripe checkout
-import StripeCheckout from "react-stripe-checkout";
-
 export default function Checkout() {
 
   const [order, setOrder] = useState({});  //sets order details to this state
@@ -22,16 +18,15 @@ export default function Checkout() {
   const [grossPrice,setGrossPrice] = useState(0);
   const [shipping,setShipping] = useState(0);
   const [netPrice,setNetPrice] = useState(0);
+
+  
+  //payment object
+  //const [payment,setPayment] = useState(0);
+
+
   
   //publishable key for Vedran's Stripe account
   const pmtKey = "pk_test_51MwfKHDtOg3Q5sN3OTX8k5fywchFMqv9sy758Q8M8hXDpucAadXrkdN33IluVD0eeaf8bNEt0jzxXH0OVRBbqYo400lE3qUaIP";
-
-  //Dummy passs
-  const handlePmtToken = async (token, address) => {
-    const response = await axios.post("http://localhost:8082/payment/pay", { token, order });
-    console.log(response.status);
-  }
-
   //retrieving the order Content
   const getOrder = async () => {
     try {
@@ -41,8 +36,11 @@ export default function Checkout() {
           setOrder(res.data);
           setOrderItems(res.data.items);
 
-          console.log(order); //order details 
-          console.log(orderItems);  //order Items
+          setInvoiceNo(`INV ${res.data._id}`);
+          setOrderNo(`ORD ${res.data._id}`);
+          setPmtDate(new Date().toLocaleDateString());
+          setEmail(res.data.email);
+
         }).catch((err) => {
           console.log(err);
         });
@@ -51,24 +49,61 @@ export default function Checkout() {
     }
   }
 
+  const createPayment = async()=>{
+
+    const payment = {
+      invoiceNo,
+      orderNo,
+      pmtDate,
+      email,
+      grossPrice,
+      netPrice
+    }
+    console.log(payment);
+
+    await axios.post("http://localhost:8082/payment/create",payment).then((res)=>{
+      console.log(res.data);
+    }).catch((err)=>{
+      console.log(err.message);
+    })
+  }
+
+  const handlePmtToken = async () => {
+    
+    await axios.post("http://localhost:8082/payment/pay",{orderItems}).then((res)=>{
+      if(res.data.url){
+        window.location.href = res.data.url;
+      }
+    }).catch((err)=>{
+      console.log('Error of HandlePmtToken: ',err.message);
+    });
+
+    createPayment();
+
+    //console.log(response.status);
+  }
+
+  
+
   useEffect(() => {
     getOrder();
-  }, [])
+  },[])
+
+  useEffect(()=>{
+    console.log('Order: ',order); //order details 
+    console.log('OrderItems: ',orderItems);  //order Items
+  },[getOrder])
 
   useEffect(()=>{
     setGrossPrice(parseFloat(order.total));
-  })
+  },[getOrder])
 
   useEffect(()=>{
     setNetPrice(grossPrice + shipping);
-  })
+    
+  },[getOrder])
+  
 
-
-
- 
-
-  //creating a payment in backend 
- // const [payment, setPayment] = useState({});
   return (
     <div>
       <Navbar />
@@ -145,7 +180,7 @@ export default function Checkout() {
                 id="radio_1"
                 type="radio"
                 name="radio"
-                value={grossPrice * 0.30}
+                value={15}
                 onChange={(e)=>setShipping(parseFloat(e.target.value))}
               />
 
@@ -162,10 +197,10 @@ export default function Checkout() {
                 <div className="ml-5">
                   <span className="mt-2 font-semibold" >Fedex Delivery</span>
                   <p className="text-slate-500 text-sm leading-6" >
-                    Delivery: 2-4 Days
+                    Delivery: 1 - 2 days
                   </p>
                   <p>
-                  ${(grossPrice * .30).toFixed(2)}
+                  ${(15.000).toFixed(2)}
                   </p>
                 </div>
               </label>
@@ -176,7 +211,7 @@ export default function Checkout() {
                 id="radio_2"
                 type="radio"
                 name="radio"
-                value={grossPrice * 0.15}
+                value={0}
                 onChange={(e)=>setShipping(parseFloat(e.target.value))}
               />
               <span className="peer-checked:border-[#278a9e] absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
@@ -196,7 +231,7 @@ export default function Checkout() {
                     
                   </p>
                   <p>
-                  ${(grossPrice * .15).toFixed(2)}
+                  Free Shipping
                   </p>
                 </div>
               </label>
@@ -223,21 +258,11 @@ export default function Checkout() {
           </div>
           <div className="justify-center text-right">
 
-            <button className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center mt-7">
+            
+            <button onClick={handlePmtToken} className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center mt-7">
               Place Order
             </button>
-
-            <StripeCheckout
-              className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center mt-7"
-              stripeKey={pmtKey}
-              currency="USD"
-              token={handlePmtToken}
-              amount={order.total* 100}
-              name={order._id}
-              billingAddress
-              shippingAddress
-              
-            ></StripeCheckout>
+            
           </div>
         </div>
       </div>

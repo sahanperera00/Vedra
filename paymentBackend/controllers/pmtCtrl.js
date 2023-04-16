@@ -24,6 +24,7 @@ export const createPayment = async(req,res)=>{
         const pmt = req.body;
         const newPayment = new Pmt(pmt);
         await newPayment.save();
+        console.log('Payment after reaching create payment',pmt);
 
         res.status(201).json(newPayment);
     }catch(error){
@@ -49,46 +50,60 @@ export const getAllPayments = async(req,res)=>{
 const stripe = new Stripe(process.env.STRIPESECRET);
 
 export const chargeUser = async(req,res)=>{
-    const {product1,token} =  req.body;
 
-    try{
-        const customer = await stripe.customers.create({
-            //creating the user
-            email: token.email,
-            source: token.id,
-        });
+    const {orderItems} = req.body;
 
-        const trnNo = uuidv4();
-        const charges = await stripe.charges.create({
-            amount: product1.price * 100,
-            currency: "usd",
-            customer: customer.id,
-            receipt_email: token.email,
-            description: `Purchased ${product1.name}`,
-            shipping: {
-                name: token.card.name,
-                address: {
-                    line1: token.card.address_line1,
-                    line2: token.card.address_line2,
-                    city: token.card.address_city,
-                    country: token.card.address_country,
-                    postal_code: token.card.address_zip,
-                },
-            },
-
-        },{
-            idempotencyKey: trnNo,
-        }
-        );
+    
+    console.log('orderItems: ',orderItems);
+    const session  = await stripe.checkout.sessions.create({
+        shipping_address_collection: {
+            allowed_countries: ['US', 'CA'],
+        },
         
-        console.log("Charge Successful");
-        res.status(200).json({charges});
-    }catch(error){
-        res.status(404).json({
-            message: error
-        })
-        console.log(error);
-    }
+        shipping_options: [
+          {
+            shipping_rate_data: {
+              type: 'fixed_amount',
+              fixed_amount: {amount: 0, currency: 'usd'},
+              display_name: 'Free shipping',
+              delivery_estimate: {
+                minimum: {unit: 'business_day', value: 5},
+                maximum: {unit: 'business_day', value: 7},
+              },
+            },
+          },
+          {
+            shipping_rate_data: {
+              type: 'fixed_amount',
+              fixed_amount: {amount: 1500, currency: 'usd'},
+              display_name: 'Next day air',
+              delivery_estimate: {
+                minimum: {unit: 'business_day', value: 1},
+                maximum: {unit: 'business_day', value: 1},
+              },
+            },
+          },
+        ],
+        
+        line_items: [
+            {
+                price_data:{
+                    currency: "usd",
+                    product_data:{
+                        name: "T-shirt",
+                    },
+                    unit_amount: 2000,
+                },
+                quantity: 1,
+            }
+        ],
+        mode: "payment",
+        shipping_address_collection: {},
+        success_url: `http://localhost:3000/cart`,
+        cancel_url: `http://localhost:3000/`,
+    });
+    //console.log(res.body);
+    res.send({url: session.url});
 }
 
 
