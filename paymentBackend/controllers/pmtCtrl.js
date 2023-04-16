@@ -49,7 +49,7 @@ export const getAllPayments = async(req,res)=>{
 const stripe = new Stripe(process.env.STRIPESECRET);
 
 export const chargeUser = async(req,res)=>{
-    const {product, token} =  req.body;
+    const {product1,token} =  req.body;
 
     try{
         const customer = await stripe.customers.create({
@@ -60,12 +60,13 @@ export const chargeUser = async(req,res)=>{
 
         const trnNo = uuidv4();
         const charges = await stripe.charges.create({
-            amount: product.price * 100,
+            amount: product1.price * 100,
             currency: "usd",
             customer: customer.id,
             receipt_email: token.email,
-            description: `Purchased ${product.name}`,
+            description: `Purchased ${product1.name}`,
             shipping: {
+                name: token.card.name,
                 address: {
                     line1: token.card.address_line1,
                     line2: token.card.address_line2,
@@ -79,6 +80,7 @@ export const chargeUser = async(req,res)=>{
             idempotencyKey: trnNo,
         }
         );
+        
         console.log("Charge Successful");
         res.status(200).json({charges});
     }catch(error){
