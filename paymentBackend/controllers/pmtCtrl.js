@@ -51,9 +51,25 @@ const stripe = new Stripe(process.env.STRIPESECRET);
 
 export const chargeUser = async(req,res)=>{
 
-    const {orderItems} = req.body;
+    const {orderItems,orderId} = req.body;
+    const line_items = orderItems.map((item)=>{
+        return{
+            price_data:{
+                currency: "usd",
+                product_data:{
+                    name: item.name,
+                    images: [item.image],
+                    description: item.itemId,
+                    metadata: {
+                        id: item._id,
+                    },
+                },
+                unit_amount: parseFloat(item.price) * 100,
+            },
+            quantity: item.quantity,
+        };
+    });
 
-    
     console.log('orderItems: ',orderItems);
     const session  = await stripe.checkout.sessions.create({
         shipping_address_collection: {
@@ -85,22 +101,11 @@ export const chargeUser = async(req,res)=>{
           },
         ],
         
-        line_items: [
-            {
-                price_data:{
-                    currency: "usd",
-                    product_data:{
-                        name: "T-shirt",
-                    },
-                    unit_amount: 2000,
-                },
-                quantity: 1,
-            }
-        ],
+        line_items,
         mode: "payment",
         shipping_address_collection: {},
         success_url: `http://localhost:3000/cart`,
-        cancel_url: `http://localhost:3000/`,
+        cancel_url: `http://localhost:3000/checkout/${orderId}`,
     });
     //console.log(res.body);
     res.send({url: session.url});
