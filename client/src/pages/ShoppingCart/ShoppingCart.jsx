@@ -66,7 +66,7 @@ export default function ShoppingCart() {
               </svg>
               <li class="flex items-center space-x-3 text-left sm:space-x-4">
                 <Link
-                  to="/checkout"
+                  to={`/checkout/${cart._id}`}
                   class="flex h-6 w-6 items-center justify-center rounded-full bg-gray-400 text-xs font-semibold text-white"
                 >
                   2
@@ -193,7 +193,7 @@ export default function ShoppingCart() {
                 <span>Total Cost</span>
                 {/* <span className="text-xl">${item.price * count}</span> */}
               </div>
-              <Link to="/checkout">
+              <Link to={`/checkout/${cart._id}`}>
                 <button class="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-2">
                   Checkout
                 </button>
