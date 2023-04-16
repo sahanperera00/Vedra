@@ -90,23 +90,7 @@ const DispatchedOrders = () => {
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
         <Header  title="Dispatched Orders" />
 
-        <div className=" flex items-center mb-5 ">
-          <div>
-            <input type="text" className=" block w-400 rounded-md bg-gray-100 focus:bg-white dark:text-black" placeholder="Search Here" 
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-            }} />
-          </div>
-          
-
-          </div>
-
-
-
-
-
-
-
+        <div className=" flex items-center mb-5 "></div>
         <div className="block w-full overflow-x-auto rounded-lg">
           <table className="w-full rounded-lg" >
             <thead>

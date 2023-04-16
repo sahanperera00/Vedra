@@ -225,6 +225,7 @@ export default function Product() {
               </div>
 
               {disableCart ? (
+                
                 <button
                   className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-9"
                   onClick={AddtoCart}
@@ -232,13 +233,16 @@ export default function Product() {
                 >
                   Added
                 </button>
+                
               ) : (
+                <Link to="/cart">
                 <button
                   className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-9"
                   onClick={AddtoCart}
                 >
                   Add to Shopping Cart
                 </button>
+                </Link>
               )}
             </div>
 
