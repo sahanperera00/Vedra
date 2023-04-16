@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import axios from "axios";
 
 export default function Checkout() {
 
+  const orderId = useParams().id;
   const [order, setOrder] = useState({});  //sets order details to this state
   const [orderItems, setOrderItems] = useState([]); //retrieving the order Items
 
@@ -28,9 +29,9 @@ export default function Checkout() {
   //publishable key for Vedran's Stripe account
   const pmtKey = "pk_test_51MwfKHDtOg3Q5sN3OTX8k5fywchFMqv9sy758Q8M8hXDpucAadXrkdN33IluVD0eeaf8bNEt0jzxXH0OVRBbqYo400lE3qUaIP";
   //retrieving the order Content
-  const getOrder = async () => {
+  const getOrder = async (orderId) => {
     try {
-      const orderId = '6438fa2c518a57cbd5bdc8f4';
+      //const orderId = '6438fa2c518a57cbd5bdc8f4';
       await axios.get(`http://localhost:8083/orders/${orderId}`)
         .then((res) => {
           setOrder(res.data);
@@ -70,7 +71,7 @@ export default function Checkout() {
 
   const handlePmtToken = async () => {
     
-    await axios.post("http://localhost:8082/payment/pay",{orderItems}).then((res)=>{
+    await axios.post("http://localhost:8082/payment/pay",{orderItems, orderId}).then((res)=>{
       if(res.data.url){
         window.location.href = res.data.url;
       }
@@ -86,7 +87,7 @@ export default function Checkout() {
   
 
   useEffect(() => {
-    getOrder();
+    getOrder(orderId);
   },[])
 
   useEffect(()=>{
@@ -166,7 +167,7 @@ export default function Checkout() {
                     <span className="font-semibold">{data.name}
                     </span>
                     <span className="float-right text-gray-400">Quantity {data.quantity}</span>
-                    <p className="text-lg font-bold">${data.quantity*data.price}</p>
+                    <p className="text-lg font-bold">${(data.quantity*data.price).toFixed(2)}</p>
                   </div>
                 </div>
               </div>
