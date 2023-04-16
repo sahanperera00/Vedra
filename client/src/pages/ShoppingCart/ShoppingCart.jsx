@@ -167,12 +167,12 @@ export default function ShoppingCart() {
                         </td>
                         <td className="h-full ">
                           <span class="text-center flex items-center justify-center text-m">
-                            ${item.price}
+                            ${(item.price).toFixed(2)}
                           </span>
                         </td>
                         <td className="h-full">
                           <span class="text-center flex items-center justify-center text-m">
-                            ${item.price * count}
+                            ${(item.price * count).toFixed(2)}
                           </span>
                         </td>
                       </>
@@ -184,15 +184,28 @@ export default function ShoppingCart() {
 
           <div id="summary" class="w-[35%] h-max px-8 py-3 rounded-[20px]">
             <h1 class="font-semibold text-2xl border-b pb-8">Order Summary</h1>
+            {cart &&
+                  cart.items &&
+                  cart.items.map((item) => (
             <div class="flex justify-between mt-10 mb-5">
-              {/* <span class=" text-m w-[350px]">{item.name}</span> */}
-              {/* <span class=" text-m">${item.price * count}</span> */}
+            <span class=" text-m w-[350px]">{item.name}</span>
+            <span class=" text-m">${(item.price * count).toFixed(2)}</span>
             </div>
+                  ))}
             <div class="border-t mt-8">
               <div class="flex font-semibold justify-between py-6 text-m ">
+                
                 <span>Total Cost</span>
-                {/* <span className="text-xl">${item.price * count}</span> */}
+                
+                <span className="text-xl">
+                ${cart &&
+                  cart.items &&
+                  cart.items.reduce((acc, item) => acc + item.price * count, 0).toFixed(2)}
+                  
+                  </span>
+                 
               </div>
+            
               <Link to={`/checkout/${cart._id}`}>
                 <button class="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-2">
                   Checkout
