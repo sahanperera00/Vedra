@@ -1,31 +1,15 @@
 import User from "../model/user.js";
+import express from "express";
 // import bcrypt from "bcryptjs";
 import jwt from 'jsonwebtoken';
-import axios from 'axios';
 
-export const getAllUsers = async (req, res) => {
-    try {
-        const users = await User.find();
-        res.status(200).json(users);
-    } catch (error) {
-        res.status(404).json({ message: error });
-    }
-};
-
-export const getUser = async (req, res) => {
-    const id = req.params.id;
-    try {
-        const user = await User.findById(id);
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(404).json({ message: error });
-    }
-};
+const router = express.Router();
 
 export const registerUser = async(req, res) => {
     const { firstName,
             lastName,
-            email,password} = req.body;
+            email,
+            password      } = req.body;
     
     //validation to see if the email already exists
 
@@ -40,27 +24,22 @@ export const registerUser = async(req, res) => {
                 firstName,
                 lastName, 
                 email,
-                password
+                password,
+                
             })
             await user.save();  //this saves the user 
 
-            //along with this ensure to create the JWT Token
-            const data = jwt.sign({
-                _id: user._id,
-                firstName: user.firstName,
-                email: user.email,
-            })
-
-            //JWT secret key is created by yourself in process.env which is encrypted
-            const token = jwt.sign(data,process.env.JWTSECRET,{expiresIn: '0.5h'});
+           const jwtData = {_id: user._id, name: user.email}
+           const token = jwt.sign(jwtData, process.env.JWTSECRET,{expiresIn: "1h"});
 
             res.status(201).json(token);
             
         }catch(error){
-            res.status(400).json({message: error.message});
+            res.status(409).json({message: error});
         }
     }
 
+    //LOGIN USER
     export const loginUser = async(req,res)=>{
         const {email, password} = req.body;
         let user = await User.findOne({email,password});
@@ -68,30 +47,43 @@ export const registerUser = async(req, res) => {
         if(!user) return res.status(400).send("Invalid email or password");
 
         //Create a jwt data token 
-
-        const data = {_id: user._id,
-            firstName: user.firstName, 
-            email: user.email};
-
-        const token = jwt.sign(data,process.env.JWTSECRET,{expiresIn:'1h'});
-        res.status(200).json({token});
-    }
-
-    //creating the authentication header for the user 
-
-    export const jwtauth = async(req,res,next)=>{
-        const token = req.header('x-auth-token');
-
-        if(!token) return res.status(401).send("Access denied.(Token not found)");
-        try{
-            const decoded = jwt.verify(token,process.end.JWTSECRET);
-            req.user = decoded;
-            console.log(req.user);
-            next();
-        }catch(error){
-            res.status(400).send("Invalid token");
+        const jwtData = {_id: user._id, name: user.email}
+        const token = jwt.sign(jwtData, process.env.JWTSECRET,{expiresIn: "1h"});
+        res.status(201).json(token);
         }
+    
+    //VIEW ALL
+    export const getAllUsers = async (req, res) => {
+        try {
+            const users = await User.find();
+            res.status(200).json(users);
+        } catch (error) {
+            res.status(404).json({ message: error });
+        }
+    };
+
+    //VIEW
+    export const getUser = async (req, res) => {
+        const profile = await User.findById(req.user._id);
+        res.send(profile);
     }
+
+
+    // //creating the authentication header for the user 
+
+    // export const jwtauth = async(req,res,next)=>{
+    //     const token = req.header('x-auth-token');
+
+    //     if(!token) return res.status(401).send("Access denied.(Token not found)");
+    //     try{
+    //         const decoded = jwt.verify(token,process.end.JWTSECRET);
+    //         req.user = decoded;
+    //         console.log(req.user);
+    //         next();
+    //     }catch(error){
+    //         res.status(400).send("Invalid token");
+    //     }
+    // }
 
 
 export const updateUser = async (req, res) => {
