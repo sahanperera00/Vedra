@@ -104,7 +104,7 @@ export const chargeUser = async(req,res)=>{
         line_items,
         mode: "payment",
         shipping_address_collection: {},
-        success_url: `http://localhost:3000/cart`,
+        success_url: `http://localhost:3000/pmtsuccess`,
         cancel_url: `http://localhost:3000/checkout/${orderId}`,
     });
     //console.log(res.body);
