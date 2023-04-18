@@ -18,6 +18,7 @@ import SellerDash from "./pages/SellerDashboard/SellerDash";
 import ItemManagement from "./pages/SellerDashboard/ItemManagement";
 import AddItemForm from "./pages/SellerDashboard/AddItemForm";
 import UpdateItemForm from "./pages/SellerDashboard/UpdateItemForm";
+import PmtSuccess from "./pages/PaymentSuccess/success";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route path="/client" element={<ClientDash />} />
         <Route path="/template" element={<PageTemplate />} />
         <Route path="/checkout/:id" element={<Checkout />} />
+        <Route path="/pmtsuccess" element={<PmtSuccess />} />
         {/* Test method to fetch item information */}
         <Route path="/checkout/:6438fa2c518a57cbd5bdc8f4" element={<Checkout />} /> 
         
