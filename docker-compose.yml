@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  frontend:
+    build: ./client
+    image: client
+    container_name: client_server
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./itemBackend
+    image: itembackend
+    container_name: itembackend_server
+    ports:
+      - "8081:8081"
