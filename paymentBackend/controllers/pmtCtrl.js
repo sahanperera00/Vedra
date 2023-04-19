@@ -52,6 +52,7 @@ const stripe = new Stripe(process.env.STRIPESECRET);
 export const chargeUser = async(req,res)=>{
 
     const {orderItems,orderId} = req.body;
+    console.log(orderId);
     const line_items = orderItems.map((item)=>{
         return{
             price_data:{

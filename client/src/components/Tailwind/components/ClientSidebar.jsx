@@ -15,7 +15,7 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import { useStateContext } from '../../../../src/contexts/ContextProvider';
 
-const Sidebar = () => {
+const ClientSidebar = () => {
   const { currentColor, activeMenu, setActiveMenu, screenSize } =
     useStateContext();
 
@@ -127,7 +127,7 @@ const Sidebar = () => {
             </NavLink>
 
             <NavLink
-              to="/CustomerDashboard"
+              to="/mypayments"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
@@ -148,4 +148,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default ClientSidebar;
