@@ -52,6 +52,7 @@ const stripe = new Stripe(process.env.STRIPESECRET);
 export const chargeUser = async(req,res)=>{
 
     const {orderItems,orderId} = req.body;
+    console.log(orderId);
     const line_items = orderItems.map((item)=>{
         return{
             price_data:{
@@ -104,7 +105,7 @@ export const chargeUser = async(req,res)=>{
         line_items,
         mode: "payment",
         shipping_address_collection: {},
-        success_url: `http://localhost:3000/cart`,
+        success_url: `http://localhost:3000/pmtsuccess`,
         cancel_url: `http://localhost:3000/checkout/${orderId}`,
     });
     //console.log(res.body);
