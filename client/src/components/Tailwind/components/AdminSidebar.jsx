@@ -139,6 +139,19 @@ const AdminSidebar = () => {
               {/*  link name  */}
             </NavLink>
 
+            
+            <NavLink
+              to="https://dashboard.stripe.com/test/payments"
+              onClick={handleCloseSideBar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : '',
+              })}
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            >
+              <TbBrandGoogleAnalytics /> {/*  icon  */}
+              <span className="capitalize ">Payment Analytics</span> {/*  link name  */}
+            </NavLink>
+
           
 
 

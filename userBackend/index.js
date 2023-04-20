@@ -1,5 +1,4 @@
-import * as dotenv from 'dotenv';
-dotenv.config();
+import dotenv from "dotenv/config";
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
@@ -10,12 +9,13 @@ const app = express();
 const PORT = process.env.PORT || 8084;
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
-app.use(bodyParser.urlencoded({limit: "30mb", extended: true}));
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
-app.use("/user", userRouter);
+app.use("/", userRouter);
 
 const URL = process.env.MONGODB_URL;
+
 mongoose.connect(URL);
 const connection = mongoose.connection;
 connection.once("open", () => {
