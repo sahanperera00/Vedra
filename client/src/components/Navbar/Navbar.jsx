@@ -6,7 +6,6 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import decode from "jwt-decode";
 
 export default function Navbar() {
