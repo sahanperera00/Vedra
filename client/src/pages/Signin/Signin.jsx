@@ -23,8 +23,11 @@ export default function Signin() {
       alert("Login Successfull");
       const decoded = jwtdecode(token);
       if (decoded.role === "seller") {
+        localStorage.setItem("sellerId", decoded._id);
+        localStorage.setItem("email", decoded.email);
         navigate("/seller");
       } else if (decoded.role === "buyer") {
+        localStorage.setItem("email", decoded.email);
         navigate("/");
       } else {
         navigate("/admin");
