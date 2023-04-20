@@ -17,12 +17,10 @@ export default function Navbar() {
   }
 
   useEffect(() => {
-    const token = decode(localStorage.getItem("token"));
+    const token = localStorage.getItem("token");
     if (token) {
-      setToken(token);
-      console.log(token);
-    } else {
-      setToken("");
+      const decodedToken = decode(token);
+      setToken(decodedToken);
     }
   }, []);
 
@@ -45,7 +43,7 @@ export default function Navbar() {
           <Link to={"/cart"}>
             <UilShoppingBag className="cartIcon" />
           </Link>
-          {token ? (
+          {token.email ? (
             <>
               <Menu as="div" className="relative inline-block text-left">
                 <div>
@@ -58,9 +56,9 @@ export default function Navbar() {
                     <p className="text-sm font-medium">
                       Hello {token.firstName} {token.lastName}
                       <br />
-                      <p className="text-slate-400">
+                      <span className="text-slate-400">
                         {localStorage.getItem("email")}
-                      </p>
+                      </span>
                     </p>
                   </Menu.Button>
                 </div>
@@ -105,7 +103,7 @@ export default function Navbar() {
                               localStorage.removeItem("token");
                               localStorage.removeItem("sellerId");
                               localStorage.removeItem("email");
-                              setToken("");
+                              setToken(null);
                               navigate("/");
                             }}
                           >
