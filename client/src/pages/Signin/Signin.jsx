@@ -1,31 +1,31 @@
-import React, { useState, useRef } from 'react';
-import { Link } from "react-router-dom";
-import axios from 'axios';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Signin() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
-
-  const [token,setToken] = useState('');
-
-    const submitHandler = async (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-      
-       try {
-      const {data} = await axios.post('http://localhost:8084/', {
-        email,
-        password,
-      });
-      localStorage.setItem('token', JSON.stringify(data));
-      window.location ="/seller"
-    } catch (errors) {
-      setError(true);
+
+    const user = {
+      email,
+      password,
+    };
+
+    try {
+      const response = await axios.post("http://localhost:8084/login", user);
+      const { token } = response.data;
+      localStorage.setItem("token", token);
+      alert("Login Successfull");
+      navigate("/");
+    } catch (err) {
+      alert("Login Failed");
     }
   };
 
-    
   return (
     <div className="signin">
       <section class="bg-gray-50 dark:bg-gray-900">
@@ -45,7 +45,7 @@ export default function Signin() {
               <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Sign in
               </h1>
-              <form class="space-y-4 md:space-y-6" onSubmit={submitHandler} >
+              <form class="space-y-4 md:space-y-6" onSubmit={submitHandler}>
                 <div>
                   <label
                     for="email"
@@ -82,30 +82,10 @@ export default function Signin() {
                 </div>
                 <br />
 
-                  <div className="flex">
-                        {error && (
-                          <>
-                            <div
-                              className=" text-red-700 px-4 py-1 rounded relative"
-                              role="alert"
-                            >
-                              <strong className="font-bold">
-                                Incorrect email or password!
-                              </strong>
-                            </div>
-                            <br />
-                          </>
-                        )}
+                <button class="w-full text-white bg-sky-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                  Sign in
+                </button>
 
-                    </div>
-               
-                  <button
-                  
-                    class="w-full text-white bg-sky-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                  >
-                    Sign in
-                  </button>
-              
                 <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                   Don't have an account?{" "}
                   <a

@@ -2,8 +2,16 @@ import "./Navbar.css";
 import SearchBar from "../SearchBar/SearchBar";
 import { Link } from "react-router-dom";
 import { UilShoppingBag } from "@iconscout/react-unicons";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function Navbar() {
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, []);
+
   return (
     <div className="navbar">
       <div className="navTopCont">
@@ -20,14 +28,29 @@ export default function Navbar() {
           <SearchBar />
         </div>
         <div>
-          <Link to={"/signin"}>
-            <button
-              type="button"
-              className="bg-[#3ea7ac] hover:bg-[#278a9e] mx-4 text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-            >
-              Sign in
-            </button>
-          </Link>
+          {token ? (
+            <Link to={"/signin"}>
+              <button
+                type="button"
+                className="bg-[#3ea7ac] hover:bg-[#278a9e] mx-4 text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  setToken("");
+                }}
+              >
+                Sign out
+              </button>
+            </Link>
+          ) : (
+            <Link to={"/signin"}>
+              <button
+                type="button"
+                className="bg-[#3ea7ac] hover:bg-[#278a9e] mx-4 text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              >
+                Sign in
+              </button>
+            </Link>
+          )}
           <Link to={"/cart"}>
             <UilShoppingBag className="cartIcon" />
           </Link>
