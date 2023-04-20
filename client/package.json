@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@headlessui/react": "^1.7.14",
     "@iconscout/react-unicons": "^1.1.6",
     "@syncfusion/ej2": "^19.4.48",
     "@syncfusion/ej2-base": "^20.2.48",
