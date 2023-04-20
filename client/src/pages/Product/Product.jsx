@@ -47,11 +47,11 @@ export default function Product() {
             itemID: item._id,
             name: item.name,
             quantity: count,
-            price: item.price,
+            price: item.price.$numberDecimal,
             image: item.image[0],
           },
         ],
-        total: item.price * count,
+        total: item.price.$numberDecimal * count,
         status: status,
         address: "kandy",
         shippingMethod: "PayPal",
@@ -61,7 +61,7 @@ export default function Product() {
         itemID: item._id,
         name: item.name,
         quantity: count,
-        price: item.price,
+        price: item.price.$numberDecimal,
         image: item.image[0],
       };
 
@@ -174,7 +174,7 @@ export default function Product() {
                 {item.description}
               </p>
               <p className=" font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 mt-6">
-                ${item.price}
+                ${item.price && item.price.$numberDecimal}
               </p>
 
               <div className="lg:mt-11 mt-10">
@@ -225,7 +225,6 @@ export default function Product() {
               </div>
 
               {disableCart ? (
-                
                 <button
                   className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-9"
                   onClick={AddtoCart}
@@ -233,16 +232,15 @@ export default function Product() {
                 >
                   Added
                 </button>
-                
               ) : (
-                <Link to="/cart">
+                // <Link to="/cart">
                 <button
                   className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-9"
                   onClick={AddtoCart}
                 >
                   Add to Shopping Cart
                 </button>
-                </Link>
+                // </Link>
               )}
             </div>
 
