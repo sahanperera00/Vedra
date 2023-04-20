@@ -11,13 +11,13 @@ const itemSchema = new Schema({
     required: true,
   },
   price: {
-    type: Number,
+    type: Schema.Types.Decimal128,
     required: true,
   },
   star: {
     total: {
       type: Number,
-      required: true,
+      default: 0,
     },
     reviewers: [
       {
