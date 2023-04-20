@@ -33,7 +33,7 @@ export default function Product() {
       : 0;
 
   async function AddtoCart() {
-    const email = "abc@gmail.com";
+    const email = localStorage.getItem("email");
     const status = "cart";
     const itemID = item._id;
 
@@ -49,6 +49,8 @@ export default function Product() {
             quantity: count,
             price: item.price.$numberDecimal,
             image: item.image[0],
+            sellerID: item.sellerId,
+            sellerEmail: item.sellerEmail,
           },
         ],
         total: item.price.$numberDecimal * count,
@@ -63,6 +65,8 @@ export default function Product() {
         quantity: count,
         price: item.price.$numberDecimal,
         image: item.image[0],
+        sellerID: item.sellerId,
+        sellerEmail: item.sellerEmail,
       };
 
       if (res.isSuccess) {
@@ -76,6 +80,7 @@ export default function Product() {
           console.error(err);
         }
       } else {
+        console.log(Neworder);
         await axios
           .post(`http://localhost:8083/orders`, Neworder)
           .then((res) => {
@@ -91,22 +96,23 @@ export default function Product() {
   }
 
   async function fetchItem() {
+    const email = localStorage.getItem("email");
     try {
-      const response1 = await fetch(`http://localhost:8081/items/${id}`);
-      setItem(await response1.json());
+      const [response1, response2, response3] = await Promise.all([
+        fetch(`http://localhost:8081/items/${id}`),
+        fetch(`http://localhost:8083/orders/${email}/cart/${id}`),
+        fetch(`http://localhost:8083/orders/${email}/cart`),
+      ]);
 
-      const response2 = await fetch(
-        `http://localhost:8083/orders/abc@gmail.com/cart/${id}`
-      );
+      const item = await response1.json();
       const data = await response2.json();
+      const res = await response3.json();
+
+      setItem(item);
       setDisableCart(data.isSuccess);
+      setRes(res);
 
-      const response3 = await fetch(
-        `http://localhost:8083/orders/abc@gmail.com/cart`
-      );
-      setRes(await response3.json());
-
-      return { item, disableCart, res };
+      return { item, disableCart: data.isSuccess, res };
     } catch (error) {
       console.error(error);
       throw error;

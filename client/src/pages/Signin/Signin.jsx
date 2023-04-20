@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import jwtdecode from "jwt-decode";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -20,7 +21,17 @@ export default function Signin() {
       const { token } = response.data;
       localStorage.setItem("token", token);
       alert("Login Successfull");
-      navigate("/");
+      const decoded = jwtdecode(token);
+      if (decoded.role === "seller") {
+        localStorage.setItem("sellerId", decoded._id);
+        localStorage.setItem("email", decoded.email);
+        navigate("/seller");
+      } else if (decoded.role === "buyer") {
+        localStorage.setItem("email", decoded.email);
+        navigate("/");
+      } else {
+        navigate("/admin");
+      }
     } catch (err) {
       alert("Login Failed");
     }

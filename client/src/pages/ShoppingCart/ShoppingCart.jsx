@@ -20,7 +20,7 @@ export default function ShoppingCart() {
 
   useEffect(() => {
     async function fetchCart() {
-      const email = "abc@gmail.com";
+      const email = localStorage.getItem("email");
       const status = "cart";
       const response = await fetch(
         `http://localhost:8083/orders/${email}/${status}`
@@ -80,9 +80,9 @@ export default function ShoppingCart() {
       <div class="mb-[200px] w-[100vw] flex justify-center">
         <div class="flex my-7 flex justify-between w-[85%]">
           <div class="w-[63%] h-max px-10 py-3 rounded-[20px] shadow-md bg-white">
-            <table>
+            <table className="w-[100%]">
               <thead>
-                <tr className="w-full h-[70px] pb-9">
+                <tr className="w-[100%] bg-blue h-[70px] pb-9">
                   <th className="font-semibold text-gray-600 text-m w-[30%]">
                     Product Details
                   </th>
@@ -101,12 +101,12 @@ export default function ShoppingCart() {
                 {cart &&
                   cart.items &&
                   cart.items.map((item) => (
-                    <tr className="hover:bg-gray-100 border-t h-[160px]">
+                    <tr className="w-[100%] hover:bg-gray-100 border-t h-[130px]">
                       {/* {item && item.quantity && setCount(item.quantity)} */}
                       <>
                         <td className="h-full">
                           <div class="flex w-full">
-                            <div class="w-[280px]">
+                            <div class="w-[130px]">
                               <img
                                 className="pl-[12px]"
                                 src={
@@ -167,7 +167,7 @@ export default function ShoppingCart() {
                         </td>
                         <td className="h-full ">
                           <span class="text-center flex items-center justify-center text-m">
-                            ${(item.price).toFixed(2)}
+                            ${item.price.toFixed(2)}
                           </span>
                         </td>
                         <td className="h-full">
@@ -185,27 +185,29 @@ export default function ShoppingCart() {
           <div id="summary" class="w-[35%] h-max px-8 py-3 rounded-[20px]">
             <h1 class="font-semibold text-2xl border-b pb-8">Order Summary</h1>
             {cart &&
-                  cart.items &&
-                  cart.items.map((item) => (
-            <div class="flex justify-between mt-10 mb-5">
-            <span class=" text-m w-[350px]">{item.name}</span>
-            <span class=" text-m">${(item.price * count).toFixed(2)}</span>
-            </div>
-                  ))}
+              cart.items &&
+              cart.items.map((item) => (
+                <div class="flex justify-between mt-10 mb-5">
+                  <span class=" text-m w-[350px]">{item.name}</span>
+                  <span class=" text-m">
+                    ${(item.price * count).toFixed(2)}
+                  </span>
+                </div>
+              ))}
             <div class="border-t mt-8">
               <div class="flex font-semibold justify-between py-6 text-m ">
-                
                 <span>Total Cost</span>
-                
+
                 <span className="text-xl">
-                ${cart &&
-                  cart.items &&
-                  cart.items.reduce((acc, item) => acc + item.price * count, 0).toFixed(2)}
-                  
-                  </span>
-                 
+                  $
+                  {cart &&
+                    cart.items &&
+                    cart.items
+                      .reduce((acc, item) => acc + item.price * count, 0)
+                      .toFixed(2)}
+                </span>
               </div>
-            
+
               <Link to={`/checkout/${cart._id}`}>
                 <button class="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-2">
                   Checkout

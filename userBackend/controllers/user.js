@@ -4,7 +4,7 @@ import User from "../model/user.js";
 import dotenv from "dotenv/config";
 
 export const registerUser = async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
+  const { firstName, lastName, role, email, password } = req.body;
 
   try {
     let user = await User.findOne({ email });
@@ -13,7 +13,7 @@ export const registerUser = async (req, res) => {
       return res.status(400).json({ msg: "User already exists" });
     }
 
-    user = new User({ firstName, lastName, email, password });
+    user = new User({ firstName, lastName, role, email, password });
 
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
@@ -23,6 +23,7 @@ export const registerUser = async (req, res) => {
     const payload = {
       _id: user._id,
       email: user.email,
+      role: user.role,
       firstName: user.firstName,
       lastName: user.lastName,
     };
@@ -60,6 +61,7 @@ export const loginUser = async (req, res) => {
     const payload = {
       _id: user._id,
       email: user.email,
+      role: user.role,
       firstName: user.firstName,
       lastName: user.lastName,
     };

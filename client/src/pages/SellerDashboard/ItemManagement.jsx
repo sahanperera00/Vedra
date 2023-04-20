@@ -26,7 +26,7 @@ const ItemManagement = () => {
   const [images, setImages] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [sellerId, setSellerId] = useState("SELL005");
+  const [sellerId, setSellerId] = useState("");
   const [items, setItems] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -35,6 +35,7 @@ const ItemManagement = () => {
   const [uploadedPostImages, setUploadedPostImages] = useState([]);
   const filepickerRef = useRef(null);
   const [category, setCategory] = useState("");
+  const [state, setState] = useState(false);
 
   const navigate = useNavigate();
 
@@ -88,6 +89,9 @@ const ItemManagement = () => {
   const handleAddItem = async (e) => {
     e.preventDefault();
 
+    const sellerId = localStorage.getItem("sellerId");
+    const sellerEmail = localStorage.getItem("email");
+
     await uploadFiles().then((res) => {
       const item = {
         name,
@@ -95,6 +99,7 @@ const ItemManagement = () => {
         price,
         image: res,
         sellerId,
+        sellerEmail,
         category,
       };
 
@@ -117,6 +122,7 @@ const ItemManagement = () => {
       .delete(`http://localhost:8081/items/${id}`)
       .then(() => {
         console.log("Item deleted");
+        setState(!state);
       })
       .catch((err) => {
         console.log(err);
@@ -125,13 +131,14 @@ const ItemManagement = () => {
 
   useEffect(() => {
     const fetchItems = async () => {
+      const sellerId = localStorage.getItem("sellerId");
       const res = await axios.get(
         `http://localhost:8081/items/seller/${sellerId}`
       );
       setItems(res.data);
     };
     fetchItems();
-  }, [showModal]);
+  }, [showModal, state]);
 
   return (
     <div>

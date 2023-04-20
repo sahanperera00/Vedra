@@ -28,6 +28,14 @@ const orderSchema = new Schema({
         type: String,
         required: true,
       },
+      sellerID: {
+        type: String,
+        required: true,
+      },
+      sellerEmail: {
+        type: String,
+        required: true,
+      },
     },
   ],
   total: {
