@@ -10,6 +10,7 @@ import {
   findOrderbyEmailStatus,
   addItemToCart,
   removeItemFromCart,
+  getCartOrders,
 } from "../controllers/cart.js";
 
 const router = express.Router();
@@ -24,5 +25,6 @@ router.post("/:id/removeItem", removeItemFromCart);
 router.delete("/:id", deleteOrder);
 router.get("/:email/:status/:itemID", searchOrder);
 router.get("/:email/:status", findOrderbyEmailStatus);
+router.get("/status/cart/cart/cart", getCartOrders);
 
 export default router;
