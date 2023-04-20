@@ -28,7 +28,7 @@ export default function Card1({ item }) {
           </div>
         </Link>
         <div>
-          <p>${item.price}</p>
+          <p>${item.price.$numberDecimal}</p>
           <div>
             <StarRatings
               starDimension="20px"

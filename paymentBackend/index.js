@@ -11,10 +11,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({limit:"30mb",extended:true}));
 app.use(cors());
 
-
-
 //Assigning routes
-app.use("/client",router);
+app.use("/payment",router);
 //mongoDb
 
 const PORT = process.env.PORT || 8082;
@@ -27,7 +25,7 @@ mongoose.set('strictQuery',false); // To hide the deprecated warnings
 mongoose.connect(URL);
 const connection = mongoose.connection;
 connection.once('open',()=>{
-    console.log("MongoDb connection is successful");
+    console.log("MongoDB payment database connection successful!");
 
 });
 

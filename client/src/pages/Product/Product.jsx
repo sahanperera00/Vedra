@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
+import axios from "axios";
 import "./Product.css";
 import { useEffect, useState } from "react";
 import StarRatings from "react-star-ratings";
@@ -9,16 +10,12 @@ import Reviews from "../../components/Reviews/Reviews";
 export default function Product() {
   const { id } = useParams();
   const [item, setItem] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
   const [count, setCount] = useState(1);
   const [imagePreview, setImagePreview] = useState(
     item.image && item.image.length > 0 && item.image[0]
   );
-
-  const avgStar =
-    item.star && item.star.reviewers && item.star.reviewers.length > 0
-      ? item.star.total / item.star.reviewers.length
-      : 0;
+  const [disableCart, setDisableCart] = useState();
+  const [res, setRes] = useState({});
 
   const minusCount = () => {
     if (count > 1) {
@@ -30,15 +27,101 @@ export default function Product() {
     setCount(count + 1);
   };
 
-  useEffect(() => {
-    async function fetchData() {
-      const response = await fetch(`http://localhost:8081/items/${id}`);
-      const data = await response.json();
-      setItem(data);
-      setIsLoading(false);
+  const avgStar =
+    item.star && item.star.reviewers && item.star.reviewers.length > 0
+      ? item.star.total / item.star.reviewers.length
+      : 0;
+
+  async function AddtoCart() {
+    const email = "abc@gmail.com";
+    const status = "cart";
+    const itemID = item._id;
+
+    if (disableCart) {
+      return;
+    } else {
+      const Neworder = {
+        email: email,
+        items: [
+          {
+            itemID: item._id,
+            name: item.name,
+            quantity: count,
+            price: item.price.$numberDecimal,
+            image: item.image[0],
+          },
+        ],
+        total: item.price.$numberDecimal * count,
+        status: status,
+        address: "kandy",
+        shippingMethod: "PayPal",
+      };
+
+      const newItem = {
+        itemID: item._id,
+        name: item.name,
+        quantity: count,
+        price: item.price.$numberDecimal,
+        image: item.image[0],
+      };
+
+      if (res.isSuccess) {
+        try {
+          const res2 = await axios.post(
+            `http://localhost:8083/orders/${res.order[0]._id}/addItem`,
+            newItem
+          );
+          console.log(res2.data);
+        } catch (err) {
+          console.error(err);
+        }
+      } else {
+        await axios
+          .post(`http://localhost:8083/orders`, Neworder)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+
+      setDisableCart(true);
     }
-    fetchData();
-  }, [id]);
+  }
+
+  async function fetchItem() {
+    try {
+      const response1 = await fetch(`http://localhost:8081/items/${id}`);
+      setItem(await response1.json());
+
+      const response2 = await fetch(
+        `http://localhost:8083/orders/abc@gmail.com/cart/${id}`
+      );
+      const data = await response2.json();
+      setDisableCart(data.isSuccess);
+
+      const response3 = await fetch(
+        `http://localhost:8083/orders/abc@gmail.com/cart`
+      );
+      setRes(await response3.json());
+
+      return { item, disableCart, res };
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  useEffect(() => {
+    fetchItem()
+      .then((data) => {
+        // console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <>
@@ -91,7 +174,7 @@ export default function Product() {
                 {item.description}
               </p>
               <p className=" font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 mt-6">
-                ${item.price}
+                ${item.price && item.price.$numberDecimal}
               </p>
 
               <div className="lg:mt-11 mt-10">
@@ -141,11 +224,24 @@ export default function Product() {
                 </div>
               </div>
 
-              <Link to="/">
-                <button className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-9">
+              {disableCart ? (
+                <button
+                  className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-9"
+                  onClick={AddtoCart}
+                  disabled
+                >
+                  Added
+                </button>
+              ) : (
+                // <Link to="/cart">
+                <button
+                  className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-9"
+                  onClick={AddtoCart}
+                >
                   Add to Shopping Cart
                 </button>
-              </Link>
+                // </Link>
+              )}
             </div>
 
             <div
