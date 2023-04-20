@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Signup.css";
 
@@ -24,7 +24,7 @@ export default function Signup() {
 
     try {
       await axios.post("http://localhost:8084/register", newUser);
-      alert("Registration Successfull");
+      // alert("Registration Successfull");
       navigate("/signin");
     } catch (err) {
       alert("User Registration Failed");
@@ -32,8 +32,7 @@ export default function Signup() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
+    if (localStorage.getItem("token")) {
       navigate("/");
     }
   }, []);
@@ -42,8 +41,8 @@ export default function Signup() {
     <div className="signup">
       <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <a
-            href="#"
+          <Link
+            to="/"
             className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
           >
             <img
@@ -51,11 +50,11 @@ export default function Signup() {
               src="https://firebasestorage.googleapis.com/v0/b/vedra-8d493.appspot.com/o/C.png?alt=media&token=e4428da2-88c5-4e72-92b9-589c18f95334"
               alt="logo"
             />
-          </a>
+          </Link>
           <div className="w-[30%] bg-white rounded-lg shadow dark:border md:mt-0 xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="w-full p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                Create an Account
+                Create your Account
               </h1>
               <form onSubmit={handleSubmit}>
                 <div className="">
@@ -73,7 +72,7 @@ export default function Signup() {
                           name="firstName"
                           id="firstName"
                           className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          placeholder="First Name"
+                          placeholder="John"
                           required="required"
                           onChange={(e) => {
                             setFirstName(e.target.value);
@@ -94,7 +93,7 @@ export default function Signup() {
                           name="lastName"
                           id="lastName"
                           className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          placeholder="Last Name"
+                          placeholder="Doe"
                           required="required"
                           onChange={(e) => {
                             setLastName(e.target.value);
@@ -138,7 +137,7 @@ export default function Signup() {
                         name="email"
                         id="email"
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="samaple@gmail.com"
+                        placeholder="samaple@mail.com"
                         required="required"
                         onChange={(e) => {
                           setEmail(e.target.value);

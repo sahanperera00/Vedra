@@ -1,15 +1,30 @@
 import "./Navbar.css";
 import SearchBar from "../SearchBar/SearchBar";
-import { Link } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import { UilShoppingBag } from "@iconscout/react-unicons";
 import { useState } from "react";
 import { useEffect } from "react";
+import { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import decode from "jwt-decode";
 
 export default function Navbar() {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState({});
+  const navigate = useNavigate();
+
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
 
   useEffect(() => {
-    setToken(localStorage.getItem("token"));
+    const token = decode(localStorage.getItem("token"));
+    if (token) {
+      setToken(token);
+      console.log(token);
+    } else {
+      setToken("");
+    }
   }, []);
 
   return (
@@ -27,22 +42,83 @@ export default function Navbar() {
         <div>
           <SearchBar />
         </div>
-        <div>
+        <div className="flex items-center gap-6">
+          <Link to={"/cart"}>
+            <UilShoppingBag className="cartIcon" />
+          </Link>
           {token ? (
-            <Link to={"/signin"}>
-              <button
-                type="button"
-                className="bg-[#3ea7ac] hover:bg-[#278a9e] mx-4 text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                onClick={() => {
-                  localStorage.removeItem("token");
-                  localStorage.removeItem("sellerId");
-                  localStorage.removeItem("email");
-                  setToken("");
-                }}
-              >
-                Sign out
-              </button>
-            </Link>
+            <>
+              <Menu as="div" className="relative inline-block text-left">
+                <div>
+                  <Menu.Button className="flex gap-3">
+                    <img
+                      className="w-[40px] rounded-full border-[1px] border-slate-400"
+                      src="https://firebasestorage.googleapis.com/v0/b/surge-internship-march-2023.appspot.com/o/noprofile.png?alt=media&token=739a8587-3eb9-4d38-9e44-d887d2bf54e3"
+                      alt="profile"
+                    />
+                    <p className="text-sm font-medium">
+                      Hello {token.firstName} {token.lastName}
+                      <br />
+                      <p className="text-slate-400">
+                        {localStorage.getItem("email")}
+                      </p>
+                    </p>
+                  </Menu.Button>
+                </div>
+
+                <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95"
+                >
+                  <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="py-1">
+                      <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            to={"/client"}
+                            className={classNames(
+                              active
+                                ? "bg-gray-100 text-gray-900"
+                                : "text-gray-700",
+                              "block px-4 py-2 text-sm"
+                            )}
+                          >
+                            Dashboard
+                          </Link>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <button
+                            type="button"
+                            className={classNames(
+                              active
+                                ? "bg-gray-100 text-gray-900"
+                                : "text-gray-700",
+                              "block w-full px-4 py-2 text-left text-sm"
+                            )}
+                            onClick={() => {
+                              localStorage.removeItem("token");
+                              localStorage.removeItem("sellerId");
+                              localStorage.removeItem("email");
+                              setToken("");
+                              navigate("/");
+                            }}
+                          >
+                            Sign out
+                          </button>
+                        )}
+                      </Menu.Item>
+                    </div>
+                  </Menu.Items>
+                </Transition>
+              </Menu>
+            </>
           ) : (
             <Link to={"/signin"}>
               <button
@@ -53,9 +129,6 @@ export default function Navbar() {
               </button>
             </Link>
           )}
-          <Link to={"/cart"}>
-            <UilShoppingBag className="cartIcon" />
-          </Link>
         </div>
       </div>
       <hr />

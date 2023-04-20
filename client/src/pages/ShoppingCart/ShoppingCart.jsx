@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import { useEffect, useState } from "react";
 import Footer from "../../components/Footer/Footer";
@@ -7,6 +7,7 @@ import axios from "axios";
 export default function ShoppingCart() {
   const [count, setCount] = useState(1);
   const [cart, setCart] = useState({});
+  const navigate = useNavigate();
 
   const minusCount = () => {
     if (count > 1) {
@@ -19,16 +20,20 @@ export default function ShoppingCart() {
   };
 
   useEffect(() => {
-    async function fetchCart() {
-      const email = localStorage.getItem("email");
-      const status = "cart";
-      const response = await fetch(
-        `http://localhost:8083/orders/${email}/${status}`
-      );
-      const data = await response.json();
-      setCart(data.order[0]);
+    if (localStorage.getItem("token")) {
+      async function fetchCart() {
+        const email = localStorage.getItem("email");
+        const status = "cart";
+        const response = await fetch(
+          `http://localhost:8083/orders/${email}/${status}`
+        );
+        const data = await response.json();
+        setCart(data.order[0]);
+      }
+      fetchCart();
+    } else {
+      navigate("/signin");
     }
-    fetchCart();
   }, [cart]);
 
   return (
