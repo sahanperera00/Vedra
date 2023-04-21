@@ -40,7 +40,7 @@ const orderSchema = new Schema({
   ],
   total: {
     type: Number,
-    required: true,
+    required: false,
   },
   status: {
     type: String,
@@ -48,11 +48,11 @@ const orderSchema = new Schema({
   },
   address: {
     type: String,
-    required: true,
+    required: false,
   },
   shippingMethod: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 
