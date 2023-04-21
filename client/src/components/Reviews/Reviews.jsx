@@ -7,11 +7,11 @@ export default function Reviews({ reviews }) {
 
   return (
     <div>
-      {reviews && reviews.total && reviews.reviewers.length > 0 ? (
-        <section className="bg-blueGray-100 rounded-t-10xl overflow-hidden">
-          <div className="container mx-auto mb-[150px]">
-            <h2 className="mb-14 text-3xl">Reviews</h2>
-            {reviews.reviewers.map((review) => (
+      <section className="bg-blueGray-100 rounded-t-10xl overflow-hidden">
+        <div className="container mx-auto mb-[150px]">
+          <h2 className="mb-14 text-3xl">Reviews</h2>
+          {reviews && reviews.total && reviews.reviewers.length > 0 ? (
+            reviews.reviewers.map((review) => (
               <div className="mb-8 shadow-md rounded-lg overflow-hidden">
                 <div className=" md:px-16 bg-white md:py-6 flex flex-wrap items-center">
                   <img
@@ -52,14 +52,14 @@ export default function Reviews({ reviews }) {
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-        </section>
-      ) : (
-        <div className="flex justify-center items-center h-96">
-          <h1 className="text-2xl font-semibold">No Reviews</h1>
+            ))
+          ) : (
+            <div className="flex justify-center items-center">
+              <h1 className="text-2xl font-semibold">No Reviews</h1>
+            </div>
+          )}
         </div>
-      )}
+      </section>
     </div>
   );
 }

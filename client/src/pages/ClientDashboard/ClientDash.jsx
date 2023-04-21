@@ -40,7 +40,7 @@ const ClientDash = () => {
         navigate("/");
       }
     } else {
-      navigate("/signin");
+      navigate("/");
     }
   }, []);
 

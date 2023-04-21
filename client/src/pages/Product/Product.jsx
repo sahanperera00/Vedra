@@ -6,6 +6,7 @@ import "./Product.css";
 import { useEffect, useState } from "react";
 import StarRatings from "react-star-ratings";
 import Reviews from "../../components/Reviews/Reviews";
+import jwtDecode from "jwt-decode";
 
 export default function Product() {
   const { id } = useParams();
@@ -183,70 +184,79 @@ export default function Product() {
                 ${item.price && item.price.$numberDecimal}
               </p>
 
-              <div className="lg:mt-11 mt-10">
-                <div
-                  className="flex flex-row"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <p
-                    className=" font-medium text-base leading-4 text-gray-600"
-                    style={{
-                      marginRight: "50px",
-                    }}
-                  >
-                    Select quantity
-                  </p>
+              {!localStorage.getItem("token") ? (
+                <></>
+              ) : jwtDecode(localStorage.getItem("token")).role == "buyer" ? (
+                <div className="lg:mt-11 mt-10">
                   <div
-                    className="flex"
+                    className="flex flex-row"
                     style={{
                       display: "flex",
                       alignItems: "center",
                     }}
                   >
-                    <button
-                      onClick={minusCount}
-                      className="focus:outline-none cursor-pointer w-7 h-7 flex items-center justify-center bg-[#3ea7ac] text-white hover:bg-[#278a9e] rounded-l-lg"
+                    <p
+                      className=" font-medium text-base leading-4 text-gray-600"
+                      style={{
+                        marginRight: "50px",
+                      }}
                     >
-                      -
-                    </button>
-                    <input
-                      id="counter"
-                      aria-label="input"
-                      className="border border-gray-300 h-full text-center w-14 mx-2"
-                      type="text"
-                      value={count}
-                      disabled
-                    />
-                    <button
-                      onClick={addCount}
-                      className="focus:outline-none cursor-pointer w-7 h-7 flex items-center justify-center bg-[#3ea7ac] text-white hover:bg-[#278a9e] rounded-r-lg"
+                      Select quantity
+                    </p>
+                    <div
+                      className="flex"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                      }}
                     >
-                      +
-                    </button>
+                      <button
+                        onClick={minusCount}
+                        className="focus:outline-none cursor-pointer w-7 h-7 flex items-center justify-center bg-[#3ea7ac] text-white hover:bg-[#278a9e] rounded-l-lg"
+                      >
+                        -
+                      </button>
+                      <input
+                        id="counter"
+                        aria-label="input"
+                        className="border border-gray-300 h-full text-center w-14 mx-2"
+                        type="text"
+                        value={count}
+                        disabled
+                      />
+                      <button
+                        onClick={addCount}
+                        className="focus:outline-none cursor-pointer w-7 h-7 flex items-center justify-center bg-[#3ea7ac] text-white hover:bg-[#278a9e] rounded-r-lg"
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              {disableCart ? (
-                <button
-                  className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-9"
-                  onClick={AddtoCart}
-                  disabled
-                >
-                  Added
-                </button>
               ) : (
-                // <Link to="/cart">
-                <button
-                  className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-9"
-                  onClick={AddtoCart}
-                >
-                  Add to Shopping Cart
-                </button>
-                // </Link>
+                <></>
+              )}
+
+              {!localStorage.getItem("token") ? (
+                <></>
+              ) : jwtDecode(localStorage.getItem("token")).role == "buyer" ? (
+                disableCart ? (
+                  <button
+                    className="bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-9"
+                    disabled
+                  >
+                    Added
+                  </button>
+                ) : (
+                  <button
+                    className="bg-[#3ea7ac] hover:bg-[#278a9e] text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-3 text-center w-full mt-9"
+                    onClick={AddtoCart}
+                  >
+                    Add to Shopping Cart
+                  </button>
+                )
+              ) : (
+                <></>
               )}
             </div>
 
