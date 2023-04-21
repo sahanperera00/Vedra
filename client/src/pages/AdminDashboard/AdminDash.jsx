@@ -53,6 +53,8 @@ const AdminDash = () => {
       if (decodedToken.role === "buyer" || decodedToken.role === "admin") {
         navigate("/");
       }
+    } else {
+      navigate("/");
     }
   }, []);
 

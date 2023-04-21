@@ -10,6 +10,7 @@ import decode from "jwt-decode";
 
 export default function Navbar() {
   const [token, setToken] = useState({});
+  const [state, setState] = useState(false);
   const navigate = useNavigate();
 
   function classNames(...classes) {
@@ -22,7 +23,7 @@ export default function Navbar() {
       const decodedToken = decode(token);
       setToken(decodedToken);
     }
-  }, []);
+  }, [state]);
 
   return (
     <div className="navbar">
@@ -75,19 +76,47 @@ export default function Navbar() {
                   <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                       <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to={"/client"}
-                            className={classNames(
-                              active
-                                ? "bg-gray-100 text-gray-900"
-                                : "text-gray-700",
-                              "block px-4 py-2 text-sm"
+                        {token.role == "buyer"
+                          ? ({ active }) => (
+                              <Link
+                                to={"/client"}
+                                className={classNames(
+                                  active
+                                    ? "bg-gray-100 text-gray-900"
+                                    : "text-gray-700",
+                                  "block px-4 py-2 text-sm"
+                                )}
+                              >
+                                Dashboard
+                              </Link>
+                            )
+                          : token.role == "seller"
+                          ? ({ active }) => (
+                              <Link
+                                to={"/seller"}
+                                className={classNames(
+                                  active
+                                    ? "bg-gray-100 text-gray-900"
+                                    : "text-gray-700",
+                                  "block px-4 py-2 text-sm"
+                                )}
+                              >
+                                Dashboard
+                              </Link>
+                            )
+                          : ({ active }) => (
+                              <Link
+                                to={"/admin"}
+                                className={classNames(
+                                  active
+                                    ? "bg-gray-100 text-gray-900"
+                                    : "text-gray-700",
+                                  "block px-4 py-2 text-sm"
+                                )}
+                              >
+                                Dashboard
+                              </Link>
                             )}
-                          >
-                            Dashboard
-                          </Link>
-                        )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
@@ -103,7 +132,8 @@ export default function Navbar() {
                               localStorage.removeItem("token");
                               localStorage.removeItem("sellerId");
                               localStorage.removeItem("email");
-                              setToken(null);
+                              setToken("");
+                              setState(!state);
                               navigate("/");
                             }}
                           >
