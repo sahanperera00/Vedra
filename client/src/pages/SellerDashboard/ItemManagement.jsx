@@ -20,13 +20,14 @@ import { storage } from "../../firebase.js";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import AddItemModal from "../../components/AddItemModal/AddItemModal.jsx";
 import UpdateItemModal from "../../components/UpdateItemModal/UpdateItemModal.jsx";
+import { async } from "@firebase/util";
 
 const ItemManagement = () => {
   const [quantity, setQuantity] = useState("");
   const [images, setImages] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [sellerId, setSellerId] = useState("SELL005");
+  const [sellerId, setSellerId] = useState("");
   const [items, setItems] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -35,6 +36,8 @@ const ItemManagement = () => {
   const [uploadedPostImages, setUploadedPostImages] = useState([]);
   const filepickerRef = useRef(null);
   const [category, setCategory] = useState("");
+  const [state, setState] = useState(false);
+  const [cartDelete, setCartDelete] = useState({});
 
   const navigate = useNavigate();
 
@@ -88,6 +91,9 @@ const ItemManagement = () => {
   const handleAddItem = async (e) => {
     e.preventDefault();
 
+    const sellerId = localStorage.getItem("sellerId");
+    const sellerEmail = localStorage.getItem("email");
+
     await uploadFiles().then((res) => {
       const item = {
         name,
@@ -95,6 +101,7 @@ const ItemManagement = () => {
         price,
         image: res,
         sellerId,
+        sellerEmail,
         category,
       };
 
@@ -112,11 +119,42 @@ const ItemManagement = () => {
     });
   };
 
-  const handleDeleteItem = (id) => {
-    axios
+  const handleDeleteItem = async (id) => {
+    const orders = await axios.get(
+      `http://localhost:8083/orders/status/cart/cart/cart`
+    );
+
+    orders.data.map(async (order) => {
+      const orderID = order._id;
+      const cartitems = order.items;
+
+      cartitems.map(async (item) => {
+        if (item.itemID === id) {
+          console.log(orderID);
+          console.log(item);
+          await axios
+            .post(`http://localhost:8083/orders/${orderID}/removeItem`, {
+              itemID: item.itemID,
+              name: item.name,
+              quantity: item.quantity,
+              price: item.price,
+              image: item.image,
+            })
+            .then(() => {
+              console.log("Item deleted from cart");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      });
+    });
+
+    await axios
       .delete(`http://localhost:8081/items/${id}`)
       .then(() => {
         console.log("Item deleted");
+        setState(!state);
       })
       .catch((err) => {
         console.log(err);
@@ -125,13 +163,14 @@ const ItemManagement = () => {
 
   useEffect(() => {
     const fetchItems = async () => {
+      const sellerId = localStorage.getItem("sellerId");
       const res = await axios.get(
         `http://localhost:8081/items/seller/${sellerId}`
       );
       setItems(res.data);
     };
     fetchItems();
-  }, [showModal]);
+  }, [showModal, state]);
 
   return (
     <div>

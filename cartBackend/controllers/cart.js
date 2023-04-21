@@ -153,3 +153,12 @@ export const findOrderbyEmailStatus = async (req, res) => {
     });
   }
 };
+
+export const getCartOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({ status: "cart" });
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
