@@ -1,22 +1,29 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '.';
-import { userProfileData } from '../../../data/dummy';
 import { useStateContext } from '../../../../src/contexts/ContextProvider';
-import KG from '../../../data/KG.png';
+
+import jwtDecode from 'jwt-decode';
 
 const UserProfile = () => {
   const { currentColor } = useStateContext();
-
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem('userInfo');
+    localStorage.removeItem('token');
     navigate('/');
   };
 
-  const user = JSON.parse(localStorage.getItem('userInfo'));
+  const [user,setUser] = useState("");
+
+  useEffect(()=>{
+    if(localStorage.token){
+      const token = localStorage.getItem('token');
+      const decodedUser = jwtDecode(token);
+      setUser(decodedUser);
+    }
+  },[])
 
   return (
     <div className="nav-item absolute right-1 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96">
@@ -31,22 +38,23 @@ const UserProfile = () => {
         />
       </div>
       <div className="flex gap-5 items-center mt-6 border-color border-b-1 pb-6">
-        <img
+        {/* <img
           className="rounded-full h-24 w-24"
           src={KG}
           alt="user-profile"
-        />
+        /> */}
         <div>
           <p className="font-semibold text-xl dark:text-gray-200 text-transform: capitalize">
-            Michael Roberts
+            
             {/* Michael Roberts */}
+            {user.firstName} {user.lastName}
           </p>
-          <p className="text-gray-500 text-sm dark:text-gray-400">
-            Client
+          <p className=" capitalize text-gray-500 text-sm dark:text-gray-400">
+            {user.role}
             {/* Administrator */}
           </p>
           <p className="text-gray-500 text-sm font-semibold dark:text-gray-400">
-            michael@123.com
+            {user.email}
             {/* admin@lmc.lk */}
           </p>
         </div>

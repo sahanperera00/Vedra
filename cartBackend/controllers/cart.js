@@ -162,3 +162,24 @@ export const getCartOrders = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
+
+export const updateOrderStatus = async(req,res)=>{
+  
+  const {id} = req.body;
+  const {status} =  req.body;
+
+  try{
+    const order = await Order.findByIdAndUpdate(
+    {_id:id},
+    {status : status},
+    {new:true}
+    );
+    console.log("id",id);
+    console.log("status",status);
+    res.json(order);
+  }catch(error){
+    console.log(error);
+    res.status(404).json({message:error.message});
+  }
+
+}
