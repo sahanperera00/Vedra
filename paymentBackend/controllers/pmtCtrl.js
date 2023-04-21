@@ -105,8 +105,8 @@ export const chargeUser = async(req,res)=>{
         line_items,
         mode: "payment",
         shipping_address_collection: {},
-        success_url: `http://localhost:3000/pmtsuccess`,
-        cancel_url: `http://localhost:3000/checkout/${orderId}`,
+        success_url: `http://localhost:3000/pmtsuccess${orderId}`,
+        cancel_url: `http://localhost:3000/checkout`,
     });
     //console.log(res.body);
     res.send({url: session.url});

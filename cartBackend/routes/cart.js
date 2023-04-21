@@ -11,6 +11,7 @@ import {
   addItemToCart,
   removeItemFromCart,
   getCartOrders,
+  updateOrderStatus,
 } from "../controllers/cart.js";
 
 const router = express.Router();
@@ -20,6 +21,7 @@ router.post("/", createOrder);
 router.get("/:id", getOrderbyId);
 router.get("/email/:email", getOrderbyUserEmail);
 // router.patch("/:id", updateOrder);
+router.patch("/updateStatus", updateOrderStatus);
 router.post("/:id/addItem", addItemToCart);
 router.post("/:id/removeItem", removeItemFromCart);
 router.delete("/:id", deleteOrder);

@@ -20,6 +20,7 @@ import AddItemForm from "./pages/SellerDashboard/AddItemForm";
 import UpdateItemForm from "./pages/SellerDashboard/UpdateItemForm";
 import PmtSuccess from "./pages/PaymentSuccess/success";
 import ClientPayments from "./pages/ClientDashboard/ClientPayments";
+import Unsuccesful from "./pages/Checkout/Unsuccesful";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         <Route path="/template" element={<PageTemplate />} />
         <Route path="/checkout/:id" element={<Checkout />} />
         <Route path="/pmtsuccess" element={<PmtSuccess />} />
+        <Route path="/failed" element={<Unsuccesful/>}/>
         <Route path="/mypayments" element={<ClientPayments />} />
         {/* Test method to fetch item information */}
         <Route path="/checkout/:6438fa2c518a57cbd5bdc8f4" element={<Checkout />} /> 

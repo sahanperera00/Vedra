@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { FiShoppingCart } from 'react-icons/fi';
 import { BsChatLeft } from 'react-icons/bs';
@@ -6,7 +6,9 @@ import { RiNotification3Line } from 'react-icons/ri';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-import KG from '../../../../src/data/KG.png';
+import jwtDecode from 'jwt-decode';
+
+//import KG from '../../../../src/data/KG.png';
 import { Cart, Chat, Notification, UserProfile } from '.';
 import { useStateContext } from '../../../../src/contexts/ContextProvider';
 
@@ -57,6 +59,16 @@ const Navbar = () => {
     }
   }, [screenSize]);
 
+  const [user, setUser] = useState('');
+
+  useEffect(() => {
+    if(localStorage.token){
+      const token = localStorage.getItem('token');
+      const decodedUser = jwtDecode(token);
+      setUser(decodedUser);
+    }
+  },[])
+
   const handleActiveMenu = () => setActiveMenu(!activeMenu);
 
   return (
@@ -73,15 +85,15 @@ const Navbar = () => {
             className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
             onClick={() => handleClick('userProfile')}
           >
-            <img
+            {/* <img
               className="rounded-full w-8 h-8"
               src={KG}
               alt="user-profile"
-            />
+            /> */}
             <p>
-              <span className="text-gray-400 text-14">Hi,</span>{' '}
+              <span className="text-gray-400 text-14">Hello,</span>{' '}
               <span className="text-gray-400 font-bold ml-1 text-14">
-                Michael
+                {user.firstName}
                 {/* Michael */}
               </span>
             </p>
