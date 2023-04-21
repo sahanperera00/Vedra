@@ -56,8 +56,8 @@ export default function Product() {
         ],
         total: item.price.$numberDecimal * count,
         status: status,
-        address: "kandy",
-        shippingMethod: "PayPal",
+        address: "",
+        shippingMethod: "",
       };
 
       const newItem = {
