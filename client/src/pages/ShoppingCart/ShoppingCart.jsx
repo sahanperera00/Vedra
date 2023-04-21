@@ -40,7 +40,7 @@ export default function ShoppingCart() {
         navigate("/");
       }
     } else {
-      navigate("/signin");
+      navigate("/");
     }
   }, [cart]);
 

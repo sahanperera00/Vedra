@@ -21,6 +21,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import AddItemModal from "../../components/AddItemModal/AddItemModal.jsx";
 import UpdateItemModal from "../../components/UpdateItemModal/UpdateItemModal.jsx";
 import { async } from "@firebase/util";
+import jwtDecode from "jwt-decode";
 
 const ItemManagement = () => {
   const [quantity, setQuantity] = useState("");
@@ -162,6 +163,16 @@ const ItemManagement = () => {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      if (decodedToken.role === "buyer" || decodedToken.role === "admin") {
+        navigate("/");
+      }
+    } else {
+      navigate("/");
+    }
+
     const fetchItems = async () => {
       const sellerId = localStorage.getItem("sellerId");
       const res = await axios.get(
