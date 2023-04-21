@@ -13,7 +13,8 @@ export default function NewArrivals() {
         "http://localhost:8081/items/category/NewArrivals"
       );
       const data = await response.json();
-      setItems(data);
+      const reversedData = data.reverse();
+      setItems(reversedData);
       setIsLoading(false);
     }
     fetchData();
@@ -25,12 +26,16 @@ export default function NewArrivals() {
       items: 6,
     },
     desktop: {
-      breakpoint: { max: 3000, min: 1024 },
+      breakpoint: { max: 3000, min: 2000 },
       items: 6,
     },
+    minidesktop: {
+      breakpoint: { max: 2000, min: 1000 },
+      items: 7,
+    },
     tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2,
+      breakpoint: { max: 1000, min: 464 },
+      items: 3,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
@@ -42,7 +47,7 @@ export default function NewArrivals() {
     <div className="trendingNow">
       <div>
         <h3>New Arrivals</h3>
-        <button className="bg-[#3ea7ac] hover:bg-[#278a9e]  mx-4 text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+        <button className="bg-[#3ea7ac] hover:bg-[#278a9e] mx-4 text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
           View more
         </button>
       </div>

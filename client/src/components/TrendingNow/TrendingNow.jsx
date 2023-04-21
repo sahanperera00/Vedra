@@ -13,7 +13,8 @@ export default function TrendingNow() {
         "http://localhost:8081/items/category/TrendingNow"
       );
       const data = await response.json();
-      setItems(data);
+      const reversedData = data.reverse();
+      setItems(reversedData);
       setIsLoading(false);
     }
     fetchData();
