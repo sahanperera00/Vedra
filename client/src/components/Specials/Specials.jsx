@@ -10,10 +10,11 @@ export default function Specials() {
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        "http://localhost:8081/items/category/NewArrivals"
+        "http://localhost:8081/items/category/Specials"
       );
       const data = await response.json();
-      setItems(data);
+      const reversedData = data.reverse();
+      setItems(reversedData);
       setIsLoading(false);
     }
     fetchData();

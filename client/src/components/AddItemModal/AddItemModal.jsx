@@ -121,7 +121,7 @@ export default function AddItemModal({
                           Image
                         </label>
                         <div
-                          className="flex items-center justify-center "
+                          className="flex items-center justify-center gap-5"
                           style={{
                             cursor: "pointer",
                             // backgroundColor: "#5a5a5a",
