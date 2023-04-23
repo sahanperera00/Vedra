@@ -12,7 +12,7 @@ const PmtSuccess = () => {
   const id = useParams().id;
   const orderStatus = async(req)=>{
     console.log(id);
-    const status = "paid"
+    const status = "Pending"
     try{
       await axios.patch(`http://localhost:8083/orders/updateStatus`,{id,status})
       .then((res)=>{
