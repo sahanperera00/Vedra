@@ -41,7 +41,7 @@ function App() {
         <Route path="/client" element={<ClientDash />} />
         <Route path="/template" element={<PageTemplate />} />
         <Route path="/checkout/:id" element={<Checkout />} />
-        <Route path="/pmtsuccess" element={<PmtSuccess />} />
+        <Route path="/pmtsuccess/:id" element={<PmtSuccess />} />
         <Route path="/failed" element={<Unsuccesful/>}/>
         <Route path="/mypayments" element={<ClientPayments />} />
         {/* Test method to fetch item information */}

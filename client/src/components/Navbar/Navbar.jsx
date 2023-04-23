@@ -37,7 +37,7 @@ export default function Navbar() {
             />
           </Link>
         </div>
-        <div>
+        <div className="h-1000">
           <SearchBar />
         </div>
         <div className="flex items-center gap-6">

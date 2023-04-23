@@ -1,9 +1,44 @@
-import React from 'react'
+import React, {useEffect}from 'react'
+import { useParams } from 'react-router-dom'
 import {Link} from 'react-router-dom'
+import axios from 'axios'
+import { ToastContainer,toast,Zoom,Bounce } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 
 const PmtSuccess = () => {
+
+  //This page should initially handle all the payment related content and status redirections
+  const id = useParams().id;
+  const orderStatus = async(req)=>{
+    console.log(id);
+    const status = "paid"
+    try{
+      await axios.patch(`http://localhost:8083/orders/updateStatus`,{id,status})
+      .then((res)=>{
+        console.log(res.data);
+        console.log("order Status Updated");
+      }) 
+    }catch(error){
+      console.log(error);
+    }
+  }
+
+  // const handleNavigation = ()=>{
+  //   window.location.href = "/";
+  // }
+
+  
+  toast.success("Your payment has been successful! Please check your payment history for more details.");
+ 
+
+  useEffect(()=>{
+    orderStatus();
+  },[])
+
   return (
     <div className="bg-gray-100 h-screen">
+      <ToastContainer/>
       <div className="bg-white p-6  md:mx-auto">
         <svg viewBox="0 0 24 24" className="text-green-600 w-16 h-16 mx-auto my-6">
             <path fill="currentColor"
@@ -14,7 +49,7 @@ const PmtSuccess = () => {
             <h3 className="md:text-2xl text-base text-gray-900 font-semibold text-center">Payment Done!</h3>
             <p className="text-gray-600 my-2">Thank you for completing your secure online payment.</p>
             <p> Have a great day!  </p>
-            <div className="py-10 text-center">
+            <div className="py-10 text-center" >
                 <Link to="/" className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3">
                     Continue Shopping
                </Link>
