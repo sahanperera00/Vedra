@@ -57,6 +57,47 @@ const AdminDash = () => {
       navigate("/");
     }
   }, []);
+  
+  const [orders,setOrders] = useState([]);
+  let total = 0
+  const [Totals,setTotals] = useState(0);
+  const getOrders = async () => {
+    await axios.get(`http://localhost:8083/orders/`).then((res) => {
+      console.log(res.data);
+      setOrders(res.data);
+      console.log(orders);
+    }).catch((error) => {
+      console.log(error);
+    })};
+
+    const calcTotal = ()=>{
+      orders.map((order)=>{
+        if(order.status === "Dispatched" || order.status === "Confirmed" || order.status === "Pending"){
+          total += order.total
+          setTotals(total);
+        }
+      })
+      
+      console.log(Totals)
+    }
+    useEffect(()=>{
+      getOrders();
+      
+    },[])
+
+    useEffect(()=>{
+      calcTotal();
+    })
+
+
+    //Cost formatter
+
+    const formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2,
+      currencyDisplay: 'symbol'
+    })
 
   return (
     <div>
@@ -131,12 +172,12 @@ const AdminDash = () => {
                       <DashTopBox
                         icon={<GiMoneyStack />}
                         label="Average Sales Amount"
-                        data={200000 + "LKR"}
+                        data={formatter.format(Totals)}
                       />
                       <DashTopBox
                         icon={<GiMoneyStack />}
-                        label="Total Revenue Amount"
-                        data={2000000 + "LKR"}
+                        label="Total Commissions Earned"
+                        data={formatter.format(Totals * .15)}
                       />
                     </div>
                   </div>
@@ -149,7 +190,7 @@ const AdminDash = () => {
                         <DashTopBox
                           icon={<MdPendingActions />}
                           label="Orders pending"
-                          data={23}
+                          data={0}
                         />
                       </Link>
                       <Link to="/MachMaintenanceViewAll">
