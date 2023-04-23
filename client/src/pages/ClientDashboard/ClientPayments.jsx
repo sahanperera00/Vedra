@@ -46,14 +46,13 @@ const ClientPayments = () => {
 
 
   const [payment, setPayment] = useState([]);
-
   const getPayment = async () => {
 
     //ONCE THE JWT TOKEN IS SORTED USE THESE CONTENT TO GET THE VALUES
     //const jwt = JSON.parse(localStorage.getItem("email"));
     //const user = jwtDecode(jwt); //Using this to get the email of the user
 
-    const clientMail = "abc@gmail.com"
+    const clientMail = localStorage.getItem('email');
     axios.get(`http://localhost:8082/payment/${clientMail}`).then((res) => {
       setPayment(res.data);
     })
@@ -63,6 +62,14 @@ const ClientPayments = () => {
     getPayment();
     console.log(payment);
   }, [])
+
+  //Using a formatter
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    currencyDisplay: 'symbol'
+  })
 
   return (
     <div>
@@ -137,17 +144,17 @@ const ClientPayments = () => {
                                 <tr className="text-sm h-10 border dark:border-slate-600">
                                   <TableData value={`INV` + data._id} />
                                   <TableData value={data._id} />
-                                  <TableData value={data.pmtDate} />
-                                  <TableData value={(data.netPrice).toFixed(2)} />
-                                  <TableData value={'Paid'} />
+                                  <TableData value={new Date(data.pmtDate).toISOString().split('T')[0]} />
+                                  <TableData value={formatter.format(data.netPrice)} />
+                                  <TableData value={'Card'} />
 
                                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                    <Link to="/nigga">
+                                    <Link to="/unconfirmed">
                                       <button
                                         type="button"
                                         className="font-bold py-1 px-4 rounded-full mx-3 text-white"
                                         style={{ background: currentColor }}
-                                      >
+                                      > Invoice
                                         <i className="fas fa-edit" />
                                       </button>
                                     </Link>
