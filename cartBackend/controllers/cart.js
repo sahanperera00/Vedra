@@ -204,31 +204,3 @@ export const updateItemQuantity = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
-
-// Order.findById(orderId, (err, order) => {
-//   if (err) {
-//     return res.status(500).json({ error: err });
-//   }
-
-//   if (!order) {
-//     return res.status(404).json({ error: "Order not found" });
-//   }
-
-//   const itemIndex = order.items.findIndex((item) => item.itemID === itemId);
-
-//   if (itemIndex === -1) {
-//     return res.status(404).json({ error: "Item not found in order" });
-//   }
-
-//   order.items[itemIndex].quantity = quantity;
-
-//   order.save((err, updatedOrder) => {
-//     if (err) {
-//       return res.status(500).json({ error: err });
-//     }
-
-//     res.json(updatedOrder);
-//   });
-// }
-//   );
-// };
