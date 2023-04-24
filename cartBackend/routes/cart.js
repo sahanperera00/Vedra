@@ -3,7 +3,7 @@ import {
   getOrders,
   getOrderbyId,
   createOrder,
-  updateOrder,
+  updateItemQuantity,
   deleteOrder,
   getOrderbyUserEmail,
   searchOrder,
@@ -20,7 +20,7 @@ router.get("/", getOrders);
 router.post("/", createOrder);
 router.get("/:id", getOrderbyId);
 router.get("/email/:email", getOrderbyUserEmail);
-// router.patch("/:id", updateOrder);
+router.put("/:orderId/:itemId", updateItemQuantity);
 router.patch("/updateStatus", updateOrderStatus);
 router.post("/:id/addItem", addItemToCart);
 router.post("/:id/removeItem", removeItemFromCart);

@@ -1,23 +1,50 @@
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Footer from "../../components/Footer/Footer";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
 export default function ShoppingCart() {
-  const [count, setCount] = useState(1);
   const [cart, setCart] = useState({});
   const navigate = useNavigate();
+  const countRefs = useRef([]);
+  const [state, setState] = useState(false);
 
-  const minusCount = () => {
-    if (count > 1) {
-      setCount(count - 1);
+  const minusCount = async (index, itemID) => {
+    if (cart.items[index].quantity > 1) {
+      const updatedCart = { ...cart };
+      updatedCart.items[index].quantity -= 1;
+      setCart(updatedCart);
+
+      await axios
+        .put(`http://localhost:8083/orders/${cart._id}/${itemID}`, {
+          quantity: updatedCart.items[index].quantity,
+        })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
     }
   };
 
-  const addCount = () => {
-    setCount(count + 1);
+  const addCount = async (index, itemID) => {
+    const updatedCart = { ...cart };
+    updatedCart.items[index].quantity += 1;
+    setCart(updatedCart);
+
+    await axios
+      .put(`http://localhost:8083/orders/${cart._id}/${itemID}`, {
+        quantity: updatedCart.items[index].quantity,
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   };
 
   useEffect(() => {
@@ -42,7 +69,7 @@ export default function ShoppingCart() {
     } else {
       navigate("/");
     }
-  }, [cart]);
+  }, [state]);
 
   return (
     <div className="Shoppingcart">
@@ -113,9 +140,8 @@ export default function ShoppingCart() {
               <tbody>
                 {cart &&
                   cart.items &&
-                  cart.items.map((item) => (
+                  cart.items.map((item, index) => (
                     <tr className="w-[100%] hover:bg-gray-100 border-t h-[130px]">
-                      {/* {item && item.quantity && setCount(item.quantity)} */}
                       <>
                         <td className="h-full">
                           <div className="flex w-full">
@@ -141,7 +167,7 @@ export default function ShoppingCart() {
                                       item
                                     )
                                     .then((res) => {
-                                      console.log(res);
+                                      setState(!state);
                                     });
                                 }}
                               >
@@ -150,11 +176,12 @@ export default function ShoppingCart() {
                             </div>
                           </div>
                         </td>
+
                         <td className="h-full">
                           <div className="flex items-center justify-center items-center">
                             <button
-                              onClick={(e) => {
-                                setCount(minusCount);
+                              onClick={() => {
+                                minusCount(index, item.itemID);
                               }}
                               className="focus:outline-none cursor-pointer w-7 h-7 flex items-center justify-center bg-[#3ea7ac] text-white hover:bg-[#278a9e] rounded-l-lg"
                             >
@@ -164,13 +191,15 @@ export default function ShoppingCart() {
                               id="counter"
                               aria-label="input"
                               className="border border-gray-300 h-full text-center w-14 mx-2"
-                              type="text"
+                              type="number"
+                              ref={(ref) => (countRefs.current[index] = ref)}
                               value={item.quantity}
-                              disabled
+                              min={1}
+                              readOnly
                             />
                             <button
-                              onClick={(e) => {
-                                setCount(addCount);
+                              onClick={() => {
+                                addCount(index, item.itemID);
                               }}
                               className="focus:outline-none cursor-pointer w-7 h-7 flex items-center justify-center bg-[#3ea7ac] text-white hover:bg-[#278a9e] rounded-r-lg"
                             >
@@ -185,7 +214,7 @@ export default function ShoppingCart() {
                         </td>
                         <td className="h-full">
                           <span className="text-center flex items-center justify-center text-m">
-                            ${(item.price * count).toFixed(2)}
+                            ${(item.price * item.quantity).toFixed(2)}
                           </span>
                         </td>
                       </>
@@ -205,7 +234,7 @@ export default function ShoppingCart() {
                 <div className="flex justify-between mt-10 mb-5">
                   <span className=" text-m w-[350px]">{item.name}</span>
                   <span className=" text-m">
-                    ${(item.price * count).toFixed(2)}
+                    ${(item.price * item.quantity).toFixed(2)}
                   </span>
                 </div>
               ))}
@@ -218,7 +247,10 @@ export default function ShoppingCart() {
                   {cart &&
                     cart.items &&
                     cart.items
-                      .reduce((acc, item) => acc + item.price * count, 0)
+                      .reduce(
+                        (acc, item) => acc + item.price * item.quantity,
+                        0
+                      )
                       .toFixed(2)}
                 </span>
               </div>

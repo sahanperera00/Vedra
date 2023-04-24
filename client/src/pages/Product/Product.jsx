@@ -186,7 +186,8 @@ export default function Product() {
 
               {!localStorage.getItem("token") ? (
                 <></>
-              ) : jwtDecode(localStorage.getItem("token")).role == "buyer" ? (
+              ) : jwtDecode(localStorage.getItem("token")).role == "buyer" &&
+                !disableCart ? (
                 <div className="lg:mt-11 mt-10">
                   <div
                     className="flex flex-row"
