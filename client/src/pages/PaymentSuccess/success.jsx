@@ -12,6 +12,7 @@ const PmtSuccess = () => {
   const orderId = useParams().id;
   const [order, setOrder] = useState({}); 
 
+  
 
   //Payment related content
   const [invoiceNo,setInvoiceNo] = useState("");

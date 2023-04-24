@@ -32,6 +32,46 @@ const SellerDash = () => {
 
   const navigate = useNavigate();
 
+  const [orders, setOrders] = useState([]);
+  const [total, setTotal] = useState(0);
+
+  const getOrders = async () => {
+    await axios
+      .get(`http://localhost:8083/orders/`)
+      .then((res) => {
+        setOrders(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  //algorithm to get the total of all
+  const getTotal = async () => {
+    let value = 0;
+    for (let i = 0; i < orders.length; i++) {
+      value = value + orders[i].total;
+    }
+
+    console.log("Total: ", value);
+    setTotal(value);
+  };
+
+  useEffect(() => {
+    const currentThemeColor = localStorage.getItem("colorMode"); // KEEP THESE LINES
+    const currentThemeMode = localStorage.getItem("themeMode");
+    if (currentThemeColor && currentThemeMode) {
+      setCurrentColor(currentThemeColor);
+      setCurrentMode(currentThemeMode);
+    }
+    getOrders();
+  }, []);
+
+  useEffect(() => {
+    console.log("Orders: ", orders);
+    getTotal();
+  }, [getOrders]);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -100,14 +140,20 @@ const SellerDash = () => {
                           <div class="flex items-center justify-between mb-4">
                             <div class="flex-shrink-0">
                               <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                                $45,385
+                                $ {total.toFixed(2)}
+                              </span>
+                              <h3 class="text-base font-normal text-gray-500 mb-12">
+                                Total Sales
+                              </h3>
+
+                              <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
+                                $ {(total * 0.15).toFixed(2)}
                               </span>
                               <h3 class="text-base font-normal text-gray-500">
-                                Sales this week
+                                Total Commission to be paid
                               </h3>
                             </div>
                             <div class="flex items-center justify-end flex-1 text-green-500 text-base font-bold">
-                              12.5%
                               <svg
                                 class="w-5 h-5"
                                 fill="currentColor"
@@ -136,7 +182,7 @@ const SellerDash = () => {
                             </div>
                             <div class="flex-shrink-0">
                               <a
-                                href="#"
+                                href="/sellerPay"
                                 class="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg p-2"
                               >
                                 View all
@@ -171,63 +217,24 @@ const SellerDash = () => {
                                       </tr>
                                     </thead>
                                     <tbody class="bg-white">
-                                      <tr>
-                                        <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                          Payment from{" "}
-                                          <span class="font-semibold">
-                                            Bonnie Green
-                                          </span>
-                                        </td>
-                                        <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                          Apr 23 ,2021
-                                        </td>
-                                        <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                          $2300
-                                        </td>
-                                      </tr>
-
-                                      <tr>
-                                        <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                          Payment failed from{" "}
-                                          <span class="font-semibold">
-                                            #087651
-                                          </span>
-                                        </td>
-                                        <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                          Apr 18 ,2021
-                                        </td>
-                                        <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                          $234
-                                        </td>
-                                      </tr>
-                                      <tr class="bg-gray-50">
-                                        <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
-                                          Payment from{" "}
-                                          <span class="font-semibold">
-                                            Lana Byrd
-                                          </span>
-                                        </td>
-                                        <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                          Apr 15 ,2021
-                                        </td>
-                                        <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                          $5000
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                          Payment from{" "}
-                                          <span class="font-semibold">
-                                            Jese Leos
-                                          </span>
-                                        </td>
-                                        <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                          Apr 15 ,2021
-                                        </td>
-                                        <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                          $2300
-                                        </td>
-                                      </tr>
+                                      {orders.map((order) => {
+                                        return (
+                                          <tr>
+                                            <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                              Payment from 
+                                              <span class="font-semibold">
+                                              {order.email}
+                                              </span>
+                                            </td>
+                                            <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                              Apr 23 ,2021
+                                            </td>
+                                            <td class=" whitespace-nowrap text-sm font-semibold text-gray-900">
+                                              $ {order.total}
+                                            </td>
+                                          </tr>
+                                        );
+                                      })}
                                     </tbody>
                                   </table>
                                 </div>
