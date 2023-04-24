@@ -163,24 +163,44 @@ export const getCartOrders = async (req, res) => {
   }
 };
 
-export const updateOrderStatus = async(req,res)=>{
-  
-  const {id} = req.body;
-  const {status} =  req.body;
+export const updateOrderStatus = async (req, res) => {
+  const { id } = req.body;
+  const { status } = req.body;
 
-  
-  try{
+  try {
     const order = await Order.findByIdAndUpdate(
-    {_id:id},
-    {status : status},
-    {new:true}
+      { _id: id },
+      { status: status },
+      { new: true }
     );
-    console.log("id",id);
-    console.log("status",status);
+    console.log("id", id);
+    console.log("status", status);
     res.json(order);
-  }catch(error){
+  } catch (error) {
     console.log(error);
-    res.status(404).json({message:error.message});
+    res.status(404).json({ message: error.message });
   }
+};
 
-}
+export const updateItemQuantity = async (req, res) => {
+  const orderId = req.params.orderId;
+  const itemId = req.params.itemId;
+  const quantity = req.body.quantity;
+
+  try {
+    const order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+    const itemIndex = order.items.findIndex((item) => item.itemID === itemId);
+    if (itemIndex === -1) {
+      return res.status(404).json({ error: "Item not found in order" });
+    }
+    order.items[itemIndex].quantity = quantity;
+    await order.save();
+    res.json(order);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ message: error.message });
+  }
+};
