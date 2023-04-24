@@ -168,6 +168,7 @@ export const updateOrderStatus = async(req,res)=>{
   const {id} = req.body;
   const {status} =  req.body;
 
+  
   try{
     const order = await Order.findByIdAndUpdate(
     {_id:id},

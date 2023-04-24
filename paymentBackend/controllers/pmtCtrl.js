@@ -52,7 +52,8 @@ const stripe = new Stripe(process.env.STRIPESECRET);
 export const chargeUser = async(req,res)=>{
 
     const {orderItems,orderId} = req.body;
-    console.log(orderId);
+    console.log("Order ID: ", orderId);
+    console.log('orderItems: ',orderItems);
     const line_items = orderItems.map((item)=>{
         return{
             price_data:{
@@ -60,23 +61,24 @@ export const chargeUser = async(req,res)=>{
                 product_data:{
                     name: item.name,
                     images: [item.image],
-                    description: item.itemId,
+                    description: item.itemID,
                     metadata: {
                         id: item._id,
                     },
                 },
-                unit_amount: parseFloat(item.price) * 100,
+                unit_amount: parseInt(item.price * 100),
             },
             quantity: item.quantity,
         };
     });
 
-    console.log('orderItems: ',orderItems);
+    console.log("List of all the Items: " ,line_items);
+
+   
     const session  = await stripe.checkout.sessions.create({
         shipping_address_collection: {
-            allowed_countries: ['US', 'CA'],
+            allowed_countries: ['US', 'CA','SL','SR','IN','NZ','PA'],
         },
-        
         shipping_options: [
           {
             shipping_rate_data: {
@@ -104,9 +106,11 @@ export const chargeUser = async(req,res)=>{
         
         line_items,
         mode: "payment",
-        shipping_address_collection: {},
-        success_url: `http://localhost:3000/pmtsuccess${orderId}`,
-        cancel_url: `http://localhost:3000/checkout`,
+        success_url: `http://localhost:3000/pmtsuccess/${orderId}`,
+        cancel_url: `http://localhost:3000/failed`,
+        payment_intent_data:{
+            receipt_email: "vedraindustries@gmail.com",
+        }
     });
     //console.log(res.body);
     res.send({url: session.url});
