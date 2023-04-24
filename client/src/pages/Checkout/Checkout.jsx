@@ -10,22 +10,9 @@ export default function Checkout() {
   const [order, setOrder] = useState({});  //sets order details to this state
   const [orderItems, setOrderItems] = useState([]); //retrieving the order Items
 
-  //payment parameters to pass 
-
-  const [invoiceNo,setInvoiceNo] = useState("");
-  const [orderNo,setOrderNo] = useState("");
-  const [pmtDate, setPmtDate] = useState("");
-  const [email,setEmail] = useState("");
-  const [grossPrice,setGrossPrice] = useState(0);
   const [shipping,setShipping] = useState(0);
-  const [netPrice,setNetPrice] = useState(0);
+  const [subTotal,setSubTotal] = useState(0);
 
-  
-  //payment object
-  //const [payment,setPayment] = useState(0);
-
-
-  
   //publishable key for Vedran's Stripe account
   const pmtKey = "pk_test_51MwfKHDtOg3Q5sN3OTX8k5fywchFMqv9sy758Q8M8hXDpucAadXrkdN33IluVD0eeaf8bNEt0jzxXH0OVRBbqYo400lE3qUaIP";
   //retrieving the order Content
@@ -37,10 +24,7 @@ export default function Checkout() {
           setOrder(res.data);
           setOrderItems(res.data.items);
 
-          setInvoiceNo(`INV ${res.data._id}`);
-          setOrderNo(`ORD ${res.data._id}`);
-          setPmtDate(new Date().toLocaleDateString());
-          setEmail(res.data.email);
+          setSubTotal(res.data.total);
 
         }).catch((err) => {
           console.log(err);
@@ -50,24 +34,6 @@ export default function Checkout() {
     }
   }
 
-  const createPayment = async()=>{
-
-    const payment = {
-      invoiceNo,
-      orderNo,
-      pmtDate,
-      email,
-      grossPrice,
-      netPrice
-    }
-    console.log(payment);
-
-    await axios.post("http://localhost:8082/payment/create",payment).then((res)=>{
-      console.log(res.data);
-    }).catch((err)=>{
-      console.log(err.message);
-    })
-  }
 
   const handlePmtToken = async () => {
     
@@ -78,31 +44,17 @@ export default function Checkout() {
     }).catch((err)=>{
       console.log('Error of HandlePmtToken: ',err.message);
     });
-
-    createPayment();
-
     //console.log(response.status);
   }
 
-  
-
   useEffect(() => {
     getOrder(orderId);
+    console.log(order);
   },[])
 
   useEffect(()=>{
-    console.log('Order: ',order); //order details 
-    console.log('OrderItems: ',orderItems);  //order Items
-  },[getOrder])
-
-  useEffect(()=>{
-    setGrossPrice(parseFloat(order.total));
-  },[getOrder])
-
-  useEffect(()=>{
-    setNetPrice(grossPrice + shipping);
-    
-  },[getOrder])
+    localStorage.setItem('shippingChoice',JSON.stringify(shipping));
+  },[shipping]);
   
 
   return (
@@ -182,7 +134,7 @@ export default function Checkout() {
                 type="radio"
                 name="radio"
                 value={15}
-                onChange={(e)=>setShipping(parseFloat(e.target.value))}
+                onChange={(e)=>setShipping(parseFloat(15))}
               />
 
               <span className="peer-checked:border-[#278a9e] absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
@@ -213,7 +165,7 @@ export default function Checkout() {
                 type="radio"
                 name="radio"
                 value={0}
-                onChange={(e)=>setShipping(parseFloat(e.target.value))}
+                onChange={(e)=>setShipping(parseFloat(0))}
               />
               <span className="peer-checked:border-[#278a9e] absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
               <label
@@ -245,7 +197,7 @@ export default function Checkout() {
             <div className="mt-6 border-t border-b py-2">
               <div className="flex items-center justify-between">
                 <p className="text-sm font-medium text-gray-900">Subtotal</p>
-                <p className="font-semibold text-gray-900">{`$ ${(grossPrice).toFixed(2)} `}</p>
+                <p className="font-semibold text-gray-900">{`$ ${(subTotal).toFixed(2)} `}</p>
               </div>
               <div className="flex items-center justify-between">
                 <p className="text-sm font-medium text-gray-900">Shipping</p>
@@ -254,7 +206,7 @@ export default function Checkout() {
             </div>
             <div className="mt-6 flex items-center justify-between">
               <p className="text-sm font-medium text-gray-900">Total</p>
-              <p className="text-2xl font-semibold text-gray-900">${(netPrice).toFixed(2)}</p>
+              <p className="text-2xl font-semibold text-gray-900">${(subTotal + shipping).toFixed(2)}</p>
             </div>
           </div>
           <div className="justify-center text-right">
