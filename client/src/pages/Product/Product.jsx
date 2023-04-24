@@ -76,7 +76,7 @@ export default function Product() {
             `http://localhost:8083/orders/${res.order[0]._id}/addItem`,
             newItem
           );
-          console.log(res2.data);
+          // console.log(res2.data);
         } catch (err) {
           console.error(err);
         }
@@ -85,7 +85,7 @@ export default function Product() {
         await axios
           .post(`http://localhost:8083/orders`, Neworder)
           .then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
           })
           .catch((err) => {
             console.log(err);
