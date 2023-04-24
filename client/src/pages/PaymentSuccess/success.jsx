@@ -1,4 +1,4 @@
-import React, {useEffect}from 'react'
+import React, {useEffect,useState}from 'react'
 import { useParams } from 'react-router-dom'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
@@ -8,6 +8,80 @@ import 'react-toastify/dist/ReactToastify.css'
 
 const PmtSuccess = () => {
 
+  //Order related Content
+  const orderId = useParams().id;
+  const [order, setOrder] = useState({}); 
+
+  
+
+  //Payment related content
+  const [invoiceNo,setInvoiceNo] = useState("");
+  const [orderNo,setOrderNo] = useState("");
+  const [pmtDate, setPmtDate] = useState("");
+  const [email,setEmail] = useState("");
+  const [grossPrice,setGrossPrice] = useState();
+  const [shipping,setShipping] = useState();
+  const [netPrice,setNetPrice] = useState();
+
+  //retrieving the order Content
+
+  const getOrder = async (orderId) => {
+    try {
+      //const orderId = '6438fa2c518a57cbd5bdc8f4';
+      await axios.get(`http://localhost:8083/orders/${orderId}`)
+        .then((res) => {
+          setOrder(res.data);
+          setInvoiceNo(`INV ${res.data._id}`);
+          setOrderNo(`ORD ${res.data._id}`);
+          setPmtDate(new Date().toLocaleDateString());
+          setEmail(res.data.email);
+
+        }).catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const createPayment = async()=>{
+    const payment = {
+      invoiceNo,
+      orderNo,
+      pmtDate,
+      email,
+      grossPrice,
+      netPrice
+    }
+    await axios.post("http://localhost:8082/payment/create",payment).then((res)=>{
+      toast.success("Payment Successful! An Invoice will be sent to you shortly.");
+    }).catch((err)=>{
+      console.log(err.message);
+    })
+  }
+
+  useEffect(() => {
+    getOrder(orderId);
+  },[])
+
+  useEffect(()=>{
+    let value = localStorage.getItem('shippingChoice');
+    setShipping(parseFloat(value));
+  },[shipping])
+
+  useEffect(()=>{
+    setGrossPrice(parseFloat(order.total));
+  },[getOrder])
+
+  useEffect(()=>{
+    setNetPrice(grossPrice + shipping);
+  },[getOrder])
+
+  useEffect(()=>{ //Payment will only work if netPrice is set
+    createPayment();
+  },[netPrice])
+
+  
   //This page should initially handle all the payment related content and status redirections
   const id = useParams().id;
   const orderStatus = async(req)=>{
@@ -16,7 +90,7 @@ const PmtSuccess = () => {
     try{
       await axios.patch(`http://localhost:8083/orders/updateStatus`,{id,status})
       .then((res)=>{
-        console.log(res.data);
+        console.log("Order After Status Update:",res.data);
         console.log("order Status Updated");
       }) 
     }catch(error){
@@ -24,17 +98,9 @@ const PmtSuccess = () => {
     }
   }
 
-  // const handleNavigation = ()=>{
-  //   window.location.href = "/";
-  // }
-
-  
-  toast.success("Your payment has been successful! Please check your payment history for more details.");
- 
-
   useEffect(()=>{
     orderStatus();
-  },[])
+  },[createPayment]);
 
   return (
     <div className="bg-gray-100 h-screen">
