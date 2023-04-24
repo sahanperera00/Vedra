@@ -76,7 +76,7 @@ export default function Product() {
             `http://localhost:8083/orders/${res.order[0]._id}/addItem`,
             newItem
           );
-          // console.log(res2.data);
+          console.log(res2.data);
         } catch (err) {
           console.error(err);
         }
@@ -85,7 +85,7 @@ export default function Product() {
         await axios
           .post(`http://localhost:8083/orders`, Neworder)
           .then((res) => {
-            // console.log(res.data);
+            console.log(res.data);
           })
           .catch((err) => {
             console.log(err);
@@ -186,7 +186,8 @@ export default function Product() {
 
               {!localStorage.getItem("token") ? (
                 <></>
-              ) : jwtDecode(localStorage.getItem("token")).role == "buyer" ? (
+              ) : jwtDecode(localStorage.getItem("token")).role == "buyer" &&
+                !disableCart ? (
                 <div className="lg:mt-11 mt-10">
                   <div
                     className="flex flex-row"
