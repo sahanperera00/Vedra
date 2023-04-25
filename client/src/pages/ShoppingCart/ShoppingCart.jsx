@@ -61,6 +61,7 @@ export default function ShoppingCart() {
           );
           const data = await response.json();
           setCart(data.order[0]);
+          console.log(data.order[0]);
         }
         fetchCart();
       } else {
