@@ -73,7 +73,6 @@ const ClientSidebar = () => {
               <span className="capitalize">My Dashboard</span> {/*  link name  */}
             </NavLink>
 
-
             <NavLink
               to="/"
               onClick={handleCloseSideBar}
@@ -88,7 +87,7 @@ const ClientSidebar = () => {
             </NavLink>
 
             <NavLink
-              to="/wishlist"
+              to="/comingSoon"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
