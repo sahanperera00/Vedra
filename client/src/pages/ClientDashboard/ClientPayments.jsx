@@ -8,6 +8,8 @@ import { FiSettings } from "react-icons/fi";
 import axios from "axios";
 
 
+
+
 import {
   Header,
   Navbar,
@@ -23,7 +25,6 @@ import ClientSidebar from "../../components/Tailwind/components/ClientSidebar";
 
 const ClientPayments = () => {
 
-  const [searchTerm, setSearchTerm] = useState("");
   const {
     setCurrentColor,
     setCurrentMode,
@@ -43,14 +44,9 @@ const ClientPayments = () => {
     }
   }, []);
 
-
-
   const [payment, setPayment] = useState([]);
   const getPayment = async () => {
 
-    //ONCE THE JWT TOKEN IS SORTED USE THESE CONTENT TO GET THE VALUES
-    //const jwt = JSON.parse(localStorage.getItem("email"));
-    //const user = jwtDecode(jwt); //Using this to get the email of the user
 
     const clientMail = localStorage.getItem('email');
     axios.get(`http://localhost:8082/payment/${clientMail}`).then((res) => {
