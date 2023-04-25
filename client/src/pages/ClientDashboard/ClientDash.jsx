@@ -12,6 +12,8 @@ import {
 import ClientSidebar from "../../components/Tailwind/components/ClientSidebar";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 import jwtDecode from "jwt-decode";
+import ClientPayTab from "../../components/ClientPaymentTable/ClientPmtTable";
+import ClientOrderTable from "../../components/ClientOrderTable/ClientOrderTable";
 
 const ClientDash = () => {
   const {
@@ -43,6 +45,34 @@ const ClientDash = () => {
       navigate("/");
     }
   }, []);
+
+  useEffect(() => {
+    getPayment();
+    getOrder();
+  }, []);
+
+  //Payment information -> Will be passed to the clientPayTab
+  const [payment, setPayment] = useState([]);
+  const getPayment = async () => {
+    const clientMail = localStorage.getItem("email");
+    axios.get(`http://localhost:8082/payment/${clientMail}`).then((res) => {
+      setPayment(res.data);
+      console.log("User Specific Payments: ", res.data);
+    });
+  };
+
+  //Order information -> will be passed to the clientOrderTable
+
+  const [order, setOrder] = useState([]);
+  const getOrder = async () => {
+    const clientMail = localStorage.getItem("email");
+    axios
+      .get(`http://localhost:8083/orders/email/${clientMail}`)
+      .then((res) => {
+        setOrder(res.data);
+        console.log("User Specific Orders: ", res.data);
+      });
+  };
 
   //retrieving payment information
 
@@ -93,9 +123,16 @@ const ClientDash = () => {
               <div>
                 {/* Paste your content Here */}
 
-                <h1 className="dark:text-gray-200 ml-5">
-                  Hello My Name is Billy Balloon Head
-                </h1>
+                <div className="flex flex-wrap lg:flex-nowrap justify-center ml-5 mt-5">
+                  <div className="flex m-3 flex-wrap justify-center gap-5 items-center">
+                  <div className="">
+                    <ClientOrderTable order={order} />
+                  </div>
+                  <div className="">
+                    <ClientPayTab payment={payment} />
+                  </div>
+                  </div>
+                </div>
               </div>
               <Footer />
             </div>
