@@ -69,7 +69,7 @@ const AdminSidebar = () => {
             </NavLink>
 
             <NavLink
-              to="/"
+              to="/comingSoon"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : '',
