@@ -14,8 +14,7 @@ userbackend:
   build: ./userBackend
   image: userbackend
   container_name: userbackend_server
-  ports:
-    -"8084:8084"
+  ports: -"8084:8084"
 
   backend:
     build: ./itemBackend
@@ -23,3 +22,13 @@ userbackend:
     container_name: itembackend_server
     ports:
       - "8081:8081"
+
+  cartbackend:
+    build: ./cartBackend
+    image: cartbackend
+    container_name: cartbackend_server
+    ports:
+      - "8083:8083"
+    depends_on:
+      - userbackend
+      - backend
