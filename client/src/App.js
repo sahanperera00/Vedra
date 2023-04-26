@@ -26,6 +26,7 @@ import ComingSoon from "./pages/ComingSoon/ComingSoon";
 import ClientOrders from "./pages/ClientDashboard/ClientOrders";
 import Order from "./pages/ClientDashboard/Order";
 import Payment from "./pages/ClientDashboard/Payment";
+import RefundedOrders from "./pages/AdminDashboard/Refunded";
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
         <Route path="/orders" element={<ClientOrders/>}/>
         <Route path="/orders/:id" element={<Order/>}/>
         <Route path="/payment/:id" element={<Payment />} />
+        <Route path="/refunded" element={<RefundedOrders/>}/>
         
 
 
