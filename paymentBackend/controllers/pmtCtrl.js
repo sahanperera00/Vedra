@@ -7,6 +7,8 @@ import {v4 as uuidv4} from "uuid";
 
 
 //MONGODB Controllers
+
+//Retrieves document by passing the client email
 export const getFromUser = async(req,res)=>{
     try{
         const email = req.params.email
@@ -19,6 +21,7 @@ export const getFromUser = async(req,res)=>{
     }   
 }
 
+//Retrieves document by passing the paymentID
 export const getPaymentbyId = async(req,res)=>{
     try{
         const id = req.params.id;
@@ -31,9 +34,11 @@ export const getPaymentbyId = async(req,res)=>{
     }
 }
 
+
+//creating a payment
 export const createPayment = async(req,res)=>{
     try{
-        const pmt = req.body;
+        const pmt = req.body;   //Taking the parameters from the JSON body passed down to the API
         const newPayment = new Pmt(pmt);
         await newPayment.save();
         console.log('Payment after reaching create payment',pmt);
@@ -46,6 +51,7 @@ export const createPayment = async(req,res)=>{
     }
 }
 
+//fetching all payments 
 export const getAllPayments = async(req,res)=>{
 
     try{
@@ -61,12 +67,13 @@ export const getAllPayments = async(req,res)=>{
 //Stripe Controller
 const stripe = new Stripe(process.env.STRIPESECRET);
 
+//Creating a stripe Payment Session
 export const chargeUser = async(req,res)=>{
 
     const {orderItems,orderId} = req.body;
     console.log("Order ID: ", orderId);
     console.log('orderItems: ',orderItems);
-    const line_items = orderItems.map((item)=>{
+    const line_items = orderItems.map((item)=>{ //creating a list of all items inside the order to be displayed in the session
         return{
             price_data:{
                 currency: "usd",
@@ -84,10 +91,10 @@ export const chargeUser = async(req,res)=>{
         };
     });
 
-    console.log("List of all the Items: " ,line_items);
+    console.log("List of all the Items: " ,line_items);   
 
    
-    const session  = await stripe.checkout.sessions.create({
+    const session  = await stripe.checkout.sessions.create({    
         shipping_address_collection: {
             allowed_countries: ['US', 'CA','SL','SR','IN','NZ','PA','LK'],
         },
@@ -115,8 +122,8 @@ export const chargeUser = async(req,res)=>{
             },
           },
         ],
-        
-        line_items,
+
+        line_items, //passing the list of items to the session
         mode: "payment",
         success_url: `http://localhost:3000/pmtsuccess/${orderId}`,
         cancel_url: `http://localhost:3000/failed`,
@@ -124,9 +131,17 @@ export const chargeUser = async(req,res)=>{
             receipt_email: "vedraindustries@gmail.com",
         }
     });
-    //console.log(res.body);
-    res.send({url: session.url});
+    res.send({url: session.url});   //Passing the URL to the frontend
 }
 
-
-
+export const getPaymentbyOrderId = async(req,res)=>{
+    try{
+        const orderNo = req.params.orderId;
+        const payment = await Pmt.find({orderNo : orderNo});
+        res.status(200).json(payment);
+    }catch(err){
+        res.status(404).json(({
+            message: err.message
+        }));
+    }
+}
