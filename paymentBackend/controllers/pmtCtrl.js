@@ -19,6 +19,18 @@ export const getFromUser = async(req,res)=>{
     }   
 }
 
+export const getPaymentbyId = async(req,res)=>{
+    try{
+        const id = req.params.id;
+        const payment = await Pmt.findById(id);
+        res.status(200).json(payment);
+    }catch(error){
+        res.status(404).json({
+            message:error
+        })
+    }
+}
+
 export const createPayment = async(req,res)=>{
     try{
         const pmt = req.body;

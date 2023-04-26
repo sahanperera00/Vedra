@@ -32,7 +32,7 @@ const PmtSuccess = () => {
         .then((res) => {
           setOrder(res.data);
           setInvoiceNo(`INV ${res.data._id}`);
-          setOrderNo(`ORD ${res.data._id}`);
+          setOrderNo(res.data._id);
           setPmtDate(new Date().toLocaleDateString());
           setEmail(res.data.email);
 

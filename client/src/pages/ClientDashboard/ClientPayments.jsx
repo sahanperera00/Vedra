@@ -130,27 +130,38 @@ const ClientPayments = () => {
                             <TableHeader value="Order ID" />
                             <TableHeader value="Payment Date" />
                             <TableHeader value="Net Price" />
-                            <TableHeader value="Payment Type" />
+                            <TableHeader value="Transaction Type" />
                             <TableHeader value="Status" />
                           </tr>
                         </thead>
                         <tbody>
                           {payment.map((data, key) => {
+
+                            let dataColor = 'text-black dark:text-white';
+                            let type = "Payment"
+
+                            if(data.netPrice > 0){
+                              dataColor = 'text-green-500 font-bold'
+                              type = 'Payment'
+                            }else{
+                              dataColor = 'text-red-500 font-bold'
+                              type = 'Refund'
+                            }
                             return (
                                 <tr className="text-sm h-10 border dark:border-slate-600">
                                   <TableData value={`INV` + data._id} />
                                   <TableData value={data._id} />
                                   <TableData value={new Date(data.pmtDate).toISOString().split('T')[0]} />
                                   <TableData value={formatter.format(data.netPrice)} />
-                                  <TableData value={'Card'} />
+                                  <td className={`${dataColor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}> {type} </td>
 
                                   <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                    <Link to="/unconfirmed">
+                                    <Link to={`/payment/${data._id}`}>
                                       <button
                                         type="button"
                                         className="font-bold py-1 px-4 rounded-full mx-3 text-white"
                                         style={{ background: currentColor }}
-                                      > Invoice
+                                      > View Payment Details
                                         <i className="fas fa-edit" />
                                       </button>
                                     </Link>
