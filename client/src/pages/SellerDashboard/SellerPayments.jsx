@@ -145,7 +145,17 @@ const SellerPayments = () => {
                         </thead>
                         <tbody>
                           {orders.map((data,key) => {
-                            if (data.status === "Confirmed" || data.status === "Pending" ) {
+                            if (data.status === "Confirmed" || data.status === "Pending" || data.status === "Dispatched") {
+                              let dataColor = 'text-black dark:text-white';
+                                if (data.status === "Pending") {
+                                  dataColor = "text-orange-800 font-bold font-bold dark:text-orange-400";
+                                } else if(data.status === "Confirmed") {
+                                  dataColor = "text-blue-800 font-bold font-bold dark:text-blue-400";
+                                } else if(data.status === "Dispatched") {
+                                  dataColor = "text-green-700 font-bold"
+                                } else if(data.status === "Refunded") {
+                                  dataColor = "text-red-700 font-bold"
+                                }
                               return (
                                 
                                 <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
@@ -153,7 +163,7 @@ const SellerPayments = () => {
                                   <TableData value={data.email} />
                                   <TableData value={formatter.format(data.total)}/>
                                   <TableData value={formatter.format(data.total * 0.15)}/>
-                                  <TableData value={data.status} />
+                                  <td className={`${dataColor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status}</td>
                                 </tr>
                               );
                             }
