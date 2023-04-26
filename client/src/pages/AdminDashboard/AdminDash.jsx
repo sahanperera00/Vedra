@@ -42,7 +42,18 @@ const AdminDash = () => {
   ------------------------------------------------
   YOUR AXIOS CALLS AND USE STATES GOES  ABOVE HERE 
   ------------------------------------------------
+
+
   */
+
+  useEffect(() => {
+    const currentThemeColor = localStorage.getItem("colorMode"); // KEEP THESE LINES
+    const currentThemeMode = localStorage.getItem("themeMode");
+    if (currentThemeColor && currentThemeMode) {
+      setCurrentColor(currentThemeColor);
+      setCurrentMode(currentThemeMode);
+    }
+  }, []);
 
   const navigate = useNavigate();
 
