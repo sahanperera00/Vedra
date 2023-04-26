@@ -118,7 +118,7 @@ export default function ShoppingCart() {
         </div>
       </div>
       <div className="mb-[200px] w-[100vw] flex justify-center">
-        <div className="flex my-7 flex justify-between w-[85%]">
+        <div className="flex my-7 justify-between w-[85%]">
           <div className="w-[63%] h-max px-10 py-3 rounded-[20px] shadow-md bg-white">
             <table className="w-[100%]">
               <thead>
