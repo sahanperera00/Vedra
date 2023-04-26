@@ -8,19 +8,18 @@ import {
   Header,
   Navbar,
   Footer,
-  AdminSidebar,
   ThemeSettings,
 } from "../../components/Tailwind/components";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
+import ClientSideBar from "../../components/Tailwind/components/ClientSidebar.jsx";
 
 import axios from "axios";
-import SellerSidebar from "../../components/Tailwind/components/SellerSidebar.jsx";
+
+import { ToastContainer, toast, Zoom, Bounce } from "react-toastify";
 
 /* IMPORT ALL YOUR IMPORTS AS USUAL ABOVE HERE, REMOVE UNNECESSARY ONES*/
 
-const SellerPayments = () => {
-  //Contexts for themeSettings.
-
+const ClientOrders = () => {
   const {
     setCurrentColor,
     setCurrentMode,
@@ -31,21 +30,15 @@ const SellerPayments = () => {
     setThemeSettings,
   } = useStateContext();
 
-  useEffect(() => {
-    const currentThemeColor = localStorage.getItem("colorMode"); // KEEP THESE LINES
-    const currentThemeMode = localStorage.getItem("themeMode");
-    if (currentThemeColor && currentThemeMode) {
-      setCurrentColor(currentThemeColor);
-      setCurrentMode(currentThemeMode);
-    }
-  }, []);
-
-  //retrieving the order
   const [orders, setOrders] = useState([]);
+
   const getOrders = async () => {
     await axios
-      .get(`http://localhost:8083/orders/`)
+      .get(
+        `http://localhost:8083/orders/email/${localStorage.getItem("email")}`
+      )
       .then((res) => {
+        console.log(res.data);
         setOrders(res.data);
       })
       .catch((error) => {
@@ -57,7 +50,41 @@ const SellerPayments = () => {
     getOrders();
   }, []);
 
-  //formatter
+  useEffect(() => {
+    const currentThemeColor = localStorage.getItem("colorMode"); // KEEP THESE LINES
+    const currentThemeMode = localStorage.getItem("themeMode");
+    if (currentThemeColor && currentThemeMode) {
+      setCurrentColor(currentThemeColor);
+      setCurrentMode(currentThemeMode);
+    }
+  }, []);
+
+  //status change
+  const orderStatus = async (id, stat) => {
+    try {
+      let status = null;
+      if (stat === "Reject") {
+        status = "Refunded";
+      } else if (stat === "Approve") {
+        status = "Dispatched";
+      }
+      await axios
+        .patch(`http://localhost:8083/orders/updateStatus`, { id, status })
+        .then((res) => {
+          console.log(res.data);
+          console.log("order Status Updated");
+          if (status == "Dispatched") {
+            toast.success("Order Successfully Dispatched!");
+          } else {
+            toast.warn("Order Rejected!");
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //using the formatter
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -65,23 +92,12 @@ const SellerPayments = () => {
     currencyDisplay: "symbol",
   });
 
-  //creating an algorithm for the the items within orders to be fetched
-  console.log("Orders: ", orders);
-    
-    const orderItems = [];
-
-    for(let i =0;i < orders.length;i++){
-        for(let j =0;j < orders[i].items.length;j++){
-            orderItems.push(orders[i].items[j]);
-        }
-    }
-    console.log("OrderItems: ", orderItems);
-
   return (
     <div>
       {/* DON'T CHANGE ANYTHING HERE */}
 
       <div className={currentMode === "Dark" ? "dark" : ""}>
+        <ToastContainer />
         <div className="flex relative dark:bg-main-dark-bg">
           <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>
             {" "}
@@ -100,11 +116,11 @@ const SellerPayments = () => {
 
           {activeMenu ? ( // SIDEBAR IMPLEMENTATION
             <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
-              <SellerSidebar />
+              <ClientSideBar />
             </div>
           ) : (
             <div className="w-0 dark:bg-secondary-dark-bg">
-              <SellerSidebar />
+              <ClientSideBar />
             </div>
           )}
 
@@ -117,7 +133,7 @@ const SellerPayments = () => {
             }
           >
             {/* NAVBAR IMPLEMENTATION */}
-            <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg w-full ">
+            <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg  w-full ">
               <Navbar />
             </div>
 
@@ -129,41 +145,56 @@ const SellerPayments = () => {
                 {/* PART AFTER THE RETURN STATEMENT */}
                 <div>
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                    <Header title="Payment Report" />
+                    <Header title="Your Orders " />
 
                     <div className=" flex items-center mb-5 "></div>
                     <div className="block w-full overflow-x-auto rounded-lg">
                       <table className="w-full rounded-lg">
                         <thead>
                           <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
-                            <TableHeader value="Payment ID" />
+                            <TableHeader value="Order ID" />
                             <TableHeader value="Client" />
-                            <TableHeader value="Gross Total" />
+                            <TableHeader value="Gross Price" />
                             <TableHeader value="Commission" />
                             <TableHeader value="Status" />
+                            <TableHeader value="Action" />
                           </tr>
                         </thead>
                         <tbody>
-                          {orders.map((data,key) => {
-                            if (data.status === "Confirmed" || data.status === "Pending" || data.status === "Dispatched") {
-                              let dataColor = 'text-black dark:text-white';
-                                if (data.status === "Pending") {
-                                  dataColor = "text-orange-800 font-bold font-bold dark:text-orange-400";
-                                } else if(data.status === "Confirmed") {
-                                  dataColor = "text-blue-800 font-bold font-bold dark:text-blue-400";
-                                } else if(data.status === "Dispatched") {
-                                  dataColor = "text-green-700 font-bold"
-                                } else if(data.status === "Refunded") {
-                                  dataColor = "text-red-700 font-bold"
-                                }
+                          {orders.map((data) => {
+                            if (data.status !== "cart") {
+                              let datacolor = "text-black ";
+                              if (data.status === "Pending") {
+                                datacolor = "text-orange-800 font-bold font-bold dark:text-orange-400";
+                              } else if(data.status === "Confirmed") {
+                                datacolor = "text-blue-800 font-bold font-bold dark:text-blue-400";
+                              } else if(data.status === "Dispatched") {
+                                datacolor = "text-green-700 font-bold"
+                              } else if(data.status === "Refunded") {
+                                datacolor = "text-red-700 font-bold"
+                              }
                               return (
-                                
-                                <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
-                                  <TableData value={"INV " + data._id} />
+                                <tr className="text-sm h-10 border dark:border-slate-600">
+                                  <TableData value={data._id} />
                                   <TableData value={data.email} />
-                                  <TableData value={formatter.format(data.total)}/>
-                                  <TableData value={formatter.format(data.total * 0.15)}/>
-                                  <td className={`${dataColor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status}</td>
+                                  <TableData
+                                    value={formatter.format(data.total)}
+                                  />
+                                  <TableData
+                                    value={formatter.format(data.total * 0.15)}
+                                  />
+                                  <td
+                                    className={`${datacolor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}
+                                  >
+                                    <TableData value={data.status} />
+                                  </td>
+                                  <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
+                                    <Link to={`/orders/${data._id}`}>
+                                      <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
+                                        View Order
+                                      </button>
+                                    </Link>
+                                  </td>
                                 </tr>
                               );
                             }
@@ -185,4 +216,4 @@ const SellerPayments = () => {
   );
 };
 
-export default SellerPayments;
+export default ClientOrders;
