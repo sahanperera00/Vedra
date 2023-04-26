@@ -42,7 +42,18 @@ const AdminDash = () => {
   ------------------------------------------------
   YOUR AXIOS CALLS AND USE STATES GOES  ABOVE HERE 
   ------------------------------------------------
+
+
   */
+
+  useEffect(() => {
+    const currentThemeColor = localStorage.getItem("colorMode"); // KEEP THESE LINES
+    const currentThemeMode = localStorage.getItem("themeMode");
+    if (currentThemeColor && currentThemeMode) {
+      setCurrentColor(currentThemeColor);
+      setCurrentMode(currentThemeMode);
+    }
+  }, []);
 
   const navigate = useNavigate();
 
@@ -66,28 +77,72 @@ const AdminDash = () => {
       console.log(res.data);
       setOrders(res.data);
       console.log(orders);
+
+      
     }).catch((error) => {
       console.log(error);
     })};
 
+    //Takes refunded and removes 
     const calcTotal = ()=>{
       orders.map((order)=>{
-        if(order.status === "Dispatched" || order.status === "Confirmed" || order.status === "Pending"){
+        if(order.status === "Dispatched" || order.status === "Confirmed" || order.status === "Pending" || order.status === "Refunded"){
+          if(order.status === "Refunded"){
+            total -= order.total * 2
+          }
           total += order.total
           setTotals(total);
         }
       })
-      
-      console.log(Totals)
     }
+
+    const [dispatched,setDispatched] = useState(0);
+    const [confirmed,setConfirmed] = useState(0);
+    const [pending,setPending] = useState(0);
+    const [refunded,setRefunded] = useState(0);
+
+    const getOrderCount = ()=>{
+
+        let pendingCount = 0;
+        let dispatchedCount = 0;
+        let confirmedCount = 0;
+        let refundedCount = 0;
+
+      orders.map((order)=>{
+        if(order.status === "Pending"){
+          pendingCount++;
+        }
+        if(order.status === "Dispatched"){
+          dispatchedCount++;
+        }
+        if(order.status === "Confirmed"){
+          confirmedCount++;
+        }
+        if(order.status === "Refunded"){
+          refundedCount++;
+        }
+        setDispatched(dispatchedCount);
+        setConfirmed(confirmedCount);
+        setPending(pendingCount);
+        setRefunded(refundedCount);
+
+      })
+    }
+
+
     useEffect(()=>{
       getOrders();
-      
     },[])
 
     useEffect(()=>{
       calcTotal();
-    })
+    },[getOrders])
+
+    useEffect(()=>{
+      getOrderCount();
+    },[getOrders])
+
+
 
 
     //Cost formatter
@@ -171,7 +226,7 @@ const AdminDash = () => {
                       {/* use minimum 3, maximum 5 */}
                       <DashTopBox
                         icon={<GiMoneyStack />}
-                        label="Average Sales Amount"
+                        label="Gross Sales Amount"
                         data={formatter.format(Totals)}
                       />
                       <DashTopBox
@@ -186,32 +241,43 @@ const AdminDash = () => {
                     <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                       {/* small top boxes in the dashboard */}{" "}
                       {/* use minimum 3, maximum 5 */}
-                      <Link to="/MaintenanceViewAll">
+                      <Link to="/pending">
                         <DashTopBox
                           icon={<MdPendingActions />}
                           label="Orders pending"
-                          data={0}
+                          data={pending}
                         />
                       </Link>
-                      <Link to="/MachMaintenanceViewAll">
+                      <Link to="/confirmed">
                         <DashTopBox
                           icon={<GiConfirmed />}
                           label="Orders confirmed"
-                          data={40}
+                          data={confirmed}
                         />
                       </Link>
-                      <Link to="/VehiMaintenanceViewAll">
+                      <Link to="/dispatched">
                         <DashTopBox
                           icon={<TbTruckDelivery />}
                           label="Orders dispatched"
-                          data={85}
+                          data={dispatched}
+                        />
+                      </Link>
+
+                      <Link to="/refunded">
+                        <DashTopBox
+                          icon={<TbTruckDelivery />}
+                          label="Orders Refunded"
+                          data={refunded}
                         />
                       </Link>
                     </div>
                   </div>
 
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-                    <AdminPieChart />
+                    <AdminPieChart dispatched={dispatched}
+                    refunded={refunded}
+                    confirmed={confirmed}
+                    pending={pending} />
                   </div>
                 </div>
               </div>

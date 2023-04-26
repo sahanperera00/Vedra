@@ -107,25 +107,6 @@ const AdminSidebar = () => {
               {/*  link name  */}
             </NavLink>
 
-            {/*  links ---------------------------------------------------------------------------------- links  */}
-            {/*<NavLink
-              to="/WelfareDashboard"
-              onClick={handleCloseSideBar}
-              style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
-              })}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <FiGift /> {/*  icon  */}
-            {/*} <span className="capitalize ">Welfare</span>{' '}
-              {/*  link name  */}
-            {/*</NavLink>*/}
-
-            {/*  menu ---------------------------------------------------------------------------------- menu  */}
-
-
-            {/*  links ---------------------------------------------------------------------------------- links  */}
-
             <NavLink
               to="/dispatched"
               onClick={handleCloseSideBar}
@@ -137,6 +118,18 @@ const AdminSidebar = () => {
               <TbTruckDelivery /> {/*  icon  */}
               <span className="capitalize ">Orders dispatched</span>{' '}
               {/*  link name  */}
+            </NavLink>
+
+            <NavLink
+              to="/refunded"
+              onClick={handleCloseSideBar}
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? currentColor : '',
+              })}
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            >
+              <MdPendingActions /> {/*  icon  */}
+              <span className="capitalize ">Returned orders</span> {/*  link name  */}
             </NavLink>
 
             
@@ -151,10 +144,6 @@ const AdminSidebar = () => {
               <TbBrandGoogleAnalytics /> {/*  icon  */}
               <span className="capitalize ">Payment Analytics</span> {/*  link name  */}
             </NavLink>
-
-          
-
-
           </div>
         </>
       )}
