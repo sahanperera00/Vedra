@@ -1,4 +1,4 @@
-import { getFromUser,createPayment,getAllPayments, chargeUser,getPaymentbyId } from "../controllers/pmtCtrl.js";
+import { getFromUser,createPayment,getAllPayments, chargeUser,getPaymentbyId, getPaymentbyOrderId } from "../controllers/pmtCtrl.js";
 import express from "express";
 import cors from "cors";
 
@@ -11,6 +11,7 @@ router.get("/:email",getFromUser);
 //router.options("/pay",cors());
 router.post("/pay",chargeUser);
 router.get("/",getAllPayments);
+router.get("/orderId/:orderId",getPaymentbyOrderId);
 
 
 export default router;
