@@ -4,18 +4,17 @@ import { useStateContext } from '../../contexts/ContextProvider.js';
 import TableData from '../../components/Tailwind/components/Table/TableData.jsx';
 import TableHeader from '../../components/Tailwind/components/Table/TableHeader.jsx';
 import { FiSettings } from 'react-icons/fi';
-import { Header, Navbar, Footer, AdminSidebar, ThemeSettings } from '../../components/Tailwind/components';
+import { Header, Navbar, Footer, ThemeSettings } from '../../components/Tailwind/components';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import DispatchedOrders from './DispatchedOrders';
+import ClientSideBar from '../../components/Tailwind/components/ClientSidebar.jsx'
+
 import axios from 'axios';
 
 import { ToastContainer,toast,Zoom,Bounce } from 'react-toastify'
 
-
-
 /* IMPORT ALL YOUR IMPORTS AS USUAL ABOVE HERE, REMOVE UNNECESSARY ONES*/
 
-const ConfirmedOrders = () => {
+const ClientOrders = () => {
 
 
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings, } = useStateContext();
@@ -24,7 +23,7 @@ const ConfirmedOrders = () => {
 
   const getOrders = async () => {
     await axios
-      .get(`http://localhost:8083/orders`)
+      .get(`http://localhost:8083/orders/email/${localStorage.getItem("email")}`)
       .then((res) => {
         console.log(res.data);
         setOrders(res.data);
@@ -113,11 +112,11 @@ const ConfirmedOrders = () => {
 
           {activeMenu ? ( // SIDEBAR IMPLEMENTATION
             <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
-              <AdminSidebar />
+              <ClientSideBar />
             </div>
           ) : (
             <div className="w-0 dark:bg-secondary-dark-bg">
-              <AdminSidebar />
+              <ClientSideBar />
             </div>
           )}
 
@@ -142,7 +141,7 @@ const ConfirmedOrders = () => {
                 {/* PART AFTER THE RETURN STATEMENT */}
                 <div>
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
-                    <Header title="Confirmed Orders " />
+                    <Header title="Your Orders " />
 
                     <div className=" flex items-center mb-5 "></div>
                     <div className="block w-full overflow-x-auto rounded-lg">
@@ -159,9 +158,8 @@ const ConfirmedOrders = () => {
                         </thead>
                         <tbody>
 
-
                           {orders.map((data) => {
-                            if (data.status === "Confirmed") {
+                            if (data.status !== "cart" ) {
                               return (
                                   <tr className="text-sm h-10 border dark:border-slate-600">
                                     <TableData value={data._id} />
@@ -170,26 +168,9 @@ const ConfirmedOrders = () => {
                                     <TableData value={formatter.format(data.total*.15)} />
                                     <TableData value={data.status} />
                                     <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                      
-                                      <button
-                                          type="button"
-                                          className="font-bold py-1 px-4 rounded-full mx-3 text-white"
-                                          style={{ background: currentColor }}
-                                          value = "Approve"
-                                          onClick={() => orderStatus(data._id, "Approve")}
-                                        > Dispatch Order
-                                          <i className="fas fa-edit" />
-                                        </button>
-
-                                        <button
-                                          type="button"
-                                          className="font-bold py-1 px-4 rounded-full mx-3 text-white"
-                                          style={{ background: "red" }}
-                                          onClick={() => orderStatus(data._id, "Reject")}
-                                        > Refund Order
-                                          <i className="fas fa-edit" />
-                                        </button>
-
+                                        <Link to={`/orders/${data._id}`}>
+                                        <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">View Order</button>
+                                        </Link>
                                     </td>
                                   </tr>
                               )
@@ -210,4 +191,4 @@ const ConfirmedOrders = () => {
   );
 };
 
-export default ConfirmedOrders;
+export default ClientOrders;
