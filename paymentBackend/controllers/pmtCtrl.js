@@ -89,7 +89,7 @@ export const chargeUser = async(req,res)=>{
    
     const session  = await stripe.checkout.sessions.create({
         shipping_address_collection: {
-            allowed_countries: ['US', 'CA','SL','SR','IN','NZ','PA'],
+            allowed_countries: ['US', 'CA','SL','SR','IN','NZ','PA','LK'],
         },
         shipping_options: [
           {
