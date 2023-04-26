@@ -16,7 +16,7 @@ import { ToastContainer,toast,Zoom,Bounce } from 'react-toastify'
 
 /* IMPORT ALL YOUR IMPORTS AS USUAL ABOVE HERE, REMOVE UNNECESSARY ONES*/
 
-const PendingOrders = () => {
+const RefundedOrders = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -78,13 +78,7 @@ const PendingOrders = () => {
       console.log(error);
     }
   }
-  const handleReject = (id)=>{
-    orderStatus(id,"Reject");
-    
-    
 
-    axios.post("http://localhost:8082/payment/create",)
-  }
 
 
   //using the formatter
@@ -170,7 +164,7 @@ const PendingOrders = () => {
 
 
                           {orders.map((data) => {
-                            if (data.status === "Pending") {
+                            if (data.status === "Refunded") {
                               return (
                                   <tr className="text-sm h-10 border dark:border-slate-600">
                                     <TableData value={data._id} />
@@ -179,30 +173,9 @@ const PendingOrders = () => {
                                     <TableData value={formatter.format(data.total*.15)} />
                                     <TableData value={data.status} />
                                     <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                      
-                                        <button
-                                          type="button"
-                                          className="font-bold py-1 px-4 rounded-full mx-3 text-white"
-                                          style={{ background: currentColor }}
-                                          value = "Approve"
-                                          onClick={() => orderStatus(data._id, "Approve")}
-                                        > Approve Order
-                                          <i className="fas fa-edit" />
-                                        </button>
-
-                                        <button
-                                          type="button"
-                                          className="font-bold py-1 px-4 rounded-full mx-3 text-white"
-                                          style={{ background: "red" }}
-                                          onClick={() => orderStatus(data._id, "Reject")}
-                                        > Reject Payment
-                                          <i className="fas fa-edit" />
-                                        </button>
-
                                         <Link to={`/orders/${data._id}`}>
-                                        <button  type="button" className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-4 rounded-full">View Order</button>
+                                        <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">View Order</button>
                                         </Link>
-
                                     </td>
                                   </tr>
                               )
@@ -223,4 +196,4 @@ const PendingOrders = () => {
   );
 };
 
-export default PendingOrders;
+export default RefundedOrders;

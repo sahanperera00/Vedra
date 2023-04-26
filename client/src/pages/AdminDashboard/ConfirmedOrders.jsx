@@ -190,6 +190,11 @@ const ConfirmedOrders = () => {
                                           <i className="fas fa-edit" />
                                         </button>
 
+                                        <Link to={`/orders/${data._id}`}>
+                                        <button  type="button" className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-4 rounded-full">View Order</button>
+                                        </Link>
+
+
                                     </td>
                                   </tr>
                               )
