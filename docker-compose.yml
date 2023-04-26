@@ -8,20 +8,25 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - backend
+      - userbackend
+      - itembackend
+      - cartbackend
 
-userbackend:
-  build: ./userBackend
-  image: userbackend
-  container_name: userbackend_server
-  ports: -"8084:8084"
+  userbackend:
+    build: ./userBackend
+    image: userbackend
+    container_name: userbackend_server
+    ports:
+      - "8084:8084"
 
-  backend:
+  itembackend:
     build: ./itemBackend
     image: itembackend
     container_name: itembackend_server
     ports:
       - "8081:8081"
+    depends_on:
+      - userbackend
 
   cartbackend:
     build: ./cartBackend
@@ -31,4 +36,4 @@ userbackend:
       - "8083:8083"
     depends_on:
       - userbackend
-      - backend
+      - itembackend

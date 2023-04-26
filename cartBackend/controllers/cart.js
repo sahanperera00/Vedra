@@ -197,6 +197,10 @@ export const updateItemQuantity = async (req, res) => {
       return res.status(404).json({ error: "Item not found in order" });
     }
     order.items[itemIndex].quantity = quantity;
+    order.total = 0;
+    order.items.forEach((item) => {
+      order.total += item.price * item.quantity;
+    });
     await order.save();
     res.json(order);
   } catch (error) {
