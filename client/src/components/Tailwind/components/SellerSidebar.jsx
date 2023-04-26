@@ -81,7 +81,7 @@ const SellerSidebar = () => {
             </NavLink>
 
             <NavLink
-              to="/"
+              to="/comingSoon"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",
@@ -95,7 +95,7 @@ const SellerSidebar = () => {
             {/*  links ---------------------------------------------------------------------------------- links  */}
 
             <NavLink
-              to="/"
+              to="/sellerPay"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
                 backgroundColor: isActive ? currentColor : "",

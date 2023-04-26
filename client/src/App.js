@@ -22,6 +22,11 @@ import PmtSuccess from "./pages/PaymentSuccess/success";
 import ClientPayments from "./pages/ClientDashboard/ClientPayments";
 import Unsuccesful from "./pages/Checkout/Unsuccesful";
 import SellerPayments from "./pages/SellerDashboard/SellerPayments";
+import ComingSoon from "./pages/ComingSoon/ComingSoon";
+import ClientOrders from "./pages/ClientDashboard/ClientOrders";
+import Order from "./pages/ClientDashboard/Order";
+import Payment from "./pages/ClientDashboard/Payment";
+import RefundedOrders from "./pages/AdminDashboard/Refunded";
 
 function App() {
   return (
@@ -48,7 +53,11 @@ function App() {
         {/* Test method to fetch item information */}
         <Route path="/checkout/:6438fa2c518a57cbd5bdc8f4" element={<Checkout />} /> 
         <Route path="/sellerPay" element={<SellerPayments />} />
-
+        <Route path="/comingSoon" element={<ComingSoon/>}/>
+        <Route path="/orders" element={<ClientOrders/>}/>
+        <Route path="/orders/:id" element={<Order/>}/>
+        <Route path="/payment/:id" element={<Payment />} />
+        <Route path="/refunded" element={<RefundedOrders/>}/>
         
 
 

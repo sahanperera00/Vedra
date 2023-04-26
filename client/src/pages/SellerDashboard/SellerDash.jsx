@@ -13,9 +13,15 @@ import {
   ThemeSettings,
   AdminPieChart,
 } from "../../components/Tailwind/components";
+
+import { GiMoneyStack, GiConfirmed } from "react-icons/gi";
+import { MdPendingActions } from "react-icons/md";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
+
+import { TbTruckDelivery } from "react-icons/tb";
 import SellerSidebar from "../../components/Tailwind/components/SellerSidebar.jsx";
 import jwtDecode from "jwt-decode";
+import PaymentChart from "../../components/PaymentChart/PaymentChart.jsx";
 
 const SellerDash = () => {
   // <== THIS IS THE COMPONENT NAME, CHANGE IT TO YOUR COMPONENT NAME
@@ -31,6 +37,114 @@ const SellerDash = () => {
   } = useStateContext();
 
   const navigate = useNavigate();
+
+  const [orders, setOrders] = useState([]);
+  const [total, setTotal] = useState(0);
+  let fTotal = 0;
+
+  const getOrders = async () => {
+    await axios
+      .get(`http://localhost:8083/orders/`)
+      .then((res) => {
+        setOrders(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const [Totals,setTotals] = useState(0);
+  const calcTotal = ()=>{
+    orders.map((order)=>{
+      if(order.status === "Dispatched" || order.status === "Confirmed" || order.status === "Pending" || order.status === "Refunded"){
+        if(order.status === "Refunded"){
+          fTotal -= order.total * 2
+        }
+        fTotal += order.total
+        setTotals(fTotal);
+      }
+    })
+  }
+
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    currencyDisplay: 'symbol'
+  })
+
+  const [dispatched,setDispatched] = useState(0);
+  const [confirmed,setConfirmed] = useState(0);
+  const [pending,setPending] = useState(0);
+  const [refunded,setRefunded] = useState(0);
+
+  const getOrderCount = ()=>{
+
+      let pendingCount = 0;
+      let dispatchedCount = 0;
+      let confirmedCount = 0;
+      let refundedCount = 0;
+
+    orders.map((order)=>{
+      if(order.status === "Pending"){
+        pendingCount++;
+      }
+      if(order.status === "Dispatched"){
+        dispatchedCount++;
+      }
+      if(order.status === "Confirmed"){
+        confirmedCount++;
+      }
+      if(order.status === "Refunded"){
+        refundedCount++;
+      }
+      setDispatched(dispatchedCount);
+      setConfirmed(confirmedCount);
+      setPending(pendingCount);
+      setRefunded(refundedCount);
+
+    })
+  }
+
+  //algorithm to get the total of all
+  const getTotal = async () => {
+    let value = 0;
+    for (let i = 0; i < orders.length; i++) {
+      if(orders[i].status === "Dispatched" || orders[i].status === "Confirmed" || orders[i].status === "Pending" || orders[i].status === "Refunded"){
+        if(orders[i].status === "Refunded"){
+          value -= orders[i].total * 2
+        }
+        value = value + orders[i].total;
+      }
+      
+    }
+
+    console.log("Total: ", value);
+    setTotal(value);
+  };
+
+  useEffect(() => {
+    const currentThemeColor = localStorage.getItem("colorMode"); // KEEP THESE LINES
+    const currentThemeMode = localStorage.getItem("themeMode");
+    if (currentThemeColor && currentThemeMode) {
+      setCurrentColor(currentThemeColor);
+      setCurrentMode(currentThemeMode);
+    }
+    getOrders();
+  }, []);
+
+  useEffect(() => {
+    console.log("Orders: ", orders);
+    getTotal();
+  }, [getOrders]);
+
+  useEffect(()=>{
+    calcTotal();
+  },[getOrders])
+
+  useEffect(()=>{
+    getOrderCount();
+  },[getOrders])
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -95,19 +209,25 @@ const SellerDash = () => {
                   <div className="flex flex-wrap lg:flex-nowrap justify-left ml-5 mt-5">
                     <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                       {/* // ADD Chart */}
-                      <div class="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
-                        <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2">
+                      <div class="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-4 gap-4">
+                        <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2 dark:bg-gray-700 w-800">
                           <div class="flex items-center justify-between mb-4">
                             <div class="flex-shrink-0">
-                              <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                                $45,385
+                              <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900 dark:text-gray-200">
+                                $ {total.toFixed(2)}
                               </span>
-                              <h3 class="text-base font-normal text-gray-500">
-                                Sales this week
+                              <h3 class="text-base font-normal text-gray-500 mb-12 dark:text-white">
+                                Total Sales
+                              </h3>
+
+                              <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900 dark:text-gray-200">
+                                $ {(total * 0.15).toFixed(2)}
+                              </span>
+                              <h3 class="text-base font-normal text-gray-500 dark:text-gray-200">
+                                Total Commission to be paid
                               </h3>
                             </div>
-                            <div class="flex items-center justify-end flex-1 text-green-500 text-base font-bold">
-                              12.5%
+                            <div class="flex items-center justify-end flex-1 text-green-500 text-base font-bold ">
                               <svg
                                 class="w-5 h-5"
                                 fill="currentColor"
@@ -124,130 +244,65 @@ const SellerDash = () => {
                           </div>
                           <div id="main-chart"></div>
                         </div>
-                        <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
-                          <div class="mb-4 flex items-center justify-between">
-                            <div>
-                              <h3 class="text-xl font-bold text-gray-900 mb-2">
-                                Latest Transactions
-                              </h3>
-                              <span class="text-base font-normal text-gray-500">
-                                This is a list of latest transactions
-                              </span>
-                            </div>
-                            <div class="flex-shrink-0">
-                              <a
-                                href="#"
-                                class="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg p-2"
-                              >
-                                View all
-                              </a>
-                            </div>
-                          </div>
-                          <div class="flex flex-col mt-8">
-                            <div class="overflow-x-auto rounded-lg">
-                              <div class="align-middle inline-block min-w-full">
-                                <div class="shadow overflow-hidden sm:rounded-lg">
-                                  <table class="min-w-full divide-y divide-gray-200">
-                                    <thead class="bg-gray-50">
-                                      <tr>
-                                        <th
-                                          scope="col"
-                                          class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                        >
-                                          Transaction
-                                        </th>
-                                        <th
-                                          scope="col"
-                                          class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                        >
-                                          Date & Time
-                                        </th>
-                                        <th
-                                          scope="col"
-                                          class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                        >
-                                          Amount
-                                        </th>
-                                      </tr>
-                                    </thead>
-                                    <tbody class="bg-white">
-                                      <tr>
-                                        <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                          Payment from{" "}
-                                          <span class="font-semibold">
-                                            Bonnie Green
-                                          </span>
-                                        </td>
-                                        <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                          Apr 23 ,2021
-                                        </td>
-                                        <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                          $2300
-                                        </td>
-                                      </tr>
-
-                                      <tr>
-                                        <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                          Payment failed from{" "}
-                                          <span class="font-semibold">
-                                            #087651
-                                          </span>
-                                        </td>
-                                        <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                          Apr 18 ,2021
-                                        </td>
-                                        <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                          $234
-                                        </td>
-                                      </tr>
-                                      <tr class="bg-gray-50">
-                                        <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
-                                          Payment from{" "}
-                                          <span class="font-semibold">
-                                            Lana Byrd
-                                          </span>
-                                        </td>
-                                        <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                          Apr 15 ,2021
-                                        </td>
-                                        <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                          $5000
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                          Payment from{" "}
-                                          <span class="font-semibold">
-                                            Jese Leos
-                                          </span>
-                                        </td>
-                                        <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                          Apr 15 ,2021
-                                        </td>
-                                        <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                          $2300
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                          <PaymentChart orders={orders}/>
                       </div>
                     </div>
                   </div>
+                  <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-gray-700 dark:text-white ">
+                  <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
 
-                  <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white "></div>
+                  </div>
+
+                  <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                    <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
+                      {/* small top boxes in the dashboard */}{" "}
+                      {/* use minimum 3, maximum 5 */}
+                      <Link to="/pending">
+                        <DashTopBox
+                          icon={<MdPendingActions />}
+                          label="Orders pending"
+                          data={pending}
+                        />
+                      </Link>
+                      <Link to="/confirmed">
+                        <DashTopBox
+                          icon={<GiConfirmed />}
+                          label="Orders confirmed"
+                          data={confirmed}
+                        />
+                      </Link>
+                      <Link to="/dispatched">
+                        <DashTopBox
+                          icon={<TbTruckDelivery />}
+                          label="Orders dispatched"
+                          data={dispatched}
+                        />
+                      </Link>
+
+                      <Link to="/refunded">
+                        <DashTopBox
+                          icon={<TbTruckDelivery />}
+                          label="Orders Refunded"
+                          data={refunded}
+                        />
+                      </Link>
+                    </div>
+                  </div>
+
+                  <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+                    <AdminPieChart dispatched={dispatched}
+                    refunded={refunded}
+                    confirmed={confirmed}
+                    pending={pending} />
+                  </div>
                 </div>
               </div>
-              <Footer />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
   );
 };
 

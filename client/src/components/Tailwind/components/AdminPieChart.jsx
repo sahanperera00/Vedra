@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useStateContext } from '../../../../src/contexts/ContextProvider';
 import ChartsHeader from './ChartsHeader';
 
-const AdminPieChart = () => {
+const AdminPieChart = ({pending,confirmed,refunded,dispatched}) => {
     // const [machinery, setMachinery] = useState([]);
    const { currentMode } = useStateContext();
 
@@ -43,9 +43,10 @@ const AdminPieChart = () => {
                     type="Pie"
                     dataSource={
                         [
-                            { x: 'Pending', y: (20).toPrecision(4), text: (20).toPrecision(2) + '%',color: '#1363DF'},
-                            { x: 'confirmed', y: (69).toPrecision(4), text: (69).toPrecision(2) + '%',  color: '#419D78'},
-                            { x: 'dispatched', y: (28).toPrecision(4), text: (28).toPrecision(2) + '%', color: '#C14953'},
+                            { x: 'Pending', y: (pending).toPrecision(1), text: (20).toPrecision(2) + '%',color: '#1363DF'},
+                            { x: 'confirmed', y: (confirmed).toPrecision(1), text: (69).toPrecision(2) + '%',  color: '#419D78'},
+                            { x: 'dispatched', y: (dispatched).toPrecision(1), text: (28).toPrecision(2) + '%', color: '#432A31'},
+                            { x: 'Refunded', y: (refunded).toPrecision(1), text: (28).toPrecision(2) + '%', color: '#A34453'},
                             
                         ]
                     }
