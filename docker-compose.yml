@@ -16,7 +16,8 @@ services:
     build: ./userBackend
     image: userbackend
     container_name: userbackend_server
-    ports: -"8084:8084"
+    ports:
+      - "8084:8084"
 
   itembackend:
     build: ./itemBackend
