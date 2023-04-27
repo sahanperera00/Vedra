@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import StarRatings from "react-star-ratings";
 
-export default function AddReview() {
-  const { itemId } = useParams();
+export default function AddReview({ itemId }) {
+  //   const { itemId } = useParams();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [star, setStar] = useState();
