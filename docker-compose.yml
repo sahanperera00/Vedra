@@ -11,7 +11,8 @@ services:
       - userbackend
       - itembackend
       - cartbackend
-      - paymentbackend
+      - paymentBackend
+      
 
   userbackend:
     build: ./userBackend
@@ -47,4 +48,4 @@ services:
       - "8082:8082"
     depends_on:
       - userbackend
-      - cartBackend
+      - cartbackend
