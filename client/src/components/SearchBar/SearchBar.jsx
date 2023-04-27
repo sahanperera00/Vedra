@@ -11,7 +11,6 @@ export default function SearchBar() {
     axios
       .get(`http://localhost:8081/items/`)
       .then((res) => {
-        console.log(res.data);
         setItems(res.data);
       })
       .catch((error) => {
