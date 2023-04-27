@@ -17,8 +17,6 @@ import axios from "axios";
 
 import { ToastContainer, toast, Zoom, Bounce } from "react-toastify";
 
-/* IMPORT ALL YOUR IMPORTS AS USUAL ABOVE HERE, REMOVE UNNECESSARY ONES*/
-
 const DispatchedOrders = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -34,6 +32,7 @@ const DispatchedOrders = () => {
 
   const [orders, setOrders] = useState([]);
 
+  //get orders
   const getOrders = async () => {
     await axios
       .get(`http://localhost:8083/orders`)
@@ -69,7 +68,7 @@ const DispatchedOrders = () => {
         status = "Dispatched";
       }
       await axios
-        .patch(`http://localhost:8083/orders/updateStatus`, { id, status })
+        .patch(`http://localhost:8083/orders/updateStatus`, { id, status }) //updateStatus
         .then((res) => {
           console.log(res.data);
           console.log("order Status Updated");
@@ -178,7 +177,10 @@ const DispatchedOrders = () => {
                                   />
                                   <TableData value={data.status} />
 
-                                  <Link to={`/orders/${data._id}`} className="pl-16">
+                                  <Link
+                                    to={`/orders/${data._id}`}
+                                    className="pl-16"
+                                  >
                                     <button
                                       type="button"
                                       className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-4 rounded-full my-2"

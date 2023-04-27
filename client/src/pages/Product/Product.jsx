@@ -18,21 +18,25 @@ export default function Product() {
   const [disableCart, setDisableCart] = useState();
   const [res, setRes] = useState({});
 
+  //quantity change
   const minusCount = () => {
     if (count > 1) {
       setCount(count - 1);
     }
   };
 
+  //quantity change
   const addCount = () => {
     setCount(count + 1);
   };
 
+  //image change
   const avgStar =
     item.star && item.star.reviewers && item.star.reviewers.length > 0
       ? item.star.total / item.star.reviewers.length
       : 0;
 
+  //add to cart
   async function AddtoCart() {
     const email = localStorage.getItem("email");
     const status = "cart";
@@ -73,7 +77,7 @@ export default function Product() {
       if (res.isSuccess) {
         try {
           const res2 = await axios.post(
-            `http://localhost:8083/orders/${res.order[0]._id}/addItem`,
+            `http://localhost:8083/orders/${res.order[0]._id}/addItem`, //add item to cart
             newItem
           );
         } catch (err) {
@@ -82,7 +86,7 @@ export default function Product() {
       } else {
         console.log(Neworder);
         await axios
-          .post(`http://localhost:8083/orders`, Neworder)
+          .post(`http://localhost:8083/orders`, Neworder) //create new cart
           .then((res) => {})
           .catch((err) => {
             console.log(err);
@@ -94,7 +98,7 @@ export default function Product() {
   }
 
   async function fetchItem() {
-    const email = localStorage.getItem("email");
+    const email = localStorage.getItem("email"); //get email from local storage
     try {
       const [response1, response2, response3] = await Promise.all([
         fetch(`http://localhost:8081/items/${id}`),

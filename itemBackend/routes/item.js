@@ -12,6 +12,7 @@ import {
 
 const router = express.Router();
 
+//Main routes
 router.get("/", getItems);
 router.post("/", createItem);
 router.get("/:id", getItembyId);

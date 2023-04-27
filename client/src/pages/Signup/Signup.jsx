@@ -11,6 +11,7 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   let navigate = useNavigate();
 
+  // handle submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -23,7 +24,7 @@ export default function Signup() {
     };
 
     try {
-      await axios.post("http://localhost:8084/register", newUser);
+      await axios.post("http://localhost:8084/register", newUser); //register user
       // alert("Registration Successfull");
       navigate("/signin");
     } catch (err) {
@@ -32,6 +33,7 @@ export default function Signup() {
   };
 
   useEffect(() => {
+    // check if user is already logged in
     if (localStorage.getItem("token")) {
       navigate("/");
     }

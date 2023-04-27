@@ -29,7 +29,7 @@ const PaymentChart = ({ orders }) => {
             <div class="align-middle inline-block min-w-full">
               <div class="shadow overflow-hidden sm:rounded-lg">
                 <table class="min-w-full divide-y divide-gray-200 dark:bg-gray-700">
-                  <thead class="bg-gray-50 dark:bg-gray-600" >
+                  <thead class="bg-gray-50 dark:bg-gray-600">
                     <tr>
                       <th
                         scope="col"

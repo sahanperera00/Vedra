@@ -1,5 +1,6 @@
 import Item from "../models/item.js";
 
+//get all items
 export const getItems = async (req, res) => {
   try {
     const items = await Item.find();
@@ -9,6 +10,7 @@ export const getItems = async (req, res) => {
   }
 };
 
+//get item by id
 export const getItembyId = async (req, res) => {
   const { id } = req.params;
   try {
@@ -19,6 +21,7 @@ export const getItembyId = async (req, res) => {
   }
 };
 
+//create item
 export const createItem = async (req, res) => {
   const item = req.body;
   const newItem = new Item(item);
@@ -30,6 +33,7 @@ export const createItem = async (req, res) => {
   }
 };
 
+//update item
 export const updateItem = async (req, res) => {
   const { id } = req.params;
   const item = req.body;
@@ -41,6 +45,7 @@ export const updateItem = async (req, res) => {
   }
 };
 
+//delete item
 export const deleteItem = async (req, res) => {
   const { id } = req.params;
   try {
@@ -51,6 +56,7 @@ export const deleteItem = async (req, res) => {
   }
 };
 
+//get items by category
 export const getItemsbyCategory = async (req, res) => {
   const { category } = req.params;
   try {
@@ -61,6 +67,7 @@ export const getItemsbyCategory = async (req, res) => {
   }
 };
 
+//get items by seller
 export const getItemsbySeller = async (req, res) => {
   const { sellerId } = req.params;
   try {
@@ -71,6 +78,7 @@ export const getItemsbySeller = async (req, res) => {
   }
 };
 
+//get items by name
 export const addReview = async (req, res) => {
   const review = req.body;
   try {

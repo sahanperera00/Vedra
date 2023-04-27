@@ -23,11 +23,7 @@ import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
-/* IMPORT ALL YOUR IMPORTS AS USUAL ABOVE HERE, REMOVE UNNECESSARY ONES*/
-
 const AdminDash = () => {
-  // <== THIS IS THE COMPONENT NAME, CHANGE IT TO YOUR COMPONENT NAME
-
   const {
     setCurrentColor,
     setCurrentMode,
@@ -38,16 +34,8 @@ const AdminDash = () => {
     setThemeSettings,
   } = useStateContext();
 
-  /* 
-  ------------------------------------------------
-  YOUR AXIOS CALLS AND USE STATES GOES  ABOVE HERE 
-  ------------------------------------------------
-
-
-  */
-
   useEffect(() => {
-    const currentThemeColor = localStorage.getItem("colorMode"); // KEEP THESE LINES
+    const currentThemeColor = localStorage.getItem("colorMode");
     const currentThemeMode = localStorage.getItem("themeMode");
     if (currentThemeColor && currentThemeMode) {
       setCurrentColor(currentThemeColor);
@@ -68,91 +56,99 @@ const AdminDash = () => {
       navigate("/");
     }
   }, []);
-  
-  const [orders,setOrders] = useState([]);
-  let total = 0
-  const [Totals,setTotals] = useState(0);
+
+  const [orders, setOrders] = useState([]);
+  let total = 0;
+  const [Totals, setTotals] = useState(0);
   const getOrders = async () => {
-    await axios.get(`http://localhost:8083/orders/`).then((res) => {
-      console.log(res.data);
-      setOrders(res.data);
-      console.log(orders);
-
-      
-    }).catch((error) => {
-      console.log(error);
-    })};
-
-    //Takes refunded and removes 
-    const calcTotal = ()=>{
-      orders.map((order)=>{
-        if(order.status === "Dispatched" || order.status === "Confirmed" || order.status === "Pending" || order.status === "Refunded"){
-          if(order.status === "Refunded"){
-            total -= order.total * 2
-          }
-          total += order.total
-          setTotals(total);
-        }
+    await axios
+      .get(`http://localhost:8083/orders/`)
+      .then((res) => {
+        console.log(res.data);
+        setOrders(res.data);
+        console.log(orders);
       })
-    }
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-    const [dispatched,setDispatched] = useState(0);
-    const [confirmed,setConfirmed] = useState(0);
-    const [pending,setPending] = useState(0);
-    const [refunded,setRefunded] = useState(0);
-
-    const getOrderCount = ()=>{
-
-        let pendingCount = 0;
-        let dispatchedCount = 0;
-        let confirmedCount = 0;
-        let refundedCount = 0;
-
-      orders.map((order)=>{
-        if(order.status === "Pending"){
-          pendingCount++;
+  //Takes refunded and removes
+  const calcTotal = () => {
+    orders.map((order) => {
+      if (
+        order.status === "Dispatched" ||
+        order.status === "Confirmed" ||
+        order.status === "Pending" ||
+        order.status === "Refunded"
+      ) {
+        if (order.status === "Refunded") {
+          total -= order.total * 2;
         }
-        if(order.status === "Dispatched"){
-          dispatchedCount++;
-        }
-        if(order.status === "Confirmed"){
-          confirmedCount++;
-        }
-        if(order.status === "Refunded"){
-          refundedCount++;
-        }
-        setDispatched(dispatchedCount);
-        setConfirmed(confirmedCount);
-        setPending(pendingCount);
-        setRefunded(refundedCount);
+        total += order.total;
+        setTotals(total);
+      }
+    });
+  };
 
-      })
-    }
+  //Order count states
+  const [dispatched, setDispatched] = useState(0);
+  const [confirmed, setConfirmed] = useState(0);
+  const [pending, setPending] = useState(0);
+  const [refunded, setRefunded] = useState(0);
 
+  //Get order count
+  const getOrderCount = () => {
+    let pendingCount = 0;
+    let dispatchedCount = 0;
+    let confirmedCount = 0;
+    let refundedCount = 0;
 
-    useEffect(()=>{
-      getOrders();
-    },[])
+    orders.map((order) => {
+      if (order.status === "Pending") {
+        pendingCount++;
+      }
+      if (order.status === "Dispatched") {
+        dispatchedCount++;
+      }
+      if (order.status === "Confirmed") {
+        confirmedCount++;
+      }
+      if (order.status === "Refunded") {
+        refundedCount++;
+      }
+      setDispatched(dispatchedCount);
+      setConfirmed(confirmedCount);
+      setPending(pendingCount);
+      setRefunded(refundedCount);
+    });
+  };
 
-    useEffect(()=>{
-      calcTotal();
-    },[getOrders])
+  //Get orders on load
 
-    useEffect(()=>{
-      getOrderCount();
-    },[getOrders])
+  useEffect(() => {
+    getOrders();
+  }, []);
 
+  //Get totals on load
 
+  useEffect(() => {
+    calcTotal();
+  }, [getOrders]);
 
+  //Get order count on load
+  useEffect(() => {
+    getOrderCount();
+  }, [getOrders]);
 
-    //Cost formatter
+  //Cost formatter
 
-    const formatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-      currencyDisplay: 'symbol'
-    })
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+    currencyDisplay: "symbol",
+  });
 
   return (
     <div>
@@ -232,7 +228,7 @@ const AdminDash = () => {
                       <DashTopBox
                         icon={<GiMoneyStack />}
                         label="Total Commissions Earned"
-                        data={formatter.format(Totals * .15)}
+                        data={formatter.format(Totals * 0.15)}
                       />
                     </div>
                   </div>
@@ -262,7 +258,6 @@ const AdminDash = () => {
                           data={dispatched}
                         />
                       </Link>
-
                       <Link to="/refunded">
                         <DashTopBox
                           icon={<TbTruckDelivery />}
@@ -274,10 +269,12 @@ const AdminDash = () => {
                   </div>
 
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-                    <AdminPieChart dispatched={dispatched}
-                    refunded={refunded}
-                    confirmed={confirmed}
-                    pending={pending} />
+                    <AdminPieChart
+                      dispatched={dispatched}
+                      refunded={refunded}
+                      confirmed={confirmed}
+                      pending={pending}
+                    />
                   </div>
                 </div>
               </div>
