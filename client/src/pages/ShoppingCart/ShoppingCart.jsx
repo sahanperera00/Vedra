@@ -190,9 +190,10 @@ export default function ShoppingCart() {
                         </td>
 
                         <td className="h-full">
-                          <div className="flex items-center justify-center items-center">
+                          <div className="flex items-center justify-center">
                             <button
                               onClick={() => {
+                                //decrease quantity
                                 minusCount(index, item.itemID);
                               }}
                               className="focus:outline-none cursor-pointer w-7 h-7 flex items-center justify-center bg-[#3ea7ac] text-white hover:bg-[#278a9e] rounded-l-lg"
@@ -211,6 +212,7 @@ export default function ShoppingCart() {
                             />
                             <button
                               onClick={() => {
+                                //add item to cart
                                 addCount(index, item.itemID);
                               }}
                               className="focus:outline-none cursor-pointer w-7 h-7 flex items-center justify-center bg-[#3ea7ac] text-white hover:bg-[#278a9e] rounded-r-lg"
