@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
-import dotenv from "dotenv/config";
+import dotenv from "dotenv/config"; //Required to use the env files
 import itemRoutes from "./routes/item.js";
 
 const app = express();
@@ -23,7 +23,7 @@ connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
 
-//listening to port
+//starting the server
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });
