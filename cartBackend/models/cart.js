@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
+// Create Schema
 const orderSchema = new Schema({
   email: {
     type: String,
@@ -56,6 +57,7 @@ const orderSchema = new Schema({
   },
 });
 
+// Create collection and add schema
 const Order = mongoose.model("Order", orderSchema);
 
 export default Order;
