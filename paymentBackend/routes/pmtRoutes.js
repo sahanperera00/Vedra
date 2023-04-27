@@ -16,7 +16,6 @@ router.options("*", cors());
 router.post("/create", createPayment);
 router.get("/payment/:id", getPaymentbyId);
 router.get("/:email", getFromUser);
-//router.options("/pay",cors());
 router.post("/pay", chargeUser);
 router.get("/", getAllPayments);
 router.get("/orderId/:orderId", getPaymentbyOrderId);

@@ -195,7 +195,7 @@ const Payment = () => {
                 <span>Total Cost</span>
 
                 <span className="text-xl">
-                    ${payment.netPrice}
+                    ${(netPrice).toFixed(2)}
                 </span>
               </div>
 
