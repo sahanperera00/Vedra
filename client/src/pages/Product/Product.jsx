@@ -76,7 +76,6 @@ export default function Product() {
             `http://localhost:8083/orders/${res.order[0]._id}/addItem`,
             newItem
           );
-          console.log(res2.data);
         } catch (err) {
           console.error(err);
         }
@@ -84,9 +83,7 @@ export default function Product() {
         console.log(Neworder);
         await axios
           .post(`http://localhost:8083/orders`, Neworder)
-          .then((res) => {
-            console.log(res.data);
-          })
+          .then((res) => {})
           .catch((err) => {
             console.log(err);
           });
@@ -305,6 +302,13 @@ export default function Product() {
         reviews={
           item.star && item.star.reviewers && item.star.reviewers.length > 0
             ? item.star
+            : 0
+        }
+        star={avgStar}
+        itemId={item._id && item._id}
+        reviewers={
+          item.star && item.star.reviewers && item.star.reviewers.length > 0
+            ? item.star.reviewers
             : 0
         }
       />
