@@ -1,7 +1,11 @@
 import StarRatings from "react-star-ratings";
 import { format } from "timeago.js";
+import AddReview from "../AddReview/AddReview";
+import jwtDecode from "jwt-decode";
 
-export default function Reviews({ reviews }) {
+export default function Reviews({ reviews, star, reviewers, itemId }) {
+  // console.log(star, reviewers, itemId);
+  console.log(star);
   const profileimg =
     "https://firebasestorage.googleapis.com/v0/b/surge-internship-march-2023.appspot.com/o/noprofile.png?alt=media&token=739a8587-3eb9-4d38-9e44-d887d2bf54e3";
 
@@ -12,7 +16,7 @@ export default function Reviews({ reviews }) {
           <h2 className="mb-14 text-3xl">Reviews</h2>
           {reviews && reviews.total && reviews.reviewers.length > 0 ? (
             reviews.reviewers.map((review) => (
-              <div className="mb-8 shadow-md rounded-lg overflow-hidden">
+              <div className="mb-8 mt-10 shadow-md rounded-lg overflow-hidden">
                 <div className=" md:px-16 bg-white md:py-6 flex flex-wrap items-center">
                   <img
                     className="w-10 mr-6 rounded-full"
@@ -41,7 +45,7 @@ export default function Reviews({ reviews }) {
                   <div className="flex flex-wrap">
                     <div className="w-full text-left">
                       <p className=" text-sm text-gray-400 mb-3">
-                        Added {format(review.createdAt)}
+                        {/* Added {format(review.createdAt)} */}
                       </p>
                     </div>
                     <div className="w-full">
@@ -54,9 +58,19 @@ export default function Reviews({ reviews }) {
               </div>
             ))
           ) : (
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center mt-[50px]">
               <h1 className="text-2xl font-semibold">No Reviews</h1>
             </div>
+          )}
+
+          {localStorage.getItem("token") ? (
+            jwtDecode(localStorage.getItem("token")).role === "buyer" ? (
+              <AddReview itemId={itemId && itemId} />
+            ) : (
+              <> </>
+            )
+          ) : (
+            <> </>
           )}
         </div>
       </section>

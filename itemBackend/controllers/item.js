@@ -70,3 +70,19 @@ export const getItemsbySeller = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
+
+export const addReview = async (req, res) => {
+  const review = req.body;
+  try {
+    const item = await Item.findById(req.params.id);
+    if (!item) {
+      return res.status(404).json({ error: "Item not found" });
+    }
+    item.star.reviewers.push(review);
+    item.star.total += review.rate;
+    await item.save();
+    res.status(201).json(item);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
+};
