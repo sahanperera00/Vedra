@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
+// Create Schema
 const itemSchema = new Schema({
   name: {
     type: String,
@@ -53,6 +54,7 @@ const itemSchema = new Schema({
   },
 });
 
+// Create collection and add schema
 const Item = mongoose.model("Item", itemSchema);
 
 export default Item;

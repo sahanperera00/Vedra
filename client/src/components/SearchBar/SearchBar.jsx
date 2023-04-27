@@ -7,6 +7,7 @@ export default function SearchBar() {
   const [searchTerm, setSearchTerm] = useState("");
   const [items, setItems] = useState([]);
 
+  // Get all items
   const getItems = async () => {
     axios
       .get(`http://localhost:8081/items/`)
@@ -46,6 +47,7 @@ export default function SearchBar() {
       >
         {items
           .filter((val) => {
+            //Filtering the items
             if (searchTerm === "") {
               return "";
             } else if (

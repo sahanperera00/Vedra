@@ -1,5 +1,6 @@
 import Order from "../models/cart.js";
 
+//get all orders
 export const getOrders = async (req, res) => {
   try {
     const orders = await Order.find();
@@ -9,6 +10,7 @@ export const getOrders = async (req, res) => {
   }
 };
 
+//get order by id
 export const getOrderbyId = async (req, res) => {
   const { id } = req.params;
   try {
@@ -19,6 +21,7 @@ export const getOrderbyId = async (req, res) => {
   }
 };
 
+//  get order by user email
 export const getOrderbyUserEmail = async (req, res) => {
   const { email } = req.params;
   try {
@@ -29,6 +32,7 @@ export const getOrderbyUserEmail = async (req, res) => {
   }
 };
 
+//get order by status
 export const createOrder = async (req, res) => {
   const order = req.body;
   const newOrder = new Order(order);
@@ -40,6 +44,7 @@ export const createOrder = async (req, res) => {
   }
 };
 
+//delete order
 export const deleteOrder = async (req, res) => {
   const { id } = req.params;
   try {
@@ -50,6 +55,7 @@ export const deleteOrder = async (req, res) => {
   }
 };
 
+//update order
 export const updateOrder = async (req, res) => {
   const { id } = req.params;
   const order = req.body;
@@ -63,6 +69,7 @@ export const updateOrder = async (req, res) => {
   }
 };
 
+//add item to cart
 export const addItemToCart = async (req, res) => {
   const item = req.body;
   try {
@@ -80,6 +87,7 @@ export const addItemToCart = async (req, res) => {
   }
 };
 
+//remove item from cart
 export const removeItemFromCart = async (req, res) => {
   const item = req.body;
   try {
@@ -97,6 +105,7 @@ export const removeItemFromCart = async (req, res) => {
   }
 };
 
+//update item quantity
 export const searchOrder = async (req, res) => {
   const { email, status, itemID } = req.params;
   try {
@@ -128,6 +137,7 @@ export const searchOrder = async (req, res) => {
   }
 };
 
+//get order by email and status
 export const findOrderbyEmailStatus = async (req, res) => {
   const { email, status } = req.params;
   try {
@@ -154,6 +164,7 @@ export const findOrderbyEmailStatus = async (req, res) => {
   }
 };
 
+//get order by email and status
 export const getCartOrders = async (req, res) => {
   try {
     const orders = await Order.find({ status: "cart" });
@@ -163,6 +174,7 @@ export const getCartOrders = async (req, res) => {
   }
 };
 
+//get order by email and status
 export const updateOrderStatus = async (req, res) => {
   const { id } = req.body;
   const { status } = req.body;
@@ -182,6 +194,7 @@ export const updateOrderStatus = async (req, res) => {
   }
 };
 
+//get order by email and status
 export const updateItemQuantity = async (req, res) => {
   const orderId = req.params.orderId;
   const itemId = req.params.itemId;
