@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const ClientOrderTable = ({order}) => {
-    let count = 0;
-    console.log("Order from order Table",order);
+const ClientOrderTable = ({ order }) => {
+  let count = 0;
+  console.log("Order from order Table", order);
   return (
     <div>
       <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 dark:bg-gray-700">
@@ -36,7 +36,7 @@ const ClientOrderTable = ({order}) => {
                         scope="col"
                         class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-200"
                       >
-                        Order 
+                        Order
                       </th>
                       <th
                         scope="col"
@@ -70,18 +70,13 @@ const ClientOrderTable = ({order}) => {
                               </span>
                             </td>
                             <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500 dark:text-gray-200">
-                              {
-                                new Date()
-                                  .toISOString()
-                                  .split("T")[0]
-                              }
+                              {new Date().toISOString().split("T")[0]}
                             </td>
                             <td class=" whitespace-nowrap text-sm font-semibold text-gray-900 dark:text-gray-200">
-                              $ {(order.total).toFixed(2)}
+                              $ {order.total.toFixed(2)}
                             </td>
                             <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-900 dark:text-gray-200">
                               <span class="font-semibold">
-                                
                                 {" " + order.status}
                               </span>
                             </td>

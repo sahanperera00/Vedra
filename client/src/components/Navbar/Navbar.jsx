@@ -17,6 +17,7 @@ export default function Navbar() {
     return classes.filter(Boolean).join(" ");
   }
 
+  // handle logout
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -129,9 +130,9 @@ export default function Navbar() {
                               "block w-full px-4 py-2 text-left text-sm"
                             )}
                             onClick={() => {
-                              localStorage.removeItem("token");
-                              localStorage.removeItem("sellerId");
-                              localStorage.removeItem("email");
+                              localStorage.removeItem("token"); //remove token from local storage
+                              localStorage.removeItem("sellerId"); //remove sellerId from local storage
+                              localStorage.removeItem("email"); //remove email from local storage
                               setToken("");
                               setState(!state);
                               navigate("/");
