@@ -16,6 +16,7 @@ import {
 
 const router = express.Router();
 
+//Main routes
 router.get("/", getOrders);
 router.post("/", createOrder);
 router.get("/:id", getOrderbyId);
