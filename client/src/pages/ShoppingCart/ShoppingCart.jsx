@@ -11,6 +11,9 @@ export default function ShoppingCart() {
   const countRefs = useRef([]);
   const [state, setState] = useState(false);
 
+  //quantity updation (minus or plus)
+
+  //decrease quantity
   const minusCount = async (index, itemID) => {
     if (cart.items[index].quantity > 1) {
       const updatedCart = { ...cart };
@@ -19,6 +22,7 @@ export default function ShoppingCart() {
 
       await axios
         .put(`http://localhost:8083/orders/${cart._id}/${itemID}`, {
+          //update quantity
           quantity: updatedCart.items[index].quantity,
         })
         .then((res) => {
@@ -30,6 +34,7 @@ export default function ShoppingCart() {
     }
   };
 
+  //increase quantity
   const addCount = async (index, itemID) => {
     const updatedCart = { ...cart };
     updatedCart.items[index].quantity += 1;
@@ -37,6 +42,7 @@ export default function ShoppingCart() {
 
     await axios
       .put(`http://localhost:8083/orders/${cart._id}/${itemID}`, {
+        //update quantity
         quantity: updatedCart.items[index].quantity,
       })
       .then((res) => {
@@ -48,21 +54,25 @@ export default function ShoppingCart() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token"); //get token from local storage
     if (token) {
-      const decodedToken = jwtDecode(token);
+      const decodedToken = jwtDecode(token); //decode token
 
       if (decodedToken.role === "buyer" || decodedToken.role === "admin") {
+        // check role
         async function fetchCart() {
+          //get cart
           const email = localStorage.getItem("email");
           const status = "cart";
           const response = await fetch(
+            //get cart
             `http://localhost:8083/orders/${email}/${status}`
           );
           const data = await response.json();
           setCart(data.order[0]);
           console.log(data.order[0]);
         }
+        //call fetchCart function
         fetchCart();
       } else {
         navigate("/");
@@ -164,6 +174,7 @@ export default function ShoppingCart() {
                                 onClick={async (e) => {
                                   await axios
                                     .post(
+                                      //remove item from cart
                                       `http://localhost:8083/orders/${cart._id}/removeItem`,
                                       item
                                     )
