@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import User from "../model/user.js";
 import dotenv from "dotenv/config";
 
+// import { Router } from "express";
 export const registerUser = async (req, res) => {
   const { firstName, lastName, role, email, password } = req.body;
 
@@ -42,6 +43,7 @@ export const registerUser = async (req, res) => {
   }
 };
 
+//login user
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -80,6 +82,7 @@ export const loginUser = async (req, res) => {
   }
 };
 
+//get all users
 export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
@@ -89,11 +92,13 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
+//get user by id
 export const getUser = async (req, res) => {
   const profile = await User.findById(req.user._id);
   res.send(profile);
 };
 
+//update user
 export const updateUser = async (req, res) => {
   const id = req.params.id;
   const update = req.body;
@@ -105,6 +110,7 @@ export const updateUser = async (req, res) => {
   }
 };
 
+//delete user
 export const deleteUser = async (req, res) => {
   const id = req.params.id;
   try {
