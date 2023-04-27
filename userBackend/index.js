@@ -1,4 +1,4 @@
-import dotenv from "dotenv/config";
+import dotenv from "dotenv/config"; //Required to use the env files
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
@@ -16,12 +16,14 @@ app.use("/", userRouter);
 
 const URL = process.env.MONGODB_URL;
 
+//Connecting to mongoDB
 mongoose.connect(URL);
 const connection = mongoose.connection;
 connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
 
+//Starting the server
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });
