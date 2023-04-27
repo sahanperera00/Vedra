@@ -17,10 +17,7 @@ import axios from "axios";
 
 import { ToastContainer, toast, Zoom, Bounce } from "react-toastify";
 
-/* IMPORT ALL YOUR IMPORTS AS USUAL ABOVE HERE, REMOVE UNNECESSARY ONES*/
-
 const PendingOrders = () => {
-
   const {
     setCurrentColor,
     setCurrentMode,
@@ -35,7 +32,7 @@ const PendingOrders = () => {
 
   const getOrders = async () => {
     await axios
-      .get(`http://localhost:8083/orders`)
+      .get(`http://localhost:8083/orders`) //change the url
       .then((res) => {
         console.log(res.data);
         setOrders(res.data);
@@ -45,10 +42,9 @@ const PendingOrders = () => {
       });
   };
 
-
-  const handlePmtToken =(id)=>{
-    orderStatus(id,"Reject");
-  }
+  const handlePmtToken = (id) => {
+    orderStatus(id, "Reject");
+  };
 
   useEffect(() => {
     getOrders();
@@ -197,7 +193,7 @@ const PendingOrders = () => {
                                       type="button"
                                       className="font-bold py-1 px-4 rounded-full mx-3 text-white"
                                       style={{ background: "red" }}
-                                      onClick={()=>handlePmtToken(data._id)}
+                                      onClick={() => handlePmtToken(data._id)}
                                     >
                                       {" "}
                                       Reject Payment
