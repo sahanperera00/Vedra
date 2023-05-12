@@ -49,7 +49,7 @@ const ClientPayments = () => {
 
 
     const clientMail = localStorage.getItem('email');
-    axios.get(`http://localhost:8082/payment/${clientMail}`).then((res) => {
+    axios.get(`http://localhost:8070/payment/${clientMail}`).then((res) => {
       setPayment(res.data);
     })
   }

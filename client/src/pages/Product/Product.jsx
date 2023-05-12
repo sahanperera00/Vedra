@@ -77,7 +77,7 @@ export default function Product() {
       if (res.isSuccess) {
         try {
           const res2 = await axios.post(
-            `http://localhost:8083/orders/${res.order[0]._id}/addItem`, //add item to cart
+            `http://localhost:8070/orders/${res.order[0]._id}/addItem`, //add item to cart
             newItem
           );
         } catch (err) {
@@ -86,7 +86,7 @@ export default function Product() {
       } else {
         console.log(Neworder);
         await axios
-          .post(`http://localhost:8083/orders`, Neworder) //create new cart
+          .post(`http://localhost:8070/orders`, Neworder) //create new cart
           .then((res) => {})
           .catch((err) => {
             console.log(err);
@@ -101,9 +101,9 @@ export default function Product() {
     const email = localStorage.getItem("email"); //get email from local storage
     try {
       const [response1, response2, response3] = await Promise.all([
-        fetch(`http://localhost:8081/items/${id}`),
-        fetch(`http://localhost:8083/orders/${email}/cart/${id}`),
-        fetch(`http://localhost:8083/orders/${email}/cart`),
+        fetch(`http://localhost:8070/items/${id}`),
+        fetch(`http://localhost:8070/orders/${email}/cart/${id}`),
+        fetch(`http://localhost:8070/orders/${email}/cart`),
       ]);
 
       const item = await response1.json();

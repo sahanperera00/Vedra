@@ -25,7 +25,7 @@ const PmtSuccess = () => {
     try {
       //const orderId = '6438fa2c518a57cbd5bdc8f4';
       await axios
-        .get(`http://localhost:8083/orders/${orderId}`)
+        .get(`http://localhost:8070/orders/${orderId}`)
         .then((res) => {
           setOrder(res.data);
           setInvoiceNo(`INV ${res.data._id}`);
@@ -52,7 +52,7 @@ const PmtSuccess = () => {
       netPrice,
     };
     await axios
-      .post("http://localhost:8082/payment/create", payment)
+      .post("http://localhost:8070/payment/create", payment)
       .then((res) => {
         toast.success(
           "Payment Successful! An Invoice will be sent to you shortly."
@@ -92,7 +92,7 @@ const PmtSuccess = () => {
     const status = "Pending";
     try {
       await axios
-        .patch(`http://localhost:8083/orders/updateStatus`, { id, status })
+        .patch(`http://localhost:8070/orders/updateStatus`, { id, status })
         .then((res) => {
           console.log("Order After Status Update:", res.data);
           console.log("order Status Updated");

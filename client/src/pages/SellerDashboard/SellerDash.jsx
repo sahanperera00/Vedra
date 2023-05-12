@@ -44,7 +44,7 @@ const SellerDash = () => {
 
   const getOrders = async () => {
     await axios
-      .get(`http://localhost:8083/orders/`)
+      .get(`http://localhost:8070/orders/`)
       .then((res) => {
         setOrders(res.data);
       })

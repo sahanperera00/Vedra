@@ -13,7 +13,7 @@ export default function Home() {
   useEffect(() => {
     const getOrder = async () => {
       const res = await axios.get(
-        `http://localhost:8083/orders/${localStorage.getItem("email")}/cart` //get order
+        `http://localhost:8070/orders/${localStorage.getItem("email")}/cart` //get order
       );
       if (!res.data.isSuccess) {
         const newOrder = {
@@ -24,7 +24,7 @@ export default function Home() {
           address: "",
           shippingMethod: "",
         };
-        await axios.post("http://localhost:8083/orders", newOrder); //create order
+        await axios.post("http://localhost:8070/orders", newOrder); //create order
       }
     };
     getOrder();

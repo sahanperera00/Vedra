@@ -32,7 +32,7 @@ const PendingOrders = () => {
 
   const getOrders = async () => {
     await axios
-      .get(`http://localhost:8083/orders`) //change the url
+      .get(`http://localhost:8070/orders`) //change the url
       .then((res) => {
         console.log(res.data);
         setOrders(res.data);
@@ -69,7 +69,7 @@ const PendingOrders = () => {
         status = "Confirmed";
       }
       await axios
-        .patch(`http://localhost:8083/orders/updateStatus`, { id, status })
+        .patch(`http://localhost:8070/orders/updateStatus`, { id, status })
         .then((res) => {
           console.log(res.data);
           console.log("order Status Updated");

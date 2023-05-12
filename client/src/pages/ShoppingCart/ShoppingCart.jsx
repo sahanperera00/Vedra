@@ -21,7 +21,7 @@ export default function ShoppingCart() {
       setCart(updatedCart);
 
       await axios
-        .put(`http://localhost:8083/orders/${cart._id}/${itemID}`, {
+        .put(`http://localhost:8070/orders/${cart._id}/${itemID}`, {
           //update quantity
           quantity: updatedCart.items[index].quantity,
         })
@@ -41,7 +41,7 @@ export default function ShoppingCart() {
     setCart(updatedCart);
 
     await axios
-      .put(`http://localhost:8083/orders/${cart._id}/${itemID}`, {
+      .put(`http://localhost:8070/orders/${cart._id}/${itemID}`, {
         //update quantity
         quantity: updatedCart.items[index].quantity,
       })
@@ -66,7 +66,7 @@ export default function ShoppingCart() {
           const status = "cart";
           const response = await fetch(
             //get cart
-            `http://localhost:8083/orders/${email}/${status}`
+            `http://localhost:8070/orders/${email}/${status}`
           );
           const data = await response.json();
           setCart(data.order[0]);
