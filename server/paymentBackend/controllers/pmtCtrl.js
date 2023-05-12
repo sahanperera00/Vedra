@@ -1,6 +1,6 @@
 import Pmt from "../models/pmtModel.js";
 import mongoose from "mongoose";
-import dotenv from "dotenv/config";
+import dotenv from "dotenv/config.js";
 
 import Stripe from "stripe";
 import { v4 as uuidv4 } from "uuid";
