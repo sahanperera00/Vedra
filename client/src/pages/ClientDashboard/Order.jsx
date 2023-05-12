@@ -16,7 +16,7 @@ const Order = () => {
   const orderId = useParams().id;
   const getOrder = async () => {
     await axios
-      .get(`http://localhost:8083/orders/${orderId}`)
+      .get(`http://localhost:8070/orders/${orderId}`)
       .then((res) => {
         setOrder(res.data);
         setStatus(res.data.status);

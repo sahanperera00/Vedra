@@ -19,7 +19,7 @@ export default function Checkout() {
   const getOrder = async (orderId) => {
     try {
       //const orderId = '6438fa2c518a57cbd5bdc8f4';
-      await axios.get(`http://localhost:8083/orders/${orderId}`)
+      await axios.get(`http://localhost:8070/orders/${orderId}`)
         .then((res) => {
           setOrder(res.data);
           setOrderItems(res.data.items);
@@ -37,7 +37,7 @@ export default function Checkout() {
 
   const handlePmtToken = async () => {
     
-    await axios.post("http://localhost:8082/payment/pay",{orderItems, orderId}).then((res)=>{
+    await axios.post("http://localhost:8070/payment/pay",{orderItems, orderId}).then((res)=>{
       if(res.data.url){
         window.location.href = res.data.url;
       }

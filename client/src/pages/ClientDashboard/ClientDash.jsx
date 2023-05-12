@@ -55,7 +55,7 @@ const ClientDash = () => {
   const [payment, setPayment] = useState([]);
   const getPayment = async () => {
     const clientMail = localStorage.getItem("email");
-    axios.get(`http://localhost:8082/payment/${clientMail}`).then((res) => {
+    axios.get(`http://localhost:8070/payment/${clientMail}`).then((res) => {
       setPayment(res.data);
       console.log("User Specific Payments: ", res.data);
     });
@@ -67,7 +67,7 @@ const ClientDash = () => {
   const getOrder = async () => {
     const clientMail = localStorage.getItem("email");
     axios
-      .get(`http://localhost:8083/orders/email/${clientMail}`)
+      .get(`http://localhost:8070/orders/email/${clientMail}`)
       .then((res) => {
         setOrder(res.data);
         console.log("User Specific Orders: ", res.data);

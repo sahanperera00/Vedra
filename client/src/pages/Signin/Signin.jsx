@@ -19,7 +19,7 @@ export default function Signin() {
     };
 
     try {
-      const response = await axios.post("http://localhost:8084/login", user); //get token
+      const response = await axios.post("http://localhost:8070/users/login", user); //get token
       const { token } = response.data;
       localStorage.setItem("token", token);
       // alert("Login Successfull");

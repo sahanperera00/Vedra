@@ -23,7 +23,7 @@ const Payment = () => {
 
     const getPayment = async () => {
         await axios
-        .get(`http://localhost:8082/payment/payment/${paymentId}`)
+        .get(`http://localhost:8070/payment/payment/${paymentId}`)
         .then((res) => {
             setPayment(res.data);
             setInvoiceNo(res.data.invoiceNo);
@@ -41,7 +41,7 @@ const Payment = () => {
   const getOrder = async () => {
     
     await axios
-      .get(`http://localhost:8083/orders/${orderId}`)
+      .get(`http://localhost:8070/orders/${orderId}`)
       .then((res) => {
         setOrder(res.data);
         setStatus(res.data.status);

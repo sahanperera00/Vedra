@@ -108,7 +108,7 @@ const ItemManagement = () => {
 
       console.log(item);
       axios
-        .post("http://localhost:8081/items", item)
+        .post("http://localhost:8070/items", item)
         .then(() => {
           setPostImage([]);
           setImages([]);
@@ -122,7 +122,7 @@ const ItemManagement = () => {
 
   const handleDeleteItem = async (id) => {
     const orders = await axios.get(
-      `http://localhost:8083/orders/status/cart/cart/cart`
+      `http://localhost:8070/orders/status/cart/cart/cart`
     );
 
     orders.data.map(async (order) => {
@@ -134,7 +134,7 @@ const ItemManagement = () => {
           console.log(orderID);
           console.log(item);
           await axios
-            .post(`http://localhost:8083/orders/${orderID}/removeItem`, {
+            .post(`http://localhost:8070/orders/${orderID}/removeItem`, {
               itemID: item.itemID,
               name: item.name,
               quantity: item.quantity,
@@ -152,7 +152,7 @@ const ItemManagement = () => {
     });
 
     await axios
-      .delete(`http://localhost:8081/items/${id}`)
+      .delete(`http://localhost:8070/items/${id}`)
       .then(() => {
         console.log("Item deleted");
         setState(!state);
@@ -176,7 +176,7 @@ const ItemManagement = () => {
     const fetchItems = async () => {
       const sellerId = localStorage.getItem("sellerId");
       const res = await axios.get(
-        `http://localhost:8081/items/seller/${sellerId}`
+        `http://localhost:8070/items/seller/${sellerId}`
       );
       setItems(res.data);
     };

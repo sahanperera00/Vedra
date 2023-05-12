@@ -24,7 +24,7 @@ export default function Signup() {
     };
 
     try {
-      await axios.post("http://localhost:8084/register", newUser); //register user
+      await axios.post("http://localhost:8070/users/register", newUser); //register user
       // alert("Registration Successfull");
       navigate("/signin");
     } catch (err) {
