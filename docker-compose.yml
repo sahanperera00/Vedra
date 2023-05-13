@@ -1,28 +1,15 @@
 version: "3.9"
 
 services:
-  frontend:
-    build: ./client
-    image: client
-    container_name: client_server
-    ports:
-      - "3000:3000"
-    depends_on:
-      - userbackend
-      - itembackend
-      - cartbackend
-      - paymentBackend
-      
-
   userbackend:
-    build: ./userBackend
+    build: ./server/userBackend
     image: userbackend
     container_name: userbackend_server
     ports:
       - "8084:8084"
 
   itembackend:
-    build: ./itemBackend
+    build: ./server/itemBackend
     image: itembackend
     container_name: itembackend_server
     ports:
@@ -31,7 +18,7 @@ services:
       - userbackend
 
   cartbackend:
-    build: ./cartBackend
+    build: ./server/cartBackend
     image: cartbackend
     container_name: cartbackend_server
     ports:
@@ -40,8 +27,8 @@ services:
       - userbackend
       - itembackend
 
-  paymentBackend:
-    build: ./paymentBackend
+  paymentbackend:
+    build: ./server/paymentBackend
     image: paymentbackend
     container_name: paymentbackend_server
     ports:
@@ -49,3 +36,24 @@ services:
     depends_on:
       - userbackend
       - cartbackend
+
+  gateway:
+    build: ./server/gateway
+    image: gateway
+    container_name: gateway_server
+    ports:
+      - "8070:8070"
+    depends_on:
+      - userbackend
+      - itembackend
+      - cartbackend
+      - paymentbackend
+
+  frontend:
+    build: ./client
+    image: client
+    container_name: client_server
+    ports:
+      - "3000:3000"
+    depends_on:
+      - gateway
