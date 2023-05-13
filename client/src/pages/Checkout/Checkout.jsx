@@ -37,7 +37,7 @@ export default function Checkout() {
 
   const handlePmtToken = async () => {
     
-    await axios.post("http://localhost:8070/payment/pay",{orderItems, orderId}).then((res)=>{
+    await axios.post("http://localhost:8082/payment/pay",{orderItems, orderId}).then((res)=>{
       if(res.data.url){
         window.location.href = res.data.url;
       }
