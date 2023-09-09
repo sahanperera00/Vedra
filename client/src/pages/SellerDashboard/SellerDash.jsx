@@ -43,7 +43,6 @@ const SellerDash = () => {
   const [total, setTotal] = useState(0);
   let fTotal = 0;
 
-   
 
   const getOrders = async () => {
     await axios
@@ -212,7 +211,6 @@ const SellerDash = () => {
                   <div className="flex flex-wrap lg:flex-nowrap justify-left ml-5 mt-5">
                     <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                       {/* // ADD Chart */}
-                     
                       <div class="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-4 gap-4">
                         <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2 dark:bg-gray-700 w-800">
                           <div class="flex items-center justify-between mb-4">

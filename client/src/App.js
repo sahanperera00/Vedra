@@ -28,6 +28,8 @@ import Order from "./pages/ClientDashboard/Order";
 import Payment from "./pages/ClientDashboard/Payment";
 import RefundedOrders from "./pages/AdminDashboard/Refunded";
 import ProvisionReport from "./pages/SellerDashboard/ProvisionReport";
+import ItemReport from "./pages/SellerDashboard/ItemReport";
+import OrderReport from "./pages/ClientDashboard/OrderReport";
 
 function App() {
   return (
@@ -49,6 +51,7 @@ function App() {
         <Route path="/pmtsuccess/:id" element={<PmtSuccess />} />
         <Route path="/failed" element={<Unsuccesful />} />
         <Route path="/mypayments" element={<ClientPayments />} />
+        <Route path="/orderReport" element={<OrderReport />} />
         {/* Test method to fetch item information */}
         <Route
           path="/checkout/:6438fa2c518a57cbd5bdc8f4"
@@ -73,6 +76,7 @@ function App() {
         <Route path="/additem" element={<AddItemForm />} />
         <Route path="/updateitem" element={<UpdateItemForm />} />
         <Route path="/ProvisionReport" element={<ProvisionReport />} />
+        <Route path='/itemreport' element={<ItemReport />} />
 
         {/* You bullshit Shaggy: Add your routes here
          

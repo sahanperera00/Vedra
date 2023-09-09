@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className="mt-24">
       <p className="dark:text-gray-200 text-gray-700 text-center m-20 capitalize">
-        © {currentYear} Project of Code Crusaders.
+        © {currentYear} Project by RunwayX
       </p>
     </footer>
   );

@@ -14,11 +14,12 @@ import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 import ClientSideBar from "../../components/Tailwind/components/ClientSidebar.jsx";
 
 import axios from "axios";
+import { jsPDF } from "jspdf";
 import { ToastContainer} from "react-toastify";
 
 /* IMPORT ALL YOUR IMPORTS AS USUAL ABOVE HERE, REMOVE UNNECESSARY ONES*/
 
-const ClientOrders = () => {
+const OrderReport = () => {
   const {
     setCurrentColor,
     setCurrentMode,
@@ -66,9 +67,23 @@ const ClientOrders = () => {
     currencyDisplay: "symbol",
   });
 
+  const createPDF = () => {
+    const date = new Date(Date.now()).toISOString().split("T")[0];
+    const pdf = new jsPDF("landscape", "px", "a1", false);
+    const data = document.querySelector("#tableContainer");
+    pdf.html(data).then(() => {
+      pdf.save("Orders-" + date + ".pdf");
+    });
+  };
+
+      //getDAte
+      const current = new Date();
+      const currentdate = `${current.getFullYear()}-${
+        current.getMonth() + 1
+      }-${current.getDate()}`;
 
   return (
-    <div> 
+    <div>
       {/* DON'T CHANGE ANYTHING HERE */}
 
       <div className={currentMode === "Dark" ? "dark" : ""}>
@@ -120,7 +135,7 @@ const ClientOrders = () => {
                 {/* PART AFTER THE RETURN STATEMENT */}
                 <div>
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white display">
-                    <div style={{
+                  <div style={{
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
@@ -130,10 +145,11 @@ const ClientOrders = () => {
                     <Link to="/orderReport">
                       <div className="mr-0 ml-auto">
                       <button
+                        onClick={createPDF}
                         type="button"
                         className="font-bold py-1 px-4 rounded-md mx-3 my-1 text-white  hover:bg-slate-700 bg-slate-500"
                       >
-                        Show Report
+                        Download Report 
                       </button>
                     </div>
                       </Link>
@@ -143,6 +159,22 @@ const ClientOrders = () => {
 
                     </div>
                     <div className="block w-full overflow-x-auto rounded-lg" id="tableContainer">
+                    <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                          {/* <img
+                          className="h-200 w-400 mb-5"
+                          //src={logo}
+                          alt="logo"
+                        /> */}
+                        </div>
+
+                        <div className="text-center mb-10">
+                          <p className="text-xl mt-2">RunwayX,</p>
+                          <p className="text-xl">No.124, Colombo 7</p>
+                          <p>011 2942 672</p>
+                        </div>
+                        <p className="text-right text-xl mt-2 mb-3">
+                          Generated On : {currentdate}
+                        </p>
                       <table className="w-full rounded-lg">
                         <thead>
                           <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
@@ -151,7 +183,6 @@ const ClientOrders = () => {
                             <TableHeader value="Gross Price" />
                             <TableHeader value="Commission" />
                             <TableHeader value="Status" />
-                            <TableHeader value="Action" />
                           </tr>
                         </thead>
                         <tbody>
@@ -182,13 +213,6 @@ const ClientOrders = () => {
                                   >
                                     <TableData value={data.status} />
                                   </td>
-                                  <td className="text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3">
-                                    <Link to={`/orders/${data._id}`}>
-                                      <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
-                                        View Order
-                                      </button>
-                                    </Link>
-                                  </td>
                                 </tr>
                               );
                             }
@@ -210,4 +234,4 @@ const ClientOrders = () => {
   );
 };
 
-export default ClientOrders;
+export default OrderReport;

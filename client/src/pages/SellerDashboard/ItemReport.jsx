@@ -20,10 +20,10 @@ import { storage } from "../../firebase.js";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import AddItemModal from "../../components/AddItemModal/AddItemModal.jsx";
 import UpdateItemModal from "../../components/UpdateItemModal/UpdateItemModal.jsx";
-import { async } from "@firebase/util";
 import jwtDecode from "jwt-decode";
+import {jsPDF} from "jspdf";
 
-const ItemManagement = () => {
+const ItemReport = () => {
   const [quantity, setQuantity] = useState("");
   const [images, setImages] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -83,6 +83,8 @@ const ItemManagement = () => {
         return null;
       }
     });
+
+
 
 
     const urls = await Promise.all(uploadPromises);
@@ -184,6 +186,21 @@ const ItemManagement = () => {
     fetchItems();
   }, [showModal, state]);
 
+  const createPDF = () => {
+    const date = new Date(Date.now()).toISOString().split("T")[0];
+    const pdf = new jsPDF("landscape", "px", "a2", false);
+    const data = document.querySelector("#tableContainer");
+    pdf.html(data).then(() => {
+      pdf.save("Orders-" + date + ".pdf");
+    });
+  };
+
+    //getDAte
+    const current = new Date();
+    const currentdate = `${current.getFullYear()}-${
+      current.getMonth() + 1
+    }-${current.getDate()}`;
+
   return (
     <div>
       <div className={currentMode === "Dark" ? "dark" : ""}>
@@ -243,25 +260,14 @@ const ItemManagement = () => {
                         Item Management
                       </h1>
 
-                      {/* Add item button form */}
                       <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded float-right mr-20 mb-6"
-                        type="button"
-                        onClick={() => setShowModal(true)}
+                        className="font-bold py-1 px-4 rounded-md mx-3 my-1 text-white  hover:bg-slate-700 bg-slate-500 "
+                        onClick={() => {
+                          createPDF();
+                        }}
                       >
-                        Add new Item
+                        Download Report
                       </button>
-                      <Link to="/itemReport">
-                      <div className="mr-0 ml-auto">
-                      <button
-                        type="button"
-                        className="font-bold py-1 px-4 rounded-md mx-3 my-1 text-white  hover:bg-slate-700 bg-slate-500"
-                      >
-                        Show Report
-                      </button>
-                    </div>
-                      </Link>
-
 
                       {/* Add item modal */}
                       <AddItemModal
@@ -278,14 +284,27 @@ const ItemManagement = () => {
                         setImages={setImages}
                         filepickerRef={filepickerRef}
                       />
+                      <div id="tableContainer">
+                      <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                          {/* <img
+                          className="h-200 w-400 mb-5"
+                          //src={logo}
+                          alt="logo"
+                        /> */}
+                        </div>
 
-                      {/* table to store item data */}
-                      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <div className="text-center mb-10">
+                          <p className="text-xl mt-2">RunwayX,</p>
+                          <p className="text-xl">No.124, Colombo 7</p>
+                          <p>011 2942 672</p>
+                        </div>
+                        <p className="text-right text-xl mt-2 mb-3">
+                          Generated On : {currentdate}
+                        </p>
+                                              {/* table to store item data */}
+                      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400" id="">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                           <tr>
-                            <th scope="col" className="px-6 py-3">
-                              Item
-                            </th>
                             <th scope="col" className="px-6 py-3">
                               Name
                             </th>
@@ -295,66 +314,22 @@ const ItemManagement = () => {
                             <th scope="col" className="px-6 py-3">
                               Price
                             </th>
-                            <th scope="col" className="px-6 py-3">
-                              Action
-                            </th>
                           </tr>
                         </thead>
                         <tbody>
                           {items.map((item) => (
                             <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                              <th
-                                scope="row"
-                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                              >
-                                <img
-                                  className="h-[80px]"
-                                  src={item.image[0]}
-                                  alt=""
-                                />
-                              </th>
                               <td className="px-6 py-4">{item.name}</td>
                               <td className="px-6 py-4">{item.category}</td>
                               <td className="px-6 py-4">
                                 ${item.price.$numberDecimal}
                               </td>
-                              <td className="px-6 py-4">
-                                <button
-                                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-                                  onClick={() => {
-                                    setShowUpdateModal(true);
-                                  }}
-                                >
-                                  Update
-                                </button>
-                                {/* Update item modal */}
-                                <UpdateItemModal
-                                  id={item._id}
-                                  showModal={showUpdateModal}
-                                  setShowUpdateModal={setShowUpdateModal}
-                                  setName={setName}
-                                  setDescription={setDescription}
-                                  setPrice={setPrice}
-                                  setCategory={setCategory}
-                                  postImage={postImage}
-                                  uploadPostImage={uploadPostImage}
-                                  setImages={setImages}
-                                  filepickerRef={filepickerRef}
-                                  setPostImage={setPostImage}
-                                />
-                                <button
-                                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                  onClick={() => {
-                                    handleDeleteItem(item._id);
-                                  }}
-                                >
-                                  Delete
-                                </button>
-                              </td>
+
                             </tr>
                           ))}
                         </tbody>
                       </table>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -368,4 +343,4 @@ const ItemManagement = () => {
   );
 };
 
-export default ItemManagement;
+export default ItemReport;
