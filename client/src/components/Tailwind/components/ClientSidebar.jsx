@@ -41,10 +41,11 @@ const ClientSidebar = () => {
               className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900"
             >
               <img
-                className="logo" style={{marginLeft: "40px"}}
-                src="https://firebasestorage.googleapis.com/v0/b/vedra-8d493.appspot.com/o/C.png?alt=media&token=e4428da2-88c5-4e72-92b9-589c18f95334"
+                className="logo"
+                style={{ marginLeft: "40px" }}
+                src="https://firebasestorage.googleapis.com/v0/b/vedra-8d493.appspot.com/o/homepage%2Flogo-white-removebg-preview.png?alt=media&token=07c66137-9a8a-473d-b6af-20b46dff3e9c"
                 alt=""
-            />
+              />
             </Link>
 
             <TooltipComponent content="Menu" position="BottomCenter">
@@ -60,29 +61,29 @@ const ClientSidebar = () => {
           </div>
 
           <div className="mt-10">
-
             <NavLink
               to="/client"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
+                backgroundColor: isActive ? currentColor : "",
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <FiUser /> {/*  icon  */}
-              <span className="capitalize">My Dashboard</span> {/*  link name  */}
+              <span className="capitalize">My Dashboard</span>{" "}
+              {/*  link name  */}
             </NavLink>
 
             <NavLink
               to="/"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
+                backgroundColor: isActive ? currentColor : "",
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              <SiMarketo/> {/*  icon  */}
-              <span className="capitalize ">Marketplace</span>{' '}
+              <SiMarketo /> {/*  icon  */}
+              <span className="capitalize ">Marketplace</span>{" "}
               {/*  link name  */}
             </NavLink>
 
@@ -90,21 +91,20 @@ const ClientSidebar = () => {
               to="/comingSoon"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
+                backgroundColor: isActive ? currentColor : "",
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <TbReportMoney /> {/*  icon  */}
-              <span className="capitalize ">My Wishlist</span>{' '}
+              <span className="capitalize ">My Wishlist</span>{" "}
               {/*  link name  */}
             </NavLink>
-
 
             <NavLink
               to="/orders"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
+                backgroundColor: isActive ? currentColor : "",
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
@@ -116,30 +116,27 @@ const ClientSidebar = () => {
               to="/cart"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
+                backgroundColor: isActive ? currentColor : "",
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
-              < AiOutlineShoppingCart/> {/*  icon  */}
-              <span className="capitalize ">My Cart</span>{' '}
-              {/*  link name  */}
+              <AiOutlineShoppingCart /> {/*  icon  */}
+              <span className="capitalize ">My Cart</span> {/*  link name  */}
             </NavLink>
 
             <NavLink
               to="/mypayments"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
+                backgroundColor: isActive ? currentColor : "",
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <TbReportMoney />
               {/*  icon  */}
-              <span className="capitalize ">My Payments</span>{' '}
+              <span className="capitalize ">My Payments</span>{" "}
               {/*  link name  */}
             </NavLink>
-
-
           </div>
         </>
       )}

@@ -34,7 +34,7 @@ const SellerSidebar = () => {
             <Link to="/" onClick={handleCloseSideBar} className="">
               <img
                 className="logo m-[40px]"
-                src="https://firebasestorage.googleapis.com/v0/b/vedra-8d493.appspot.com/o/C.png?alt=media&token=e4428da2-88c5-4e72-92b9-589c18f95334"
+                src="https://firebasestorage.googleapis.com/v0/b/vedra-8d493.appspot.com/o/homepage%2Flogo-white-removebg-preview.png?alt=media&token=07c66137-9a8a-473d-b6af-20b46dff3e9c"
                 alt=""
               />
             </Link>
