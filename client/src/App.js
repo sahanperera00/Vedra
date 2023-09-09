@@ -10,7 +10,7 @@ import ItemView from "./pages/ShoppingCart/ShoppingCart";
 import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
 import Checkout from "./pages/Checkout/Checkout";
 import PageTemplate from "./pages/PageTemplate";
-import AdminDash from './pages/AdminDashboard/AdminDash';
+import AdminDash from "./pages/AdminDashboard/AdminDash";
 import PendingOrders from "./pages/AdminDashboard/PendingOrders";
 import ConfirmedOrders from "./pages/AdminDashboard/ConfirmedOrders";
 import DispatchedOrders from "./pages/AdminDashboard/DispatchedOrders";
@@ -27,6 +27,7 @@ import ClientOrders from "./pages/ClientDashboard/ClientOrders";
 import Order from "./pages/ClientDashboard/Order";
 import Payment from "./pages/ClientDashboard/Payment";
 import RefundedOrders from "./pages/AdminDashboard/Refunded";
+import ProvisionReport from "./pages/SellerDashboard/ProvisionReport";
 
 function App() {
   return (
@@ -35,103 +36,43 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/pr/:id" element={<Product />} />
 
-
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
 
         <Route path="/item/:id" element={<ItemView />} />
         <Route path="/cart" element={<ShoppingCart />} />
-        
 
         {/* Devs: Add your routes here*/}
         <Route path="/client" element={<ClientDash />} />
         <Route path="/template" element={<PageTemplate />} />
         <Route path="/checkout/:id" element={<Checkout />} />
         <Route path="/pmtsuccess/:id" element={<PmtSuccess />} />
-        <Route path="/failed" element={<Unsuccesful/>}/>
+        <Route path="/failed" element={<Unsuccesful />} />
         <Route path="/mypayments" element={<ClientPayments />} />
         {/* Test method to fetch item information */}
-        <Route path="/checkout/:6438fa2c518a57cbd5bdc8f4" element={<Checkout />} /> 
+        <Route
+          path="/checkout/:6438fa2c518a57cbd5bdc8f4"
+          element={<Checkout />}
+        />
         <Route path="/sellerPay" element={<SellerPayments />} />
-        <Route path="/comingSoon" element={<ComingSoon/>}/>
-        <Route path="/orders" element={<ClientOrders/>}/>
-        <Route path="/orders/:id" element={<Order/>}/>
+        <Route path="/comingSoon" element={<ComingSoon />} />
+        <Route path="/orders" element={<ClientOrders />} />
+        <Route path="/orders/:id" element={<Order />} />
         <Route path="/payment/:id" element={<Payment />} />
-        <Route path="/refunded" element={<RefundedOrders/>}/>
-        
+        <Route path="/refunded" element={<RefundedOrders />} />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-         
-
-        
-         <Route path="/admin" element={<AdminDash />} />
-          <Route path="/pending" element={<PendingOrders />} />
-          <Route path="/confirmed" element={<ConfirmedOrders />} />
-          <Route path="/dispatched" element={<DispatchedOrders />} />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-         
+        <Route path="/admin" element={<AdminDash />} />
+        <Route path="/pending" element={<PendingOrders />} />
+        <Route path="/confirmed" element={<ConfirmedOrders />} />
+        <Route path="/dispatched" element={<DispatchedOrders />} />
 
         {/* Nashie Pooh: Add your routes here*/}
-         
-          <Route path="/seller" element={<SellerDash/>} />
-          <Route path="/itemmanagement" element={<ItemManagement/>} />
-          <Route path="/additem" element={<AddItemForm/>} />  
-          <Route path="/updateitem" element={<UpdateItemForm/>} />  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-         
+        <Route path="/seller" element={<SellerDash />} />
+        <Route path="/itemmanagement" element={<ItemManagement />} />
+        <Route path="/additem" element={<AddItemForm />} />
+        <Route path="/updateitem" element={<UpdateItemForm />} />
+        <Route path="/ProvisionReport" element={<ProvisionReport />} />
 
         {/* You bullshit Shaggy: Add your routes here
          
