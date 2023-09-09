@@ -67,15 +67,15 @@ const SellerPayments = () => {
 
   //creating an algorithm for the the items within orders to be fetched
   console.log("Orders: ", orders);
-    
-    const orderItems = [];
 
-    for(let i =0;i < orders.length;i++){
-        for(let j =0;j < orders[i].items.length;j++){
-            orderItems.push(orders[i].items[j]);
-        }
+  const orderItems = [];
+
+  for (let i = 0; i < orders.length; i++) {
+    for (let j = 0; j < orders[i].items.length; j++) {
+      orderItems.push(orders[i].items[j]);
     }
-    console.log("OrderItems: ", orderItems);
+  }
+  console.log("OrderItems: ", orderItems);
 
   return (
     <div>
@@ -130,7 +130,18 @@ const SellerPayments = () => {
                 <div>
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
                     <Header title="Payment Report" />
-
+                    <div className="mr-0 ml-auto">
+                      <Link to={"/ProvisionReport"}>
+                        {" "}
+                        {/* change this link your preview page */}
+                        <button
+                          type="button"
+                          className="py-1 px-4 rounded-lg text-white hover:bg-slate-700 bg-slate-500"
+                        >
+                          Generate Report
+                        </button>
+                      </Link>
+                    </div>
                     <div className=" flex items-center mb-5 "></div>
                     <div className="block w-full overflow-x-auto rounded-lg">
                       <table className="w-full rounded-lg">
@@ -144,26 +155,42 @@ const SellerPayments = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {orders.map((data,key) => {
-                            if (data.status === "Confirmed" || data.status === "Pending" || data.status === "Dispatched") {
-                              let dataColor = 'text-black dark:text-white';
-                                if (data.status === "Pending") {
-                                  dataColor = "text-orange-800 font-bold font-bold dark:text-orange-400";
-                                } else if(data.status === "Confirmed") {
-                                  dataColor = "text-blue-800 font-bold font-bold dark:text-blue-400";
-                                } else if(data.status === "Dispatched") {
-                                  dataColor = "text-green-700 font-bold"
-                                } else if(data.status === "Refunded") {
-                                  dataColor = "text-red-700 font-bold"
-                                }
+                          {orders.map((data, key) => {
+                            if (
+                              data.status === "Confirmed" ||
+                              data.status === "Pending" ||
+                              data.status === "Dispatched"
+                            ) {
+                              let dataColor = "text-black dark:text-white";
+                              if (data.status === "Pending") {
+                                dataColor =
+                                  "text-orange-800 font-bold font-bold dark:text-orange-400";
+                              } else if (data.status === "Confirmed") {
+                                dataColor =
+                                  "text-blue-800 font-bold font-bold dark:text-blue-400";
+                              } else if (data.status === "Dispatched") {
+                                dataColor = "text-green-700 font-bold";
+                              } else if (data.status === "Refunded") {
+                                dataColor = "text-red-700 font-bold";
+                              }
                               return (
-                                
-                                <tr className="text-sm h-10 border dark:border-slate-600" key={key}>
+                                <tr
+                                  className="text-sm h-10 border dark:border-slate-600"
+                                  key={key}
+                                >
                                   <TableData value={"INV " + data._id} />
                                   <TableData value={data.email} />
-                                  <TableData value={formatter.format(data.total)}/>
-                                  <TableData value={formatter.format(data.total * 0.15)}/>
-                                  <td className={`${dataColor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}>{data.status}</td>
+                                  <TableData
+                                    value={formatter.format(data.total)}
+                                  />
+                                  <TableData
+                                    value={formatter.format(data.total * 0.15)}
+                                  />
+                                  <td
+                                    className={`${dataColor} text-center px-3 align-middle border-l-0 border-r-0 text-m whitespace-nowrap p-3`}
+                                  >
+                                    {data.status}
+                                  </td>
                                 </tr>
                               );
                             }
