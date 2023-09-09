@@ -49,7 +49,7 @@ const AdminDash = () => {
     const token = localStorage.getItem("token");
     if (token) {
       const decodedToken = jwtDecode(token);
-      if (decodedToken.role === "buyer" || decodedToken.role === "admin") {
+      if (decodedToken.role === "buyer") {
         navigate("/");
       }
     } else {
