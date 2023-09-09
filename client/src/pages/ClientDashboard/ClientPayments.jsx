@@ -6,7 +6,7 @@ import TableHeader from "../../components/Tailwind/components/Table/TableHeader.
 import { FiSettings } from "react-icons/fi";
 //importing axios 
 import axios from "axios";
-
+import { jsPDF } from "jspdf";
 
 
 
@@ -24,7 +24,7 @@ import ClientSidebar from "../../components/Tailwind/components/ClientSidebar";
 /* IMPORT ALL YOUR IMPORTS AS USUAL ABOVE HERE, REMOVE UNNECESSARY ONES*/
 
 const ClientPayments = () => {
-
+  
   const {
     setCurrentColor,
     setCurrentMode,
@@ -66,6 +66,15 @@ const ClientPayments = () => {
     minimumFractionDigits: 2,
     currencyDisplay: 'symbol'
   })
+
+  const createPDF = () => {
+    const date = new Date(Date.now()).toISOString().split("T")[0];
+    const pdf = new jsPDF("landscape", "px", "a1", false);
+    const data = document.querySelector("#tableContainer");
+    pdf.html(data).then(() => {
+      pdf.save("CostedProductionOrders-" + date + ".pdf");
+    });
+  };
 
   return (
     <div>
@@ -139,7 +148,7 @@ const ClientPayments = () => {
 
                             let dataColor = 'text-black dark:text-white';
                             let type = "Payment"
-
+                            
                             if(data.netPrice > 0){
                               dataColor = 'text-green-500 font-bold'
                               type = 'Payment'

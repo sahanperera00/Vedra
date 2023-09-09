@@ -14,8 +14,8 @@ import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 import ClientSideBar from "../../components/Tailwind/components/ClientSidebar.jsx";
 
 import axios from "axios";
-
-import { ToastContainer, toast, Zoom, Bounce } from "react-toastify";
+import { jsPDF } from "jspdf";
+import { ToastContainer} from "react-toastify";
 
 /* IMPORT ALL YOUR IMPORTS AS USUAL ABOVE HERE, REMOVE UNNECESSARY ONES*/
 
@@ -59,31 +59,6 @@ const ClientOrders = () => {
     }
   }, []);
 
-  //status change
-  const orderStatus = async (id, stat) => {
-    try {
-      let status = null;
-      if (stat === "Reject") {
-        status = "Refunded";
-      } else if (stat === "Approve") {
-        status = "Dispatched";
-      }
-      await axios
-        .patch(`http://localhost:8083/orders/updateStatus`, { id, status })
-        .then((res) => {
-          console.log(res.data);
-          console.log("order Status Updated");
-          if (status == "Dispatched") {
-            toast.success("Order Successfully Dispatched!");
-          } else {
-            toast.warn("Order Rejected!");
-          }
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   //using the formatter
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -91,6 +66,15 @@ const ClientOrders = () => {
     minimumFractionDigits: 2,
     currencyDisplay: "symbol",
   });
+
+  const createPDF = () => {
+    const date = new Date(Date.now()).toISOString().split("T")[0];
+    const pdf = new jsPDF("landscape", "px", "a2", true);
+    const data = document.querySelector("#tableContainer");
+    pdf.html(data).then(() => {
+      pdf.save("Orders-" + date + ".pdf");
+    });
+  };
 
   return (
     <div>
@@ -144,11 +128,25 @@ const ClientOrders = () => {
                 {/* COPY YOUR ORIGINAL COMPONENT CODE HERE */}
                 {/* PART AFTER THE RETURN STATEMENT */}
                 <div>
-                  <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white">
+                  <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl dark:bg-secondary-dark-bg dark:text-white display">
+                    <div style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      marginBottom: "20px"
+                    }}>
                     <Header title="Your Orders " />
+                    <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full " onClick={()=>{
+                      createPDF();
+                    }}>
+                        Download Report 
+                      </button>
+                    </div>
 
-                    <div className=" flex items-center mb-5 "></div>
-                    <div className="block w-full overflow-x-auto rounded-lg">
+                    <div className=" flex items-center mb-5 ">
+
+                    </div>
+                    <div className="block w-full overflow-x-auto rounded-lg" id="tableContainer">
                       <table className="w-full rounded-lg">
                         <thead>
                           <tr className="bg-slate-200 text-md h-12 dark:bg-slate-800">
