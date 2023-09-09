@@ -22,6 +22,7 @@ import { TbTruckDelivery } from "react-icons/tb";
 import SellerSidebar from "../../components/Tailwind/components/SellerSidebar.jsx";
 import jwtDecode from "jwt-decode";
 import PaymentChart from "../../components/PaymentChart/PaymentChart.jsx";
+import {jsPDF} from "jspdf";
 
 const SellerDash = () => {
   // <== THIS IS THE COMPONENT NAME, CHANGE IT TO YOUR COMPONENT NAME
@@ -41,6 +42,15 @@ const SellerDash = () => {
   const [orders, setOrders] = useState([]);
   const [total, setTotal] = useState(0);
   let fTotal = 0;
+
+   const createPDF = () => {
+     const date = new Date(Date.now()).toISOString().split("T")[0];
+     const pdf = new jsPDF("landscape", "px", "a1", true);
+     const data = document.querySelector("#tableContainer");
+     pdf.html(data).then(() => {
+       pdf.save("Orders-" + date + ".pdf");
+     });
+   };
 
   const getOrders = async () => {
     await axios
@@ -205,10 +215,18 @@ const SellerDash = () => {
             <div>
               {themeSettings && <ThemeSettings />}
               <div>
-                <div className="mt-5">
+                <div className="mt-5" id="tableContainer">
                   <div className="flex flex-wrap lg:flex-nowrap justify-left ml-5 mt-5">
                     <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
                       {/* // ADD Chart */}
+                      <button
+                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full "
+                        onClick={() => {
+                          createPDF();
+                        }}
+                      >
+                        Download Report
+                      </button>
                       <div class="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-4 gap-4">
                         <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2 dark:bg-gray-700 w-800">
                           <div class="flex items-center justify-between mb-4">
@@ -244,65 +262,64 @@ const SellerDash = () => {
                           </div>
                           <div id="main-chart"></div>
                         </div>
-                          <PaymentChart orders={orders}/>
+                        <PaymentChart orders={orders} />
                       </div>
                     </div>
                   </div>
                   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-gray-700 dark:text-white ">
-                  <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                    <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5"></div>
 
-                  </div>
-
-                  <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
-                    <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
-                      {/* small top boxes in the dashboard */}{" "}
-                      {/* use minimum 3, maximum 5 */}
-                      <Link to="/pending">
-                        <DashTopBox
-                          icon={<MdPendingActions />}
-                          label="Orders pending"
-                          data={pending}
-                        />
-                      </Link>
-                      <Link to="/confirmed">
-                        <DashTopBox
-                          icon={<GiConfirmed />}
-                          label="Orders confirmed"
-                          data={confirmed}
-                        />
-                      </Link>
-                      <Link to="/dispatched">
-                        <DashTopBox
-                          icon={<TbTruckDelivery />}
-                          label="Orders dispatched"
-                          data={dispatched}
-                        />
-                      </Link>
-
-                      <Link to="/refunded">
-                        <DashTopBox
-                          icon={<TbTruckDelivery />}
-                          label="Orders Refunded"
-                          data={refunded}
-                        />
-                      </Link>
+                    <div className="flex flex-wrap lg:flex-nowrap justify-center mt-5">
+                      <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
+                        {/* small top boxes in the dashboard */}{" "}
+                        {/* use minimum 3, maximum 5 */}
+                        <Link to="/pending">
+                          <DashTopBox
+                            icon={<MdPendingActions />}
+                            label="Orders pending"
+                            data={pending}
+                          />
+                        </Link>
+                        <Link to="/confirmed">
+                          <DashTopBox
+                            icon={<GiConfirmed />}
+                            label="Orders confirmed"
+                            data={confirmed}
+                          />
+                        </Link>
+                        <Link to="/dispatched">
+                          <DashTopBox
+                            icon={<TbTruckDelivery />}
+                            label="Orders dispatched"
+                            data={dispatched}
+                          />
+                        </Link>
+                        <Link to="/refunded">
+                          <DashTopBox
+                            icon={<TbTruckDelivery />}
+                            label="Orders Refunded"
+                            data={refunded}
+                          />
+                        </Link>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
-                    <AdminPieChart dispatched={dispatched}
-                    refunded={refunded}
-                    confirmed={confirmed}
-                    pending={pending} />
-                  </div>
-                </div>
-              </div>
+                    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl  dark:bg-secondary-dark-bg dark:text-white ">
+                      <AdminPieChart
+                        dispatched={dispatched}
+                        refunded={refunded}
+                        confirmed={confirmed}
+                        pending={pending}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
   );
 };
 
