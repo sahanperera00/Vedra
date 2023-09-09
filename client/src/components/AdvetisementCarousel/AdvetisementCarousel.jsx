@@ -5,7 +5,7 @@ export default function AdvetisementCarousel() {
   const data = [
     {
       image:
-        "https://firebasestorage.googleapis.com/v0/b/vedra-8d493.appspot.com/o/_Path_.png?alt=media&token=507aa264-a90d-4adf-9459-cdf8b0973e56",
+        "https://firebasestorage.googleapis.com/v0/b/vedra-8d493.appspot.com/o/homepage%2Fbanner2.png?alt=media&token=692f4209-43c1-468a-9e2b-e3161b057a74",
       caption: "Image 1",
     },
   ];
@@ -20,7 +20,7 @@ export default function AdvetisementCarousel() {
         <div className="relative h overflow-hidden rounded-lg md:h-96">
           <div className=" duration-700 ease-in-out" data-carousel-item>
             <img
-              src="https://firebasestorage.googleapis.com/v0/b/vedra-8d493.appspot.com/o/_Path_.png?alt=media&token=507aa264-a90d-4adf-9459-cdf8b0973e56"
+              src="https://firebasestorage.googleapis.com/v0/b/vedra-8d493.appspot.com/o/homepage%2Fbanner2.png?alt=media&token=692f4209-43c1-468a-9e2b-e3161b057a74"
               className=" block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
               alt="..."
             />

@@ -28,16 +28,17 @@ const AdminSidebar = () => {
       {activeMenu && (
         <>
           <div className="flex justify-between items-center">
-          <Link
+            <Link
               to="/"
               onClick={handleCloseSideBar}
               className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900"
             >
               <img
-                className="logo" style={{marginLeft: "40px"}}
-                src="https://firebasestorage.googleapis.com/v0/b/vedra-8d493.appspot.com/o/C.png?alt=media&token=e4428da2-88c5-4e72-92b9-589c18f95334"
+                className="logo"
+                style={{ marginLeft: "40px" }}
+                src="https://firebasestorage.googleapis.com/v0/b/vedra-8d493.appspot.com/o/homepage%2Flogo-white-removebg-preview.png?alt=media&token=07c66137-9a8a-473d-b6af-20b46dff3e9c"
                 alt=""
-            />
+              />
             </Link>
 
             <TooltipComponent content="Menu" position="BottomCenter">
@@ -60,7 +61,7 @@ const AdminSidebar = () => {
               to="/admin"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
+                backgroundColor: isActive ? currentColor : "",
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
@@ -72,7 +73,7 @@ const AdminSidebar = () => {
               to="/comingSoon"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
+                backgroundColor: isActive ? currentColor : "",
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
@@ -84,12 +85,13 @@ const AdminSidebar = () => {
               to="/pending"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
+                backgroundColor: isActive ? currentColor : "",
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <MdPendingActions /> {/*  icon  */}
-              <span className="capitalize ">Pending orders</span> {/*  link name  */}
+              <span className="capitalize ">Pending orders</span>{" "}
+              {/*  link name  */}
             </NavLink>
 
             {/*  links ---------------------------------------------------------------------------------- links  */}
@@ -98,12 +100,12 @@ const AdminSidebar = () => {
               to="/confirmed"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
+                backgroundColor: isActive ? currentColor : "",
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <GiConfirmed /> {/*  icon  */}
-              <span className="capitalize ">Confirmed orders</span>{' '}
+              <span className="capitalize ">Confirmed orders</span>{" "}
               {/*  link name  */}
             </NavLink>
 
@@ -111,12 +113,12 @@ const AdminSidebar = () => {
               to="/dispatched"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
+                backgroundColor: isActive ? currentColor : "",
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <TbTruckDelivery /> {/*  icon  */}
-              <span className="capitalize ">Orders dispatched</span>{' '}
+              <span className="capitalize ">Orders dispatched</span>{" "}
               {/*  link name  */}
             </NavLink>
 
@@ -124,25 +126,26 @@ const AdminSidebar = () => {
               to="/refunded"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
+                backgroundColor: isActive ? currentColor : "",
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <MdPendingActions /> {/*  icon  */}
-              <span className="capitalize ">Returned orders</span> {/*  link name  */}
+              <span className="capitalize ">Returned orders</span>{" "}
+              {/*  link name  */}
             </NavLink>
 
-            
             <NavLink
               to="https://dashboard.stripe.com/test/payments"
               onClick={handleCloseSideBar}
               style={({ isActive }) => ({
-                backgroundColor: isActive ? currentColor : '',
+                backgroundColor: isActive ? currentColor : "",
               })}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <TbBrandGoogleAnalytics /> {/*  icon  */}
-              <span className="capitalize ">Payment Analytics</span> {/*  link name  */}
+              <span className="capitalize ">Payment Analytics</span>{" "}
+              {/*  link name  */}
             </NavLink>
           </div>
         </>
